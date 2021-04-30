@@ -56,8 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
-        android:fadingEdgeLength="150dp"
-        android:requiresFadingEdge="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -225,10 +223,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/paymentEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -241,6 +235,11 @@
                 app:hintTextColor="@color/blue_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/courseInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/paymentEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

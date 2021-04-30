@@ -20,7 +20,7 @@
        <item name="boxStrokeWidth">2dp</item>
        <item name="android:layout_marginStart">20dp</item>
        <item name="android:layout_marginEnd">20dp</item>
-       <item name="android:textColorHint">@color/black</item>
+       <item name="android:textColorHint">@color/blue_main</item>
        <item name="android:layout_width">match_parent</item>
        <item name="android:layout_height">wrap_content</item>
    </style>
