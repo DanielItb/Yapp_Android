@@ -14,4 +14,6 @@
     <string name="payment_type">Payment Type</string>
     <string name="register_date">Register Date</string>
     <string name="active">Active</string>
+    <string name="reason">Reason</string>
+    <string name="sessions_finished">Sessions finished</string>
 </resources>
