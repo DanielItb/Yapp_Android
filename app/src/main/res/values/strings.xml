@@ -19,4 +19,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="log_in">LOG IN</string>
+    <string name="select_patient">Select Patient</string>
+    <string name="select_specialist">Select Specialist</string>
+    <string name="save">Save</string>
 </resources>

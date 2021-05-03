@@ -31,11 +31,11 @@
         app:layout_constraintTop_toBottomOf="@+id/simpleSwitch">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:inputType="textMultiLine"
-            android:lines="4"
             android:id="@+id/treatmentReasonEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:lines="4" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -52,22 +52,39 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/sessionsEditText"
-            android:inputType="number"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/sessionsFinishedButton"
+        android:id="@+id/startDateButton"
+        style="@style/DateSelectorButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:paddingTop="8dp"
-        android:text="@string/birth_date"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/sessionsInputLayout"
-        tools:ignore="RtlHardcoded" />
+        app:layout_constraintTop_toBottomOf="@+id/sessionsInputLayout" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/selectPatientButton"
+        style="@style/DateSelectorButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_patient"
+        app:layout_constraintTop_toBottomOf="@+id/startDateButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/selectSpecialistButton"
+        style="@style/DateSelectorButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/select_specialist"
+        app:layout_constraintTop_toBottomOf="@+id/selectPatientButton" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saveButton"
+        style="@style/SaveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
