@@ -22,10 +22,6 @@
         android:id="@+id/reasonInputLayout"
         style="@style/TextInputStyle"
         android:hint="@string/reason"
-        app:boxBackgroundColor="@color/white"
-        app:endIconCheckable="true"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/blue_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/simpleSwitch">
@@ -35,17 +31,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine"
-            android:lines="4" />
+            android:lines="5" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sessionsInputLayout"
         style="@style/TextInputStyle"
         android:hint="@string/sessions_finished"
-        app:boxBackgroundColor="@color/white"
-        app:endIconCheckable="true"
-        app:endIconMode="clear_text"
-        app:hintTextColor="@color/blue_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reasonInputLayout">
