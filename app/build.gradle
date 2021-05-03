@@ -46,4 +46,12 @@ dependencies {
 
     //ImageViews Circulares
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // HTTP REQUESTS
+    //https://square.github.io/retrofit/ (para consultas)
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //https://github.com/square/retrofit/tree/master/retrofit-converters/gson (para transformar el json a objetos java)
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    //https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor (para mostrar los logs de las peticiones)
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 }
