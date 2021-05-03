@@ -22,4 +22,10 @@
     <string name="select_patient">Select Patient</string>
     <string name="select_specialist">Select Specialist</string>
     <string name="save">Save</string>
+
+    <string-array name="payment_types">
+        <item>Cuota</item>
+        <item>Beca</item>
+        <item>Sesión</item>
+    </string-array>
 </resources>
