@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/userProfileFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/userProfileFragment"
-        android:name="cat.itb.yapp.fragments.UserProfileFragment"
+        android:name="cat.itb.yapp.fragments.PatientProfileFragment"
         android:label="fragment_user_profile"
-        tools:layout="@layout/fragment_user_profile" />
+        tools:layout="@layout/fragment_patient_profile" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="cat.itb.yapp.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="cat.itb.yapp.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
 </navigation>
