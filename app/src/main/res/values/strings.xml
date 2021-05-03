@@ -19,4 +19,10 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="log_in">LOG IN</string>
+
+    <string-array name="payment_types">
+        <item>Cuota</item>
+        <item>Beca</item>
+        <item>Sesión</item>
+    </string-array>
 </resources>
