@@ -9,14 +9,15 @@ public class RetrofitHttp {
     public Retrofit retrofit;
     private HttpLoggingInterceptor loggingInterceptor;
     public OkHttpClient.Builder httpClient;
+    public static String BASE_URL = "http://10.0.2.2:8080/api/";
 
-    public RetrofitHttp(String baseUrl) {
+    public RetrofitHttp() {
         super();
         loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
 
         httpClient = new OkHttpClient.Builder().addInterceptor(loggingInterceptor);
 
-        retrofit = new Retrofit.Builder().baseUrl(baseUrl)
+        retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(httpClient.build())
                 .build();
