@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PatientFormFragment">
+    tools:context=".fragments.UserFormFragment">
 
     <View
         android:id="@+id/viewGradient"
@@ -17,17 +17,16 @@
     <TextView
         android:id="@+id/titleFormTextView"
         style="@style/TitleFormsTextView"
-        android:text="@string/patient"
+        android:text="@string/user"
         app:layout_constraintBottom_toTopOf="@+id/profile_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/viewGradient" />
 
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         style="@style/CircleImageForms"
-        android:src="@drawable/kid"
+        android:src="@drawable/profile"
         app:civ_border_color="#7A5EBA"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/viewGradient"
         android:text="@string/active"
         app:useMaterialThemeColors="false"
-       />
+        />
 
 
     <ScrollView
@@ -63,12 +62,63 @@
             app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nameInputLayout"
+                android:id="@+id/userNameInputLayout"
                 style="@style/TextInputStyle"
-                android:hint="@string/name"
+                android:hint="@string/username"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordInputLayout"
+                style="@style/TextInputStyle"
+                android:hint="@string/password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/userNameInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/rolInputLayout"
+                style="@style/DropDownOptionForms"
+                android:hint="@string/rol"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteRol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nameInputLayout"
+                style="@style/TextInputStyle"
+                android:hint="@string/name"
+                android:layout_marginTop="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rolInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameEditText"
@@ -76,6 +126,8 @@
                     android:layout_height="match_parent"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/surnameInputLayout"
@@ -92,61 +144,12 @@
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                style="@style/DateSelectorButton"
-                android:id="@+id/birthDateButton"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                app:layout_constraintTop_toBottomOf="@+id/surnameInputLayout"
-                android:text="@string/birth_date"
-                tools:ignore="RtlHardcoded"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/blackText"
-                android:textAllCaps="false"
-                android:gravity="center_vertical"
-                android:paddingBottom="10dp"
-                android:textSize="15sp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="-1dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ageInputLayout"
-                style="@style/TextInputStyle"
-                android:hint="@string/age"
-                android:layout_marginTop="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/birthDateButton">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ageEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="number"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/addressInputLayout"
-                style="@style/TextInputStyle"
-                android:hint="@string/address"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ageInputLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/addressEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/phoneInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/phone_number"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addressInputLayout">
+                app:layout_constraintTop_toBottomOf="@+id/surnameInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phoneEditText"
@@ -170,45 +173,15 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/schoolInputLayout"
-                style="@style/TextInputStyle"
-                android:hint="@string/school"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/schoolEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/courseInputLayout"
-                style="@style/TextInputStyle"
-                android:hint="@string/course"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/schoolInputLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/courseEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="text"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--TODO hacer el metodo de pago un sniper seleccionable-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/paymentInputLayout"
+                android:id="@+id/specialistTypeInputLayout"
                 style="@style/DropDownOptionForms"
-                android:hint="@string/payment_type"
+                android:hint="@string/specialist_type"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/courseInputLayout">
+                app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
 
                 <AutoCompleteTextView
-                    android:id="@+id/autoComplete"
+                    android:id="@+id/autoCompleteSpecialist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />
@@ -216,22 +189,18 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/registerDateInputLayout"
+                android:id="@+id/collegiatNumberInputLayout"
                 style="@style/TextInputStyle"
-                android:hint="@string/register_date"
+                android:hint="@string/collegiate_number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/paymentInputLayout"
-                android:visibility="invisible">
-
+                app:layout_constraintTop_toBottomOf="@+id/specialistTypeInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerDateEditText"
+                    android:id="@+id/collegiateNumberEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:focusable="false"/>
-
+                    android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/saveButton"
@@ -239,7 +208,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/paymentInputLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/collegiatNumberInputLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
