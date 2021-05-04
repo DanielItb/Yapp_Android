@@ -1,5 +1,7 @@
 package cat.itb.yapp.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,10 +16,10 @@ import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Objects;
-
 import cat.itb.yapp.R;
+import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.auth.LoginDto;
+import cat.itb.yapp.models.user.ProfileUserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 import cat.itb.yapp.webservices.AuthWebServiceClient;
@@ -29,6 +31,8 @@ public class LoginFragment extends Fragment {
 
 
     public static RetrofitHttp retrofitHttp;
+
+    ProfileUserDto profileUserDto;
 
     private NavController navController;
 
@@ -46,32 +50,40 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+
+        String token = UtilsSharedPreferences.getToken(getActivity());
+        if (token != null) {
+            Log.e("login", "accessToken is present: " + token);
+        } else {
+            Log.e("login", "accessToken is == null");
+        }
+
+
         usernameTextInput = v.findViewById(R.id.usernameLoginEditText);
         passwordTextInput = v.findViewById(R.id.passwordLoginEditText);
-        btnLogin = v.findViewById(R.id.loginButton);
-
-        //TESTING HARDCODE
+        // TESTING HARDCODE
         usernameTextInput.setText("username");
         passwordTextInput.setText("password");
 
 
+        btnLogin = v.findViewById(R.id.loginButton);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
                 String username = usernameTextInput.getText().toString();
                 String password = passwordTextInput.getText().toString();
 
-                //TODO: show errors in layout
-                if (username.length() > 0 && password.length() > 0) {
+                if (!username.isEmpty() && !password.isEmpty()) {
                     login();
                 } else {
-                    Log.e("login", "wrong credentials");
+                    //TODO: show errors in layout
+                    Log.e("login", "wrong credentials, username or password is empty");
                 }
 
             }
         });
-
 
         return v;
     }
@@ -86,23 +98,36 @@ public class LoginFragment extends Fragment {
                 passwordTextInput.getText().toString());
 
 
-        Call<LoginDto> call = authWebServiceClient.login(loginDto);
+        Call<ProfileUserDto> call = authWebServiceClient.login(loginDto);
 
-        call.enqueue(new Callback<LoginDto>() {
+        call.enqueue(new Callback<ProfileUserDto>() {
             @Override
-            public void onResponse(Call<LoginDto> call, Response<LoginDto> response) {
+            public void onResponse(Call<ProfileUserDto> call, Response<ProfileUserDto> response) {
                 Log.e("login", "onResponse okey");
+                ProfileUserDto profileUserDto = response.body();
 
-                //TODO
-                // get token and info user(photo, username, ??) from response and save token in shared preferences and go to main
-                UtilsSharedPreferences.saveToken(requireActivity(), "token");
+                Log.e("login", "id: "+ profileUserDto.getId().intValue());
+                Log.e("login", "username: "+profileUserDto.getUsername());
+                Log.e("login", "photo: "+profileUserDto.getPhoto());
+                Log.e("login", "accessToken: "+profileUserDto.getAccessToken());
+
+                profileUserDto.getRoles().forEach( rol ->
+                        Log.e("login", rol)
+                );/**/
+
+                profileUserDto = response.body();
+
+                // TODO: get info from response, save token and go to main
+                UtilsSharedPreferences.setToken(MainActivity.activity, profileUserDto.getAccessToken());
+
+                Log.e("login", "accessToken from shared preferences: "+UtilsSharedPreferences.getToken(MainActivity.activity));
             }
 
             @Override
-            public void onFailure(Call<LoginDto> call, Throwable t) {
+            public void onFailure(Call<ProfileUserDto> call, Throwable t) {
                 Log.e("login", "onResponse onFailure");
-
-                Log.e("login", call.toString());
+                Log.e("login", "throwable.getMessage(): "+t.getMessage());
+                Log.e("login", "call.toString(): "+call.toString());
             }
         });
 
