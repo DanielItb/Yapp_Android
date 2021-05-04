@@ -54,6 +54,7 @@
         style="@style/DateSelectorButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/select_start_date"
         app:layout_constraintTop_toBottomOf="@+id/sessionsInputLayout" />
 
     <com.google.android.material.button.MaterialButton
@@ -73,10 +74,21 @@
         app:layout_constraintTop_toBottomOf="@+id/selectPatientButton" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancelButton"
+        style="@style/CancelButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/saveButton"
         style="@style/SaveButton"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
