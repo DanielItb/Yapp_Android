@@ -205,6 +205,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/saveButton"
                 style="@style/SaveButton"
+                android:layout_marginVertical="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
