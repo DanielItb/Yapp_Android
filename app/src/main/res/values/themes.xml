@@ -15,7 +15,7 @@
 
 
    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-       <item name="boxStrokeColor">@color/purple_700</item>
+       <item name="boxStrokeColor">@color/primaryDarkColor</item>
        <item name="boxStrokeWidth">1dp</item>
        <item name="android:layout_marginStart">20dp</item>
        <item name="android:layout_marginEnd">20dp</item>
