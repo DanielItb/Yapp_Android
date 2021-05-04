@@ -24,10 +24,27 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="select_start_date">Select start date</string>
+    <string name="rol">Rol</string>
+    <string name="specialist_type">Specialist Type</string>
+    <string name="collegiate_number">Collegiate Number</string>
+    <string name="patient">PATIENT</string>
+    <string name="user">USER</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
         <item>Beca</item>
         <item>Sesión</item>
+    </string-array>
+
+    <string-array name="rol_types">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
+
+    <string-array name="specialist_types">
+        <item>Logopeda</item>
+        <item>Pedagogo/a</item>
+        <item>Psicólogo/a</item>
+        <item>None</item>
     </string-array>
 </resources>

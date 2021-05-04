@@ -18,7 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import cat.itb.yapp.R;
 
 
-public class PatientProfileFragment extends Fragment {
+public class PatientFormFragment extends Fragment {
     private MaterialButton birthDateButton;
     private TextInputEditText registerDate;
 
@@ -40,7 +40,7 @@ public class PatientProfileFragment extends Fragment {
 
 
         AutoCompleteTextView paymentTypesDropDown = v.findViewById(R.id.autoComplete);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_payment_types, paymentTypes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_types, paymentTypes);
         paymentTypesDropDown.setAdapter(adapter);
 
 
