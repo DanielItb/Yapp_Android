@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cat.itb.yapp.R;
+import cat.itb.yapp.apapters.TreatmentAdapter;
 
 
 public class TreatmentListFragment extends Fragment {
@@ -26,7 +27,16 @@ public class TreatmentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_treatment_list, container, false);
         recyclerView = v.findViewById(R.id.recyclerTreatment);
+        setUpRecycler(recyclerView);
 
         return v;
     }
+
+    private void setUpRecycler(RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        TreatmentAdapter adapter = new TreatmentAdapter();
+        recyclerView.setAdapter(adapter);
+    }
+
 }
