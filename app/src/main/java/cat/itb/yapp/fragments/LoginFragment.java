@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -21,6 +22,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.auth.LoginDto;
 import cat.itb.yapp.models.user.ProfileUserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.retrofit.RetrofitHttpLogin;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 import cat.itb.yapp.webservices.AuthWebServiceClient;
 import retrofit2.Call;
@@ -30,7 +32,7 @@ import retrofit2.Response;
 public class LoginFragment extends Fragment {
 
 
-    public static RetrofitHttp retrofitHttp;
+    public static RetrofitHttpLogin retrofitHttp;
 
     ProfileUserDto profileUserDto;
 
@@ -90,7 +92,7 @@ public class LoginFragment extends Fragment {
 
     public void login() {
 
-        retrofitHttp = new RetrofitHttp();
+        retrofitHttp = new RetrofitHttpLogin();
 
         AuthWebServiceClient authWebServiceClient = retrofitHttp.retrofit.create(AuthWebServiceClient.class);
 
@@ -104,32 +106,52 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(Call<ProfileUserDto> call, Response<ProfileUserDto> response) {
                 Log.e("login", "onResponse okey");
-                ProfileUserDto profileUserDto = response.body();
+                if (response.isSuccessful()) {
+                    ProfileUserDto profileUserDto = response.body();
 
-                Log.e("login", "id: "+ profileUserDto.getId().intValue());
-                Log.e("login", "username: "+profileUserDto.getUsername());
-                Log.e("login", "photo: "+profileUserDto.getPhoto());
-                Log.e("login", "accessToken: "+profileUserDto.getAccessToken());
+                    Log.e("login", "id: "+ profileUserDto.getId().intValue());
+                    Log.e("login", "username: "+profileUserDto.getUsername());
+                    Log.e("login", "photo: "+profileUserDto.getPhoto());
+                    Log.e("login", "accessToken: "+profileUserDto.getAccessToken());
 
-                profileUserDto.getRoles().forEach( rol ->
-                        Log.e("login", rol)
-                );/**/
+                    profileUserDto.getRoles().forEach( rol ->
+                            Log.e("login", rol)
+                    );
 
-                profileUserDto = response.body();
+                    profileUserDto = response.body();
 
-                // TODO: get info from response, save token and go to main
-                UtilsSharedPreferences.setToken(MainActivity.activity, profileUserDto.getAccessToken());
 
-                Log.e("login", "accessToken from shared preferences: "+UtilsSharedPreferences.getToken(MainActivity.activity));
+                    UtilsSharedPreferences.setToken(MainActivity.getActivity(), profileUserDto.getAccessToken());
+
+                    navController.navigate(R.id.mainFragment);
+
+                    Log.e("login", "accessToken from shared preferences: "+UtilsSharedPreferences.getToken(MainActivity.getActivity()));
+                }else {
+                    Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error bad credentials", Toast.LENGTH_SHORT).show();
+                    Log.e("login", "status response: " + response.code()); //401 Unauthorized
+                }
+
             }
+
+
 
             @Override
             public void onFailure(Call<ProfileUserDto> call, Throwable t) {
                 Log.e("login", "onResponse onFailure");
                 Log.e("login", "throwable.getMessage(): "+t.getMessage());
                 Log.e("login", "call.toString(): "+call.toString());
+
+
+
             }
         });
+
+
+
+    }
+
+
+    public void getTreatmentsBySpecialistId() {
 
 
 

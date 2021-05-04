@@ -9,7 +9,7 @@ import cat.itb.yapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static Activity activity;
+    private static Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +18,10 @@ public class MainActivity extends AppCompatActivity {
 
         activity = this;
 
+    }
+
+
+    public static Activity getActivity() {
+        return activity;
     }
 }
