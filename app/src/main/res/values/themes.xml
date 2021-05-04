@@ -32,20 +32,15 @@
         <item name="colorSecondary">@color/blue_main</item>
     </style>
 
-    <style name="BirthDateButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+<!--    <style name="BirthDateButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:padding">10dp</item>
         <item name="android:background">@color/white</item>
         <item name="strokeColor">@color/black</item>
         <item name="strokeWidth">5dp</item>
         <item name="textAllCaps">false</item>
-        <item name="android:alpha">0.50</item>
-    </style>
-<!--
-    app:layout_constraintTop_toBottomOf="@+id/surnameInputLayout"
-    ="5dp"
-    tools:ignore="RtlHardcoded"
-    ="8dp"/>-->
+    </style>-->
 
+<!--    <item name="strokeColor">@color/black</item>-->
     <style name="DateSelectorButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:layout_marginStart">20dp</item>
@@ -53,6 +48,8 @@
         <item name="android:paddingTop">8dp</item>
         <item name="android:gravity">left</item>
         <item name="android:textColor">@color/blackText</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="SaveButton">
