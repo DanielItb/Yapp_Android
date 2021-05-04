@@ -64,10 +64,6 @@
                 android:id="@+id/nameInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/name"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -83,10 +79,6 @@
                 android:id="@+id/surnameInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/surname"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/nameInputLayout">
@@ -127,10 +119,6 @@
                 android:id="@+id/ageInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/age"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/birthDateButton">
 
@@ -147,10 +135,6 @@
                 android:id="@+id/addressInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/address"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ageInputLayout">
@@ -166,10 +150,6 @@
                 android:id="@+id/phoneInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/phone_number"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addressInputLayout">
 
@@ -184,10 +164,6 @@
                 android:id="@+id/emailInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/email"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/phoneInputLayout">
 
@@ -202,10 +178,6 @@
                 android:id="@+id/schoolInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/school"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
 
@@ -220,10 +192,6 @@
                 android:id="@+id/courseInputLayout"
                 style="@style/TextInputStyle"
                 android:hint="@string/course"
-                app:boxBackgroundColor="@color/white"
-                app:endIconCheckable="true"
-                app:endIconMode="clear_text"
-                app:hintTextColor="@color/purple_700"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/schoolInputLayout">
 
