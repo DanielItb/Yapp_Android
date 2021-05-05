@@ -17,7 +17,7 @@ import cat.itb.yapp.R;
 import cat.itb.yapp.adapters.PatientAdapter;
 import cat.itb.yapp.models.patient.Patient;
 
-public class RecyclerFragment extends Fragment {
+public class PatientListFragment extends Fragment {
     private RecyclerView recyclerView;
     private PatientAdapter patientAdapter;
     private List<Patient> listPatient;
@@ -31,7 +31,7 @@ public class RecyclerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_recycler, container, false);
+        View v = inflater.inflate(R.layout.fragment_patient_list, container, false);
 
         recyclerView = v.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
