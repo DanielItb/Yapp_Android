@@ -25,7 +25,7 @@ public class RecyclerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listPatient = this.getNames();
+        listPatient = this.getNamesTest();
 
     }
 
@@ -45,7 +45,7 @@ public class RecyclerFragment extends Fragment {
     }
 
 
-    private List<Patient> getNames(){
+    private List<Patient> getNamesTest(){
         return new ArrayList<Patient>(){{
             add(new Patient("Paco", 4));
             add(new Patient("Filomena", 8));
