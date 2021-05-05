@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.apapters.TreatmentAdapter;
+import cat.itb.yapp.adapters.TreatmentAdapter;
 
 
 public class TreatmentListFragment extends Fragment {

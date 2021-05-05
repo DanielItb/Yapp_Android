@@ -1,4 +1,4 @@
-package cat.itb.yapp.apapters;
+package cat.itb.yapp.adapters;
 
 import android.view.View;
 import android.view.ViewGroup;
