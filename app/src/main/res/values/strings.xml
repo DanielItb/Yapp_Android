@@ -30,6 +30,12 @@
     <string name="patient">PATIENT</string>
     <string name="user">USER</string>
     <string name="center">CENTER</string>
+    <string name="treatments">TREATMENTS</string>
+    <string name="reports">REPORTS</string>
+    <string name="mts">MTS</string>
+    <string name="patients">PATIENTS</string>
+    <string name="users">USERS</string>
+    <string name="center">CENTER</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
