@@ -29,6 +29,7 @@
     <string name="collegiate_number">Collegiate Number</string>
     <string name="patient">PATIENT</string>
     <string name="user">USER</string>
+    <string name="center">CENTER</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
