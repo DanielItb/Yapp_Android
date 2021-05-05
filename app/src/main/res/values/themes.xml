@@ -97,6 +97,13 @@
         <item name="civ_border_color">@color/primaryColor</item>
     </style>
 
+    <!-- CIRCLE IMAGE RECYCLER STYLE -->
+    <style name="CircleImageRecycler">
+        <item name="android:layout_width">56dp</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="civ_border_color">@color/primaryColor</item>
+    </style>
+
     <!-- SCROLL VIEW FORMS STYLE -->
     <style name="ScrollViewForms">
         <item name="android:layout_width">match_parent</item>

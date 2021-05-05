@@ -18,7 +18,7 @@ public class ContainerFragment extends Fragment {
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
 
-    private Fragment login, userForm, main;
+    private Fragment login, userForm, main, recyclerFragment;
     private CircleImageView imageView;
 
 
@@ -37,17 +37,18 @@ public class ContainerFragment extends Fragment {
         login = new LoginFragment();
         userForm = new UserFormFragment();
         main = new MainFragment();
+        recyclerFragment = new RecyclerFragment();
 
 
         imageView = v.findViewById(R.id.profileImage);
 
-        imageView.setImageResource(R.drawable.kid);
+        imageView.setImageResource(R.drawable.profile);
         toolbar.setNavigationOnClickListener(v1 -> drawerLayout.open());
-
+        getChildFragmentManager().beginTransaction().add(R.id.containerFragments, recyclerFragment).commit();
         return v;
     }
 
     public void fragmenteando(Fragment fragment){
-        getChildFragmentManager().beginTransaction().add(R.id.containerFragments, fragment).commit();
+        getChildFragmentManager().beginTransaction().add(R.id.containerFragments, recyclerFragment).commit();
     }
 }
