@@ -14,15 +14,19 @@
         android:id="@+id/loginFragment"
         android:name="cat.itb.yapp.fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="cat.itb.yapp.fragments.ContainerFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_container" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userFormFragment"
         android:name="cat.itb.yapp.fragments.UserFormFragment"
         android:label="fragment_user_form"
         tools:layout="@layout/fragment_user_form" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="cat.itb.yapp.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
 </navigation>
