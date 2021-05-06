@@ -6,6 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+//https://stackoverflow.com/questions/41078866/retrofit2-authorization-global-interceptor-for-access-token
 public class RetrofitHttpLogin {
     public Retrofit retrofit;
     private HttpLoggingInterceptor loggingInterceptor;
