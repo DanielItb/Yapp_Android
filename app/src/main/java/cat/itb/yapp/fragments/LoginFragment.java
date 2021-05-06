@@ -168,6 +168,10 @@ public class LoginFragment extends Fragment {
         Log.e("treatment", "id: "+MainActivity.getUser().getId());
         Log.e("treatment", "username: "+MainActivity.getUser().getUsername());
 
+        MainActivity.getUser().getRoles().forEach(rol -> {
+            Log.e("treatment", "role: "+rol);
+        });
+
         final List<TreatmentDto>[] treatmentDtoList = new List[]{new ArrayList<>()};
 
 
@@ -177,14 +181,20 @@ public class LoginFragment extends Fragment {
 
         Call<List<TreatmentDto>> call;
 
+        Long specialistId = MainActivity.getUser().getId().longValue();
         //CHECK USER ROLE
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
-            call = treatmentWebServiceClient.getTreatments();
-            Log.e("treatment", "is admin");
+
+            String endpointUserRole = "treatment/clinic/" +  specialistId;
+            call = treatmentWebServiceClient.getTreatmentsByClinicId(endpointUserRole);
+            Log.e("treatment", "all treatments in clinic");
+
         } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
-            String endpointUserRole = "treatment/specialist/" +  MainActivity.getUser().getId().longValue();
+
+            String endpointUserRole = "treatment/specialist/" +  specialistId;
             call = treatmentWebServiceClient.getTreatmentsBySpecialistId(endpointUserRole);
-            Log.e("treatment", "is user");
+            Log.e("treatment", "all treatments by specialist");
+
         } else {
             Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error, usuario sin rol? ", Toast.LENGTH_SHORT).show();
             call = null;
