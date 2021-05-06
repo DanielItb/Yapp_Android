@@ -5,11 +5,23 @@
         <item
             android:id="@+id/patientListFragment"
             android:icon="@drawable/profile"
-            android:title="@string/patient"/>
+            android:title="@string/patients" />
 
         <item
             android:id="@+id/treatmentListFragment"
-            android:title="@string/treatments"/>
+            android:title="@string/treatments" />
+
+        <item
+            android:id="@+id/mtsListFragment"
+            android:title="@string/mts" />
+
+        <item
+            android:id="@+id/userListFragment"
+            android:title="@string/users" />
+
+        <item
+            android:id="@+id/reportListFragment"
+            android:title="@string/reports" />
     </group>
 
 </menu>
