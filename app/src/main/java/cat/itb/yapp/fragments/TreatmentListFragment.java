@@ -26,7 +26,7 @@ public class TreatmentListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_treatment_list, container, false);
-        recyclerView = v.findViewById(R.id.recyclerTreatment);
+        recyclerView = v.findViewById(R.id.recycler);
         setUpRecycler(recyclerView);
 
         return v;
@@ -35,8 +35,8 @@ public class TreatmentListFragment extends Fragment {
     private void setUpRecycler(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        TreatmentAdapter adapter = new TreatmentAdapter();
-        recyclerView.setAdapter(adapter);
+//        TreatmentAdapter adapter = new TreatmentAdapter();
+//        recyclerView.setAdapter(adapter);
     }
 
 }

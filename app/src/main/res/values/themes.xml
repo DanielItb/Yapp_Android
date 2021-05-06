@@ -14,6 +14,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.Yapp.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
     <!-- TEXT INPUT FORMS STYLE -->
    <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
        <item name="boxStrokeColor">@color/primaryDarkColor</item>
