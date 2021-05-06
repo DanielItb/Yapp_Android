@@ -16,10 +16,14 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 import cat.itb.yapp.R;
+import cat.itb.yapp.models.user.ProfileUserDto;
+import cat.itb.yapp.models.user.User;
 
 public class MainActivity extends AppCompatActivity {
 
     private static Activity activity;
+
+    private static ProfileUserDto profileUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,5 +53,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static Activity getActivity() {
         return activity;
+    }
+
+    public static ProfileUserDto getUser() {
+        return profileUser;
+    }
+
+    public static void setUser(ProfileUserDto user) {
+        MainActivity.profileUser = user;
     }
 }

@@ -1,7 +1,5 @@
 package cat.itb.yapp.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,14 +15,20 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.auth.LoginDto;
+import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.models.user.ProfileUserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.retrofit.RetrofitHttpLogin;
+import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 import cat.itb.yapp.webservices.AuthWebServiceClient;
+import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +36,7 @@ import retrofit2.Response;
 public class LoginFragment extends Fragment {
 
 
-    public static RetrofitHttpLogin retrofitHttp;
+    public static RetrofitHttpLogin retrofitHttpLogin;
 
     ProfileUserDto profileUserDto;
 
@@ -64,7 +68,9 @@ public class LoginFragment extends Fragment {
         usernameTextInput = v.findViewById(R.id.usernameLoginEditText);
         passwordTextInput = v.findViewById(R.id.passwordLoginEditText);
         // TESTING HARDCODE
-        usernameTextInput.setText("username");
+        // username = ADMIN, username2 = USER ADMIN, username3 USER
+
+        usernameTextInput.setText("username3");
         passwordTextInput.setText("password");
 
 
@@ -92,9 +98,9 @@ public class LoginFragment extends Fragment {
 
     public void login() {
 
-        retrofitHttp = new RetrofitHttpLogin();
+        retrofitHttpLogin = new RetrofitHttpLogin();
 
-        AuthWebServiceClient authWebServiceClient = retrofitHttp.retrofit.create(AuthWebServiceClient.class);
+        AuthWebServiceClient authWebServiceClient = retrofitHttpLogin.retrofit.create(AuthWebServiceClient.class);
 
         LoginDto loginDto = new LoginDto(usernameTextInput.getText().toString(),
                 passwordTextInput.getText().toString());
@@ -120,19 +126,25 @@ public class LoginFragment extends Fragment {
 
                     profileUserDto = response.body();
 
+                    MainActivity.setUser(profileUserDto);
+
 
                     UtilsSharedPreferences.setToken(MainActivity.getActivity(), profileUserDto.getAccessToken());
 
+
+
                     navController.navigate(R.id.mainFragment);
+
+                    getTreatments();
 
                     Log.e("login", "accessToken from shared preferences: "+UtilsSharedPreferences.getToken(MainActivity.getActivity()));
                 }else {
                     Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error bad credentials", Toast.LENGTH_SHORT).show();
                     Log.e("login", "status response: " + response.code()); //401 Unauthorized
+                    //delete token
+                    UtilsSharedPreferences.setToken(MainActivity.getActivity(), null);
                 }
-
             }
-
 
 
             @Override
@@ -140,9 +152,6 @@ public class LoginFragment extends Fragment {
                 Log.e("login", "onResponse onFailure");
                 Log.e("login", "throwable.getMessage(): "+t.getMessage());
                 Log.e("login", "call.toString(): "+call.toString());
-
-
-
             }
         });
 
@@ -151,7 +160,74 @@ public class LoginFragment extends Fragment {
     }
 
 
-    public void getTreatmentsBySpecialistId() {
+
+    // TODO: desde el fragment main, al pulsar el boton de tratments o lo que sea, hacer la request
+    // navegar a new Fragment( data );
+    public void getTreatments() {
+        //TODO: if is admin go to view admin ...
+        Log.e("treatment", "id: "+MainActivity.getUser().getId());
+        Log.e("treatment", "username: "+MainActivity.getUser().getUsername());
+
+        MainActivity.getUser().getRoles().forEach(rol -> {
+            Log.e("treatment", "role: "+rol);
+        });
+
+        final List<TreatmentDto>[] treatmentDtoList = new List[]{new ArrayList<>()};
+
+
+
+        RetrofitHttp retrofitHttp = new RetrofitHttp();
+        TreatmentWebServiceClient treatmentWebServiceClient = retrofitHttp.retrofit.create(TreatmentWebServiceClient.class);
+
+        Call<List<TreatmentDto>> call;
+
+        Long specialistId = MainActivity.getUser().getId().longValue();
+        //CHECK USER ROLE
+        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+
+            String endpointUserRole = "treatment/clinic/" +  specialistId;
+            call = treatmentWebServiceClient.getTreatmentsByClinicId(endpointUserRole);
+            Log.e("treatment", "all treatments in clinic");
+
+        } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
+
+            String endpointUserRole = "treatment/specialist/" +  specialistId;
+            call = treatmentWebServiceClient.getTreatmentsBySpecialistId(endpointUserRole);
+            Log.e("treatment", "all treatments by specialist");
+
+        } else {
+            Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error, usuario sin rol? ", Toast.LENGTH_SHORT).show();
+            call = null;
+        }
+
+        if (call != null) {
+            call.enqueue(new Callback<List<TreatmentDto>>() {
+                @Override
+                public void onResponse(Call<List<TreatmentDto>> call, Response<List<TreatmentDto>> response) {
+                    Log.e("treatment", "onResponse okey");
+                    if (response.isSuccessful()) {
+                        Log.e("treatment", "status response: " + response.code());
+                        treatmentDtoList[0] = response.body();
+                        treatmentDtoList[0].forEach(t-> {
+                            Log.e("treatment", "status response: " + t.toString());
+                        });
+
+                    }else {
+                        Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get treatment by specialistId", Toast.LENGTH_SHORT).show();
+                        Log.e("treatment", "status response: " + response.code()); //401 Unauthorized
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<TreatmentDto>> call, Throwable t) {
+                    Log.e("treatment", "onResponse onFailure");
+                    Log.e("treatment", "throwable.getMessage(): "+t.getMessage());
+                    Log.e("treatment", "call.toString(): "+call.toString());
+                }
+            });
+        }
+
+
 
 
 

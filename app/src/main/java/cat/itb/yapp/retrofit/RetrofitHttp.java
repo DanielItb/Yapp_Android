@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHttp {
     public Retrofit retrofit;
-    private HttpLoggingInterceptor loggingInterceptor;
     public OkHttpClient httpClient;
     public static String BASE_URL = "http://10.0.2.2:8080/api/";
 
@@ -39,16 +38,6 @@ public class RetrofitHttp {
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-//        loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//        httpClient = new OkHttpClient.Builder().addInterceptor(loggingInterceptor);
-//
-//        retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .client(httpClient.build())
-//                .build();
-
 
     }
 }
