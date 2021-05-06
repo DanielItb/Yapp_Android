@@ -35,6 +35,18 @@
         <action
             android:id="@+id/action_mainFragment_to_patientListFragment"
             app:destination="@id/patientListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mtsListFragment"
+            app:destination="@id/mtsListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_reportListFragment"
+            app:destination="@id/reportListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentFormFragment"
@@ -47,16 +59,31 @@
         android:label="fragment_treatment_list"
         tools:layout="@layout/fragment_treatment_list" >
         <action
-            android:id="@+id/action_treatmentListFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_treatmentListFragment_to_treatmentFormFragment"
+            app:destination="@id/treatmentFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientListFragment"
         android:name="cat.itb.yapp.fragments.PatientListFragment"
         android:label="fragment_patient_list"
-        tools:layout="@layout/fragment_patient_list" >
+        tools:layout="@layout/fragment_patient_list" />
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="cat.itb.yapp.fragments.UserListFragment"
+        android:label="fragment_user_list"
+        tools:layout="@layout/fragment_user_list" >
         <action
-            android:id="@+id/action_patientListFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_userListFragment_to_userFormFragment"
+            app:destination="@id/userFormFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/reportListFragment"
+        android:name="cat.itb.yapp.fragments.ReportListFragment"
+        android:label="fragment_report_list"
+        tools:layout="@layout/fragment_report_list" />
+    <fragment
+        android:id="@+id/mtsListFragment"
+        android:name="cat.itb.yapp.fragments.MtsListFragment"
+        android:label="fragment_mts_list"
+        tools:layout="@layout/fragment_mts_list" />
 </navigation>
