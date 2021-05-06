@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+
+        <item
+            android:id="@+id/patientListFragment"
+            android:icon="@drawable/profile"
+            android:title="@string/patient"/>
+
+        <item
+            android:id="@+id/treatmentListFragment"
+            android:title="@string/treatments"/>
+    </group>
+
+</menu>
