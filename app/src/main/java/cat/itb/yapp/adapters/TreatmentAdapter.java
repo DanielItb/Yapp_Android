@@ -33,7 +33,9 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         }
 
         public void binData(TreatmentDto treatment){
-
+            treatmentId.setText(treatment.getId());
+            startDateTreatment.setText(treatment.getStartDate());
+            patientFullNameTreatment.setText(treatment.getPatientFullName());
         }
 
     }
