@@ -3,6 +3,7 @@ package cat.itb.yapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,25 +11,29 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.models.treatment.Treatment;
+import cat.itb.yapp.models.treatment.TreatmentDto;
 
 public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Viewholder> {
-    private List<Treatment> listTreatment;
+    private List<TreatmentDto> listTreatment;
 
-    public TreatmentAdapter(List<Treatment> listTreatment) {
+    public TreatmentAdapter(List<TreatmentDto> listTreatment) {
         this.listTreatment = listTreatment;
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder {
-
+        TextView treatmentId;
+        TextView startDateTreatment;
+        TextView patientFullNameTreatment;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
-            //Todo instanciar elementos del item
+            treatmentId = itemView.findViewById(R.id.idTreatmentTextView);
+            startDateTreatment = itemView.findViewById(R.id.startDateTreatmentTextView);
+            patientFullNameTreatment = itemView.findViewById(R.id.patientNameTreatmentTextView);
         }
 
-        public void binData(Treatment treatment){
-            //todo introducir los datos en los elementos
+        public void binData(TreatmentDto treatment){
+
         }
 
     }
