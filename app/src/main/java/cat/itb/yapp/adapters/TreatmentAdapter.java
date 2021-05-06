@@ -21,21 +21,21 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     }
 
     public static class Viewholder extends RecyclerView.ViewHolder {
-        TextView treatmentId;
-        TextView startDateTreatment;
-        TextView patientFullNameTreatment;
+        TextView treatmentIdTextView;
+        TextView startDateTreatmentTextView;
+        TextView patientFullNameTreatmentTextView;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
-            treatmentId = itemView.findViewById(R.id.idTreatmentTextView);
-            startDateTreatment = itemView.findViewById(R.id.startDateTreatmentTextView);
-            patientFullNameTreatment = itemView.findViewById(R.id.patientNameTreatmentTextView);
+            treatmentIdTextView = itemView.findViewById(R.id.idTreatmentTextView);
+            startDateTreatmentTextView = itemView.findViewById(R.id.startDateTreatmentTextView);
+            patientFullNameTreatmentTextView = itemView.findViewById(R.id.patientNameTreatmentTextView);
         }
 
         public void binData(TreatmentDto treatment){
-            treatmentId.setText(treatment.getId());
-            startDateTreatment.setText(treatment.getStartDate());
-            patientFullNameTreatment.setText(treatment.getPatientFullName());
+            treatmentIdTextView.setText(treatment.getId());
+            startDateTreatmentTextView.setText(treatment.getStartDate());
+            patientFullNameTreatmentTextView.setText(treatment.getPatientFullName());
         }
 
     }

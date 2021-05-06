@@ -23,25 +23,25 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView patientName;
-        TextView patientReason;
-        TextView patientAge;
-        CircleImageView patientImage;
+        TextView patientNameTextView;
+        TextView patientReasonTextView;
+        TextView patientAgeTextView;
+        CircleImageView patientImageTextView;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            patientName = itemView.findViewById(R.id.namePatientTextView);
-            patientAge = itemView.findViewById(R.id.agePatientTextView);
+            patientNameTextView = itemView.findViewById(R.id.namePatientTextView);
+            patientAgeTextView = itemView.findViewById(R.id.agePatientTextView);
 //            patientReason = itemView.findViewById(R.id.reasonPatientTextView);
-            patientImage = itemView.findViewById(R.id.circleImageView);
+            patientImageTextView = itemView.findViewById(R.id.circleImageView);
         }
 
         public void binData(Patient patient) {
-            patientName.setText(patient.getName());
-            patientAge.setText(String.valueOf(patient.getAge()));
+            patientNameTextView.setText(patient.getName());
+            patientAgeTextView.setText(String.valueOf(patient.getAge()));
 //            patientReason.setText(patient.get);
-            patientImage.setImageResource(R.drawable.kid);
+            patientImageTextView.setImageResource(R.drawable.kid);
         }
     }
 
