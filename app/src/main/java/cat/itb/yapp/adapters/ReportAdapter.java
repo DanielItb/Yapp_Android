@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.models.report.Report;
+import cat.itb.yapp.models.report.ReportDto;
 import cat.itb.yapp.models.user.User;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
-    private List<Report> listReport;
+    private List<ReportDto> listReport;
 
-    public ReportAdapter(List<Report> listReport) {
+    public ReportAdapter(List<ReportDto> listReport) {
         this.listReport = listReport;
     }
 
@@ -27,7 +27,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             //Todo instanciar elementos del item
         }
 
-        public void binData(Report report){
+        public void binData(ReportDto report){
             //todo introducir los datos en los elementos
         }
     }

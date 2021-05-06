@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.models.mts.Mts;
+import cat.itb.yapp.models.mts.MtsDto;
 import cat.itb.yapp.models.user.User;
 
 public class MtsAdapter extends RecyclerView.Adapter<MtsAdapter.ViewHolder> {
-    private List<Mts> listMts;
+    private List<MtsDto> listMts;
 
-    public MtsAdapter(List<Mts> listMts) {
+    public MtsAdapter(List<MtsDto> listMts) {
         this.listMts = listMts;
     }
 
@@ -27,7 +27,7 @@ public class MtsAdapter extends RecyclerView.Adapter<MtsAdapter.ViewHolder> {
             //Todo instanciar elementos del item
         }
 
-        public void binData(Mts mts){
+        public void binData(MtsDto mts){
             //todo introducir los datos en los elementos
         }
     }
