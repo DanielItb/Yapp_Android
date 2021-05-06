@@ -22,7 +22,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         this.listPatient = listPatient;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView patientName;
         TextView patientReason;
         TextView patientAge;

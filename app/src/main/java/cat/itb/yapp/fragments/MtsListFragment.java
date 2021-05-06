@@ -10,11 +10,7 @@ import android.view.ViewGroup;
 
 import cat.itb.yapp.R;
 
-public class TreatmentFormFragment extends Fragment {
-
-    public TreatmentFormFragment() {
-
-    }
+public class MtsListFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +20,7 @@ public class TreatmentFormFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_treatment_form, container, false);
+        View v = inflater.inflate(R.layout.fragment_mts_list, container, false);
         return v;
     }
 }
