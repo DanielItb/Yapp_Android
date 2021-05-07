@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_mainFragment_to_reportListFragment"
             app:destination="@id/reportListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_personalProfileFragment"
+            app:destination="@id/personalProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentFormFragment"
@@ -78,4 +81,9 @@
         android:name="cat.itb.yapp.fragments.MtsListFragment"
         android:label="fragment_mts_list"
         tools:layout="@layout/fragment_mts_list" />
+    <fragment
+        android:id="@+id/personalProfileFragment"
+        android:name="cat.itb.yapp.fragments.PersonalProfileFragment"
+        android:label="fragment_personal_profile"
+        tools:layout="@layout/fragment_personal_profile" />
 </navigation>

@@ -29,4 +29,24 @@
 
     </group>
 
+    <group
+        android:id="@+id/personalGroup">
+        <item
+            android:id="@+id/subtitle"
+            android:title="Subtitle">
+            <menu>
+                <item
+                    android:id="@+id/personalProfileFragment"
+                    android:icon="@drawable/ic_baseline_person_24"
+                    android:title="@string/profile" />
+
+                <item
+                    android:id="@+id/loginFragment"
+                    android:icon="@drawable/ic_baseline_exit_to_app_24"
+                    android:title="@string/log_out" />
+
+            </menu>
+        </item>
+    </group>
+
 </menu>

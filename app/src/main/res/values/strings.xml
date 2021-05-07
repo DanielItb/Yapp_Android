@@ -45,6 +45,8 @@
     <string name="clinic_name">Clinic name</string>
     <string name="welcome_to_yapp">Welcome to YAPP</string>
     <string name="continue_btn">Continue</string>
+    <string name="profile">Profile</string>
+    <string name="log_out">Log out</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
