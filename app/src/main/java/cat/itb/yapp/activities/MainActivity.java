@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(R.id.mainFragment, R.id.treatmentListFragment,
-                        R.id.patientListFragment)
+                        R.id.patientListFragment, R.id.userListFragment, R.id.mtsListFragment,
+                        R.id.reportListFragment)
                         .setOpenableLayout(drawerLayout)
                         .build();
 
