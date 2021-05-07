@@ -2,8 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    android:id="@+id/nav_graph">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -17,12 +16,12 @@
     <fragment
         android:id="@+id/userFormFragment"
         android:name="cat.itb.yapp.fragments.UserFormFragment"
-        android:label="fragment_user_form"
+        android:label="User"
         tools:layout="@layout/fragment_user_form" />
     <fragment
         android:id="@+id/mainFragment"
         android:name="cat.itb.yapp.fragments.MainFragment"
-        android:label="fragment_main"
+        android:label="Home"
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_treatmentListFragment"
@@ -46,12 +45,12 @@
     <fragment
         android:id="@+id/treatmentFormFragment"
         android:name="cat.itb.yapp.fragments.TreatmentFormFragment"
-        android:label="fragment_treatment_form"
+        android:label="Treatment"
         tools:layout="@layout/fragment_treatment_form" />
     <fragment
         android:id="@+id/treatmentListFragment"
         android:name="cat.itb.yapp.fragments.TreatmentListFragment"
-        android:label="fragment_treatment_list"
+        android:label="Treatment List"
         tools:layout="@layout/fragment_treatment_list" >
         <action
             android:id="@+id/action_treatmentListFragment_to_treatmentFormFragment"
@@ -60,12 +59,12 @@
     <fragment
         android:id="@+id/patientListFragment"
         android:name="cat.itb.yapp.fragments.PatientListFragment"
-        android:label="fragment_patient_list"
+        android:label="Patient List"
         tools:layout="@layout/fragment_patient_list" />
     <fragment
         android:id="@+id/userListFragment"
         android:name="cat.itb.yapp.fragments.UserListFragment"
-        android:label="fragment_user_list"
+        android:label="User List"
         tools:layout="@layout/fragment_user_list" >
         <action
             android:id="@+id/action_userListFragment_to_userFormFragment"
@@ -74,12 +73,12 @@
     <fragment
         android:id="@+id/reportListFragment"
         android:name="cat.itb.yapp.fragments.ReportListFragment"
-        android:label="fragment_report_list"
+        android:label="Report List"
         tools:layout="@layout/fragment_report_list" />
     <fragment
         android:id="@+id/mtsListFragment"
         android:name="cat.itb.yapp.fragments.MtsListFragment"
-        android:label="fragment_mts_list"
+        android:label="Mts List"
         tools:layout="@layout/fragment_mts_list" />
     <fragment
         android:id="@+id/personalProfileFragment"

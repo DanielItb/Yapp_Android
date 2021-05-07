@@ -47,6 +47,12 @@
     <string name="continue_btn">Continue</string>
     <string name="profile">Profile</string>
     <string name="log_out">Log out</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="register">Register</string>
+    <string name="clinic_address">Clinic address</string>
+    <string name="clinic_phone_number">Clinic phone number</string>
+    <string name="admin_data">Admin data</string>
+    <string name="clinic_data">Clinic data</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
