@@ -5,12 +5,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -18,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.user.ProfileUserDto;
 import cat.itb.yapp.models.user.User;
+import cat.itb.yapp.utils.UtilsSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         final NavController navController = navHostFragment.getNavController();
 
+        navController.addOnDestinationChangedListener(this::destinationChange);
+
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(R.id.mainFragment, R.id.treatmentListFragment,
                         R.id.patientListFragment, R.id.userListFragment, R.id.mtsListFragment,
@@ -51,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void destinationChange(NavController navController, NavDestination navDestination, Bundle bundle) {
+        if (navDestination.getId() == R.id.loginFragment) {
+            UtilsSharedPreferences.setToken(this, null);
+            profileUser = null;
+            Toast.makeText(this, "Im doing the thing", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     public static Activity getActivity() {
