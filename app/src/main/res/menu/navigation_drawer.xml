@@ -3,25 +3,30 @@
     <group>
 
         <item
-            android:id="@+id/patientListFragment"
-            android:icon="@drawable/profile"
-            android:title="@string/patients" />
-
-        <item
-            android:id="@+id/treatmentListFragment"
-            android:title="@string/treatments" />
-
-        <item
-            android:id="@+id/mtsListFragment"
-            android:title="@string/mts" />
-
-        <item
             android:id="@+id/userListFragment"
+            android:icon="@drawable/medico"
             android:title="@string/users" />
 
         <item
+            android:id="@+id/patientListFragment"
+            android:icon="@drawable/children"
+            android:title="@string/patients" />
+
+        <item
+            android:id="@+id/mtsListFragment"
+            android:icon="@drawable/calendar"
+            android:title="@string/mts" />
+
+        <item
             android:id="@+id/reportListFragment"
+            android:icon="@drawable/historial_medico"
             android:title="@string/reports" />
+
+        <item
+            android:id="@+id/treatmentListFragment"
+            android:icon="@drawable/pocion_de_amor"
+            android:title="@string/treatments" />
+
     </group>
 
 </menu>
