@@ -84,7 +84,7 @@
     <!-- HEADER GRADIENT STYLE -->
     <style name="GradientHeaderView">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_height">80dp</item>
         <item name="android:background">@drawable/profile_background_gradient</item>
     </style>
 
@@ -101,7 +101,7 @@
     <style name="CircleImageForms">
         <item name="android:layout_width">96dp</item>
         <item name="android:layout_height">96dp</item>
-        <item name="android:layout_marginTop">60dp</item>
+        <item name="android:layout_marginTop">20dp</item>
         <item name="civ_border_color">@color/primaryColor</item>
     </style>
 
