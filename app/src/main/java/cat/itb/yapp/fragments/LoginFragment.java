@@ -137,7 +137,7 @@ public class LoginFragment extends Fragment {
 
 
 
-                    navController.navigate(R.id.mainFragment);
+                    navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
 
 
 
