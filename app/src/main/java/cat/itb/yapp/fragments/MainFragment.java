@@ -34,14 +34,14 @@ public class MainFragment extends Fragment {
         patientsCardView = v.findViewById(R.id.patientsCardViewButton);
         mtsCardView = v.findViewById(R.id.mtsCardViewButton);
         reportCardView = v.findViewById(R.id.reportCardViewButton);
-        treatmentCardView = v.findViewWithTag(R.id.treatmentCardViewButton);
+        treatmentCardView = v.findViewById(R.id.treatmentCardViewButton);
         centerCardView = v.findViewById(R.id.centerCardViewButton);
 
         usersCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_userListFragment));
         patientsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_patientListFragment));
         mtsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_mtsListFragment));
         reportCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_reportListFragment));
-        //treatmentCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_treatmentListFragment));
+        treatmentCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_treatmentListFragment));
 
         return v;
     }
