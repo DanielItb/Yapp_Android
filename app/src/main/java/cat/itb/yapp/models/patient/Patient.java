@@ -2,6 +2,9 @@ package cat.itb.yapp.models.patient;
 
 import java.time.LocalDateTime;
 
+import lombok.Data;
+
+@Data
 public class Patient {
     private int id;
     private String name;

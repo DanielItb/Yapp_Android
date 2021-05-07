@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TreatmentFormFragment"
+    tools:context=".fragments.MtsFormFragment"
     android:paddingVertical="20dp">
 
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectPatientButton"
+        android:id="@+id/selectPatientMtsButton"
         style="@style/DateSelectorButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,46 +19,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectSpecialistButton"
+        android:id="@+id/selectSpecialistMtsButton"
         style="@style/DateSelectorButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/select_specialist"
-        app:layout_constraintTop_toBottomOf="@+id/selectPatientButton" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectPatientMtsButton" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/startDateButton"
         style="@style/DateSelectorButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_start_date"
-        app:layout_constraintTop_toBottomOf="@+id/selectSpecialistButton" />
+        android:text="@string/select_mts_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectSpecialistMtsButton" />
+
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/sessionsInputLayout"
+        android:id="@+id/reasonMtsInputLayout"
         style="@style/TextInputStyle"
-        android:hint="@string/sessions_finished"
+        android:hint="@string/reason"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startDateButton">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/sessionsEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/reasonInputLayout"
-        style="@style/TextInputStyle"
-        android:hint="@string/reason"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sessionsInputLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/treatmentReasonEditText"
+            android:id="@+id/MtsReasonEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine"
@@ -66,32 +56,37 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/simpleSwitch"
+        android:id="@+id/simpleSwitchMts"
         style="@style/SwitchTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/active"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reasonInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/reasonMtsInputLayout"
         app:useMaterialThemeColors="false" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/cancelButton"
+        android:id="@+id/cancelMtsButton"
         style="@style/CancelButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintBottom_toTopOf="@+id/saveMtsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/saveButton"
+        android:id="@+id/saveMtsButton"
         style="@style/SaveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

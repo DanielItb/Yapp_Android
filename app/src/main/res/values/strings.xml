@@ -30,7 +30,7 @@
     <string name="patient">PATIENT</string>
     <string name="user">USER</string>
     <string name="treatments">Treatments</string>
-    <string name="center">CENTER</string>
+    <string name="center">CLINIC</string>
     <string name="reports">REPORTS</string>
     <string name="mts">MTS</string>
     <string name="patients">PATIENTS</string>
@@ -39,6 +39,12 @@
     <string name="patient_name">Patient name:</string>
     <string name="start_date">Start date:</string>
     <string name="treatment_n">Treatment nº:</string>
+    <string name="mts_n">Mts nº:</string>
+    <string name="date">Date:</string>
+    <string name="select_mts_date">Select Mts date</string>
+    <string name="clinic_name">Clinic name</string>
+    <string name="welcome_to_yapp">Welcome to YAPP</string>
+    <string name="continue_btn">Continue</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
