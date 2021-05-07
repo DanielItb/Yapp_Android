@@ -36,6 +36,9 @@
     <string name="patients">PATIENTS</string>
     <string name="users">USERS</string>
     <string name="recipe">RECIPE</string>
+    <string name="patient_name">Patient name:</string>
+    <string name="start_date">Start date:</string>
+    <string name="treatment_n">Treatment nº:</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>

@@ -135,7 +135,7 @@ public class LoginFragment extends Fragment {
 
                     navController.navigate(R.id.mainFragment);
 
-                    getTreatments();
+
 
                     Log.e("login", "accessToken from shared preferences: "+UtilsSharedPreferences.getToken(MainActivity.getActivity()));
                 }else {
@@ -161,75 +161,6 @@ public class LoginFragment extends Fragment {
 
 
 
-    // TODO: desde el fragment main, al pulsar el boton de tratments o lo que sea, hacer la request
-    // navegar a new Fragment( data );
-    public void getTreatments() {
-        //TODO: if is admin go to view admin ...
-        Log.e("treatment", "id: "+MainActivity.getUser().getId());
-        Log.e("treatment", "username: "+MainActivity.getUser().getUsername());
-
-        MainActivity.getUser().getRoles().forEach(rol -> {
-            Log.e("treatment", "role: "+rol);
-        });
-
-        final List<TreatmentDto>[] treatmentDtoList = new List[]{new ArrayList<>()};
 
 
-
-        RetrofitHttp retrofitHttp = new RetrofitHttp();
-        TreatmentWebServiceClient treatmentWebServiceClient = retrofitHttp.retrofit.create(TreatmentWebServiceClient.class);
-
-        Call<List<TreatmentDto>> call;
-
-        Long specialistId = MainActivity.getUser().getId().longValue();
-        //CHECK USER ROLE
-        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
-
-            String endpointUserRole = "treatment/clinic/" +  specialistId;
-            call = treatmentWebServiceClient.getTreatmentsByClinicId(endpointUserRole);
-            Log.e("treatment", "all treatments in clinic");
-
-        } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
-
-            String endpointUserRole = "treatment/specialist/" +  specialistId;
-            call = treatmentWebServiceClient.getTreatmentsBySpecialistId(endpointUserRole);
-            Log.e("treatment", "all treatments by specialist");
-
-        } else {
-            Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error, usuario sin rol? ", Toast.LENGTH_SHORT).show();
-            call = null;
-        }
-
-        if (call != null) {
-            call.enqueue(new Callback<List<TreatmentDto>>() {
-                @Override
-                public void onResponse(Call<List<TreatmentDto>> call, Response<List<TreatmentDto>> response) {
-                    Log.e("treatment", "onResponse okey");
-                    if (response.isSuccessful()) {
-                        Log.e("treatment", "status response: " + response.code());
-                        treatmentDtoList[0] = response.body();
-                        treatmentDtoList[0].forEach(t-> {
-                            Log.e("treatment", "status response: " + t.toString());
-                        });
-
-                    }else {
-                        Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get treatment by specialistId", Toast.LENGTH_SHORT).show();
-                        Log.e("treatment", "status response: " + response.code()); //401 Unauthorized
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<TreatmentDto>> call, Throwable t) {
-                    Log.e("treatment", "onResponse onFailure");
-                    Log.e("treatment", "throwable.getMessage(): "+t.getMessage());
-                    Log.e("treatment", "call.toString(): "+call.toString());
-                }
-            });
-        }
-
-
-
-
-
-    }
 }
