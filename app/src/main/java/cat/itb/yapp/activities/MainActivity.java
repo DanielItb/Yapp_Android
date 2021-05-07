@@ -11,7 +11,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private static Activity activity;
 
     private static ProfileUserDto profileUser;
+    private MaterialToolbar toolbar;
+    private View navHostFragmentLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         activity = this;
+        navHostFragmentLayout = findViewById(R.id.nav_host_fragment);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         NavigationView navView = findViewById(R.id.nav_view);
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         final NavController navController = navHostFragment.getNavController();
@@ -60,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
         if (navDestination.getId() == R.id.loginFragment) {
             UtilsSharedPreferences.setToken(this, null);
             profileUser = null;
-            Toast.makeText(this, "Im doing the thing", Toast.LENGTH_LONG).show();
+            toolbar.setVisibility(View.GONE);
+        } else if (navDestination.getId() == R.id.mainFragment) {
+            toolbar.setVisibility(View.VISIBLE);
         }
     }
 
