@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import cat.itb.yapp.R;
 
-public class ClinicFormFragment extends Fragment {
+public class RegisterFormFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class ClinicFormFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_clinic_form, container, false);
+        View v = inflater.inflate(R.layout.fragment_register_form, container, false);
         return v;
     }
 }
