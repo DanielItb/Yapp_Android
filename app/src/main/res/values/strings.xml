@@ -53,6 +53,7 @@
     <string name="clinic_phone_number">Clinic phone number</string>
     <string name="admin_data">Admin data</string>
     <string name="clinic_data">Clinic data</string>
+    <string name="new_password">New password</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>

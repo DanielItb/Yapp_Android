@@ -84,6 +84,6 @@
     <fragment
         android:id="@+id/personalProfileFragment"
         android:name="cat.itb.yapp.fragments.PersonalProfileFragment"
-        android:label="fragment_personal_profile"
+        android:label="Update Profile"
         tools:layout="@layout/fragment_personal_profile" />
 </navigation>
