@@ -6,11 +6,6 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/userProfileFragment"
-        android:name="cat.itb.yapp.fragments.PatientFormFragment"
-        android:label="fragment_user_profile"
-        tools:layout="@layout/fragment_patient_profile" />
-    <fragment
         android:id="@+id/loginFragment"
         android:name="cat.itb.yapp.fragments.LoginFragment"
         android:label="fragment_login"
@@ -44,9 +39,6 @@
         <action
             android:id="@+id/action_mainFragment_to_reportListFragment"
             app:destination="@id/reportListFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_userProfileFragment"
-            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentFormFragment"

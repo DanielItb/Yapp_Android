@@ -3,6 +3,8 @@ package cat.itb.yapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +33,31 @@ import retrofit2.Response;
 
 public class TreatmentListFragment extends Fragment {
     private RecyclerView recyclerView;
+    private NavController navController;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getTreatments();
 
-
+        navController = NavHostFragment.findNavController(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_treatment_list, container, false);
         recyclerView = v.findViewById(R.id.recyclerTreatment);
+        FloatingActionButton fab = v.findViewById(R.id.fabTreatment);
+
+        fab.setOnClickListener(this::fabClicked);
+
         setUpRecycler(recyclerView);
 
         return v;
+    }
+
+    private void fabClicked(View view) {
+        navController.navigate(R.id.action_treatmentListFragment_to_treatmentFormFragment);
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
