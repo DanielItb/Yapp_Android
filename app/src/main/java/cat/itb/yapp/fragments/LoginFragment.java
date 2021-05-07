@@ -3,6 +3,7 @@ package cat.itb.yapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -13,7 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +131,7 @@ public class LoginFragment extends Fragment {
                     profileUserDto = response.body();
 
                     MainActivity.setUser(profileUserDto);
-
+                    setUpNavDrawerInfo(profileUserDto.getUsername(), "No email in dto D:", profileUserDto.getPhoto());
 
                     UtilsSharedPreferences.setToken(MainActivity.getActivity(), profileUserDto.getAccessToken());
 
@@ -160,7 +164,19 @@ public class LoginFragment extends Fragment {
     }
 
 
+    private void setUpNavDrawerInfo(String username, String mail, String photoUrl) {
+        MaterialTextView textViewUsername, textViewMail;
+        ShapeableImageView imageViewProfile;
+        FragmentActivity mainActivity = getActivity();
 
+        textViewUsername = mainActivity.findViewById(R.id.textViewUsernameDrawer);
+        textViewMail = mainActivity.findViewById(R.id.textViewEmailDrawer);
+        imageViewProfile = mainActivity.findViewById(R.id.shapeableImageViewUser);
+
+        textViewUsername.setText(username);
+        textViewMail.setText(mail);
+        Picasso.with(requireContext()).load(photoUrl).into(imageViewProfile);
+    }
 
 
 }
