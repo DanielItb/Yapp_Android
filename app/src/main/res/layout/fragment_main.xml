@@ -21,17 +21,10 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/usersCardViewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainCardView"
             android:layout_row="0"
-            android:layout_rowWeight="1"
             android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/primaryColor"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
+            android:layout_columnWeight="1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -39,8 +32,7 @@
 
                 <ImageView
                     android:id="@+id/userIconImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    style="@style/ImageViewIconCardViewMain"
                     android:src="@drawable/medico"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -49,12 +41,8 @@
 
                 <TextView
                     android:id="@+id/usersTextViewMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextViewCardViewMain"
                     android:text="@string/users"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/userIconImageView" />
@@ -64,17 +52,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/patientsCardViewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainCardView"
             android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/primaryColor"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
+            android:layout_column="1" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -83,8 +63,7 @@
 
                 <ImageView
                     android:id="@+id/patientsIconImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    style="@style/ImageViewIconCardViewMain"
                     android:src="@drawable/children"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -93,12 +72,8 @@
 
                 <TextView
                     android:id="@+id/patientsTextViewMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextViewCardViewMain"
                     android:text="@string/patients"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/patientsIconImageView" />
@@ -108,17 +83,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/mtsCardViewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainCardView"
             android:layout_row="1"
-            android:layout_rowWeight="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/primaryColor"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
+            android:layout_column="0" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -126,8 +93,7 @@
 
                 <ImageView
                     android:id="@+id/mtsIconImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    style="@style/ImageViewIconCardViewMain"
                     android:src="@drawable/calendar"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -136,12 +102,8 @@
 
                 <TextView
                     android:id="@+id/mtsTextViewMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextViewCardViewMain"
                     android:text="@string/mts"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mtsIconImageView" />
@@ -151,17 +113,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/reportCardViewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainCardView"
             android:layout_row="1"
-            android:layout_rowWeight="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/primaryColor"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
+            android:layout_column="1" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -169,8 +123,7 @@
 
                 <ImageView
                     android:id="@+id/reportsIconImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    style="@style/ImageViewIconCardViewMain"
                     android:src="@drawable/historial_medico"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -180,12 +133,8 @@
 
                 <TextView
                     android:id="@+id/reportTextViewMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextViewCardViewMain"
                     android:text="@string/reports"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/reportsIconImageView" />
@@ -195,17 +144,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/treatmentCardViewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainCardView"
             android:layout_row="2"
-            android:layout_rowWeight="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/primaryColor"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
+            android:layout_column="0" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -213,8 +154,7 @@
 
                 <ImageView
                     android:id="@+id/treatmentIconImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    style="@style/ImageViewIconCardViewMain"
                     android:src="@drawable/pocion_de_amor"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -224,12 +164,8 @@
 
                 <TextView
                     android:id="@+id/treatmentTextViewMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/recipe"
-                    android:textColor="@color/black"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
+                    style="@style/TextViewCardViewMain"
+                    android:text="@string/treatments"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/treatmentIconImageView" />
@@ -239,17 +175,9 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/centerCardViewButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainCardView"
             android:layout_row="2"
-            android:layout_rowWeight="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp"
-            android:backgroundTint="@color/primaryColor"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
+            android:layout_column="1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -257,8 +185,7 @@
 
                 <ImageView
                     android:id="@+id/centerIconImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    style="@style/ImageViewIconCardViewMain"
                     android:src="@drawable/clinica"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -268,12 +195,8 @@
 
                 <TextView
                     android:id="@+id/centerTextViewMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextViewCardViewMain"
                     android:text="@string/center"
-                    android:textColor="@color/black"
-                    android:textAllCaps="true"
-                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/centerIconImageView" />
