@@ -31,37 +31,28 @@
 
         <TextView
             android:id="@+id/firstParagraphTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            style="@style/WelcomeFragmentParagraphStyle"
             android:lines="2"
-            android:text="YAPP is an free application that allows you to manage your clinic."
-            android:textSize="18sp"
+            android:text="@string/welcome_yapp_paragraph"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/welcomeTextView" />
 
         <TextView
             android:id="@+id/secondParagraphTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            style="@style/WelcomeFragmentParagraphStyle"
             android:lines="3"
-            android:text="To start with your management, you must insert the data of your clinic and create a user with an administrator role."
-            android:textSize="18sp"
+            android:text="@string/welcome_yapp_paragraph_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstParagraphTextView" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Press the button bellow to start."
-            android:textSize="18sp"
+            android:id="@+id/thirdParagrahpTextView"
+            style="@style/WelcomeFragmentParagraphStyle"
+            android:text="@string/press_the_button_bellow_to_start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/secondParagraphTextView" />
 
 

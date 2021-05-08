@@ -54,6 +54,9 @@
     <string name="admin_data">Admin data</string>
     <string name="clinic_data">Clinic data</string>
     <string name="new_password">New password</string>
+    <string name="welcome_yapp_paragraph">YAPP is an free application that allows you to manage your clinic.</string>
+    <string name="welcome_yapp_paragraph_2">To start with your management, you must insert the data of your clinic and create a user with an administrator role.</string>
+    <string name="press_the_button_bellow_to_start">Press the button bellow to start.</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
