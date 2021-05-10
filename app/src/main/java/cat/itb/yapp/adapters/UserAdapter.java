@@ -3,6 +3,7 @@ package cat.itb.yapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,23 +12,36 @@ import java.util.List;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.user.User;
+import cat.itb.yapp.models.user.UserDto;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
-    private List<User> listUser;
+    private List<UserDto> listUser;
 
-    public UserAdapter(List<User> listUser) {
+    public UserAdapter(List<UserDto> listUser) {
         this.listUser = listUser;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView userIdTextView, userNameTextView, userSurnameTextView, userUserNameTextView, userSpecialistTypeTextView, userRolTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //Todo instanciar elementos del item
+            userIdTextView = itemView.findViewById(R.id.userIdTextView);
+            userNameTextView = itemView.findViewById(R.id.nameUserTextView);
+            userSurnameTextView = itemView.findViewById(R.id.surnameUserTextView);
+            userUserNameTextView = itemView.findViewById(R.id.usernameTextView);
+            userSpecialistTypeTextView = itemView.findViewById(R.id.specialistTypeUserTextView);
+            userRolTextView = itemView.findViewById(R.id.rolUserEditText);
+
         }
 
-        public void binData(User user){
-            //todo introducir los datos en los elementos
+        public void binData(UserDto user){
+            userIdTextView.setText(String.valueOf(user.getId()));
+            userNameTextView.setText(user.getName());
+            userSurnameTextView.setText(user.getSurnames());
+            userUserNameTextView.setText(user.getUsername());
+            userSpecialistTypeTextView.setText(user.getSpecialistType());
+            userRolTextView.setText(user.getRoles().get(0));
         }
     }
     @NonNull
