@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class UserListFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;
-    private List<UserDto> listUsers = new ArrayList<>();
+    private List<UserDto> listUsers = null;
 
 
     @Override
@@ -51,7 +51,7 @@ public class UserListFragment extends Fragment {
 
         fab.setOnClickListener(this::fabClicked);
 
-        setUpRecycler(recyclerView);
+        if (listUsers != null) setUpRecycler(recyclerView);
 
         return v;
     }
@@ -64,7 +64,6 @@ public class UserListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         UserAdapter adapter = new UserAdapter(listUsers);
         recyclerView.setAdapter(adapter);
-
 
     }
 
@@ -114,7 +113,7 @@ public class UserListFragment extends Fragment {
                     if (response.isSuccessful()) {
                         Log.e("user", "status response: " + response.code());
 
-                        listUsers.addAll(response.body());
+                        listUsers = response.body();
 
                         setUpRecycler(recyclerView);
 //                        UserAdapter adapter = new UserAdapter(listUsers);

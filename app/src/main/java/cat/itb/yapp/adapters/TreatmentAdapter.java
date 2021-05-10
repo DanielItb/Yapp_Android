@@ -6,36 +6,37 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.fragments.list.TreatmentListFragmentDirections;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 
 public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Viewholder> {
     private List<TreatmentDto> listTreatment;
+    private RecyclerItemClickListener recyclerItemClickListener;
 
-    public TreatmentAdapter(List<TreatmentDto> listTreatment) {
+    public TreatmentAdapter(List<TreatmentDto> listTreatment, RecyclerItemClickListener recyclerItemClickListener) {
         this.listTreatment = listTreatment;
+        this.recyclerItemClickListener = recyclerItemClickListener;
     }
 
-    public class Viewholder extends RecyclerView.ViewHolder {
+    public static class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView treatmentIdTextView;
         TextView startDateTreatmentTextView;
         TextView patientFullNameTreatmentTextView;
+        private RecyclerItemClickListener recyclerItemClickListener;
 
-        public Viewholder(@NonNull View itemView) {
+        public Viewholder(@NonNull View itemView, RecyclerItemClickListener recyclerItemClickListener) {
             super(itemView);
+            this.recyclerItemClickListener = recyclerItemClickListener;
+
             treatmentIdTextView = itemView.findViewById(R.id.idTreatmentTextView);
             startDateTreatmentTextView = itemView.findViewById(R.id.startDateTreatmentTextView);
             patientFullNameTreatmentTextView = itemView.findViewById(R.id.patientNameTreatmentTextView);
 
-            itemView.setOnClickListener(this::loadForm);
-
-
+            itemView.setOnClickListener(this);
         }
 
         public void binData(TreatmentDto treatment){
@@ -44,17 +45,10 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
             patientFullNameTreatmentTextView.setText(treatment.getPatientFullName());
         }
 
-
-        private void loadForm(View view) {
-            TreatmentListFragmentDirections.ActionTreatmentListFragmentToTreatmentFormFragment dir =
-                    TreatmentListFragmentDirections.actionTreatmentListFragmentToTreatmentFormFragment();
-
-
-            dir.setTreatmentDto(listTreatment.get(getAdapterPosition()));
-
-            Navigation.findNavController(itemView).navigate(dir);
+        @Override
+        public void onClick(View v) {
+            recyclerItemClickListener.onRecyclerItemClick(getAdapterPosition());
         }
-
     }
 
 
@@ -62,7 +56,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.treatment_list_item, parent, false);
-        return new Viewholder(v);
+        return new Viewholder(v, recyclerItemClickListener);
     }
 
     @Override
@@ -74,7 +68,5 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     public int getItemCount() {
         return listTreatment.size();
     }
-
-
 
 }

@@ -34,6 +34,7 @@ import retrofit2.Response;
 public class TreatmentListFragment extends Fragment {
     private RecyclerView recyclerView;
     private NavController navController;
+    private List<TreatmentDto> treatmentList = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class TreatmentListFragment extends Fragment {
 
         fab.setOnClickListener(this::fabClicked);
 
-        setUpRecycler(recyclerView);
+        if (treatmentList != null) setUpRecycler(recyclerView);
 
         return v;
     }
@@ -62,11 +63,18 @@ public class TreatmentListFragment extends Fragment {
 
     private void setUpRecycler(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
+        TreatmentAdapter adapter = new TreatmentAdapter(treatmentList, TreatmentListFragment.this::loadForm);
+        recyclerView.setAdapter(adapter);
 
     }
 
+    private void loadForm(int position) {
+        TreatmentListFragmentDirections.ActionTreatmentListFragmentToTreatmentFormFragment dir =
+                TreatmentListFragmentDirections.actionTreatmentListFragmentToTreatmentFormFragment();
+        dir.setTreatmentDto(treatmentList.get(position));
 
+        navController.navigate(dir);
+    }
 
     public void getTreatments() {
         //TODO: if is admin go to view admin ...
@@ -113,8 +121,8 @@ public class TreatmentListFragment extends Fragment {
                     if (response.isSuccessful()) {
                         Log.e("treatment", "status response: " + response.code());
 
-                        TreatmentAdapter adapter = new TreatmentAdapter(response.body());
-                        recyclerView.setAdapter(adapter);
+                        treatmentList = response.body();
+                        setUpRecycler(recyclerView);
 
                         treatmentDtoList[0].forEach(t-> {
                             Log.e("treatment", "status response: " + t.toString());
