@@ -73,8 +73,8 @@ public class LoginFragment extends Fragment {
         passwordTextInput = v.findViewById(R.id.passwordLoginEditText);
         // TESTING HARDCODE
         // username = ADMIN, username2 = USER ADMIN, username3 USER
-
-        usernameTextInput.setText("username3");
+        // TODO: remove
+        usernameTextInput.setText("adminc4");
         passwordTextInput.setText("password");
 
 
@@ -137,7 +137,7 @@ public class LoginFragment extends Fragment {
 
 
 
-                    navController.navigate(R.id.mainFragment);
+                    navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
 
 
 
