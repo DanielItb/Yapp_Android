@@ -14,4 +14,5 @@ public class ProfileUserDto {
     private String photo;
     private Set<String> roles;
     private String accessToken;
+    private String email;
 }

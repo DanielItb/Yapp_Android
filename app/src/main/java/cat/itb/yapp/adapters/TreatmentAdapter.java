@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import cat.itb.yapp.R;
+import cat.itb.yapp.fragments.list.TreatmentListFragmentDirections;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 
 public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Viewholder> {
@@ -20,7 +22,7 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         this.listTreatment = listTreatment;
     }
 
-    public static class Viewholder extends RecyclerView.ViewHolder {
+    public class Viewholder extends RecyclerView.ViewHolder {
         TextView treatmentIdTextView;
         TextView startDateTreatmentTextView;
         TextView patientFullNameTreatmentTextView;
@@ -30,12 +32,27 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
             treatmentIdTextView = itemView.findViewById(R.id.idTreatmentTextView);
             startDateTreatmentTextView = itemView.findViewById(R.id.startDateTreatmentTextView);
             patientFullNameTreatmentTextView = itemView.findViewById(R.id.patientNameTreatmentTextView);
+
+            itemView.setOnClickListener(this::loadForm);
+
+
         }
 
         public void binData(TreatmentDto treatment){
             treatmentIdTextView.setText(treatment.getId());
             startDateTreatmentTextView.setText(treatment.getStartDate());
             patientFullNameTreatmentTextView.setText(treatment.getPatientFullName());
+        }
+
+
+        private void loadForm(View view) {
+            TreatmentListFragmentDirections.ActionTreatmentListFragmentToTreatmentFormFragment dir =
+                    TreatmentListFragmentDirections.actionTreatmentListFragmentToTreatmentFormFragment();
+
+
+            dir.setTreatmentDto(listTreatment.get(getAdapterPosition()));
+
+            Navigation.findNavController(itemView).navigate(dir);
         }
 
     }

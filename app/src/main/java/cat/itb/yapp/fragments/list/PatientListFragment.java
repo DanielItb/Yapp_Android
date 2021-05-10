@@ -53,6 +53,7 @@ public class PatientListFragment extends Fragment {
     }
 
     private void fabClicked(View view) {
+        navController.navigate(R.id.action_patientListFragment_to_patientFormFragment);
     }
 
 

@@ -1,9 +1,11 @@
 package cat.itb.yapp.models.treatment;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class TreatmentDto {
+public class TreatmentDto implements Serializable {
     private String id;
     private String reason;
     private String sessionsFinished;

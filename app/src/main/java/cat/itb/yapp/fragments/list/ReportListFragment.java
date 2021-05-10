@@ -35,5 +35,6 @@ public class ReportListFragment extends Fragment {
     }
 
     private void fabClicked(View view) {
+        navController.navigate(R.id.action_reportListFragment_to_reportFormFragment);
     }
 }
