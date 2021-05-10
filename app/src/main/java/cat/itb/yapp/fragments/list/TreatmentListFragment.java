@@ -135,10 +135,6 @@ public class TreatmentListFragment extends Fragment {
             });
         }
 
-
-
-
-
     }
 
 }

@@ -22,26 +22,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView userIdTextView, userNameTextView, userSurnameTextView, userUserNameTextView, userSpecialistTypeTextView, userRolTextView;
+        TextView userNameTextView, userSpecialistTypeTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            userIdTextView = itemView.findViewById(R.id.userIdTextView);
             userNameTextView = itemView.findViewById(R.id.nameUserTextView);
-            userSurnameTextView = itemView.findViewById(R.id.surnameUserTextView);
-            userUserNameTextView = itemView.findViewById(R.id.usernameTextView);
             userSpecialistTypeTextView = itemView.findViewById(R.id.specialistTypeUserTextView);
-            userRolTextView = itemView.findViewById(R.id.rolUserEditText);
 
         }
 
         public void binData(UserDto user){
-            userIdTextView.setText(String.valueOf(user.getId()));
-            userNameTextView.setText(user.getName());
-            userSurnameTextView.setText(user.getSurnames());
-            userUserNameTextView.setText(user.getUsername());
+            userNameTextView.setText(user.getName() + " " + user.getSurnames());
             userSpecialistTypeTextView.setText(user.getSpecialistType());
-            userRolTextView.setText(user.getRoles().get(0));
         }
     }
     @NonNull
