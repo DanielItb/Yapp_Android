@@ -1,4 +1,4 @@
-package cat.itb.yapp.fragments;
+package cat.itb.yapp.fragments.forms;
 
 import android.os.Bundle;
 
@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 
 import cat.itb.yapp.R;
 
-public class RegisterFormFragment extends Fragment {
-
+public class PersonalProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +18,7 @@ public class RegisterFormFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_register_form, container, false);
+        View v = inflater.inflate(R.layout.fragment_personal_profile, container, false);
         return v;
     }
 }

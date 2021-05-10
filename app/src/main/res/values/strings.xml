@@ -57,6 +57,14 @@
     <string name="welcome_yapp_paragraph">YAPP is an free application that allows you to manage your clinic.</string>
     <string name="welcome_yapp_paragraph_2">To start with your management, you must insert the data of your clinic and create a user with an administrator role.</string>
     <string name="press_the_button_bellow_to_start">Press the button bellow to start.</string>
+    <string name="id">User id:</string>
+    <string name="name_user_item">Name:</string>
+    <string name="specialist_type_user_item_list">Specialist:</string>
+    <string name="rol_user_item_list">Rol:</string>
+    <string name="username_user_list_item">Username:</string>
+    <string name="surname_user_item_list">Surname:</string>
+    <string name="diagnosis">Diagnosis</string>
+    <string name="objetives">Objetives</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
