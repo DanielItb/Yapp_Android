@@ -63,7 +63,11 @@
         android:id="@+id/patientListFragment"
         android:name="cat.itb.yapp.fragments.list.PatientListFragment"
         android:label="Patient List"
-        tools:layout="@layout/fragment_patient_list" />
+        tools:layout="@layout/fragment_patient_list" >
+        <action
+            android:id="@+id/action_patientListFragment_to_patientFormFragment"
+            app:destination="@id/patientFormFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userListFragment"
         android:name="cat.itb.yapp.fragments.list.UserListFragment"
@@ -77,15 +81,43 @@
         android:id="@+id/reportListFragment"
         android:name="cat.itb.yapp.fragments.list.ReportListFragment"
         android:label="Report List"
-        tools:layout="@layout/fragment_report_list" />
+        tools:layout="@layout/fragment_report_list" >
+        <action
+            android:id="@+id/action_reportListFragment_to_reportFormFragment"
+            app:destination="@id/reportFormFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mtsListFragment"
         android:name="cat.itb.yapp.fragments.list.MtsListFragment"
         android:label="Mts List"
-        tools:layout="@layout/fragment_mts_list" />
+        tools:layout="@layout/fragment_mts_list" >
+        <action
+            android:id="@+id/action_mtsListFragment_to_mtsFormFragment"
+            app:destination="@id/mtsFormFragment" />
+    </fragment>
     <fragment
         android:id="@+id/personalProfileFragment"
         android:name="cat.itb.yapp.fragments.forms.PersonalProfileFragment"
         android:label="Update Profile"
         tools:layout="@layout/fragment_personal_profile" />
+    <fragment
+        android:id="@+id/mtsFormFragment"
+        android:name="cat.itb.yapp.fragments.forms.MtsFormFragment"
+        android:label="fragment_mts_form"
+        tools:layout="@layout/fragment_mts_form" />
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="cat.itb.yapp.fragments.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" />
+    <fragment
+        android:id="@+id/reportFormFragment"
+        android:name="cat.itb.yapp.fragments.forms.ReportFormFragment"
+        android:label="fragment_report_form"
+        tools:layout="@layout/fragment_report_form" />
+    <fragment
+        android:id="@+id/patientFormFragment"
+        android:name="cat.itb.yapp.fragments.forms.PatientFormFragment"
+        android:label="fragment_patient_profile"
+        tools:layout="@layout/fragment_patient_profile" />
 </navigation>

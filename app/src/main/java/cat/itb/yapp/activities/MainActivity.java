@@ -6,6 +6,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
+import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         final NavController navController = navHostFragment.getNavController();
 
+        //setStartDestination(navController, R.id.welcomeFragment);
         navController.addOnDestinationChangedListener(this::destinationChange);
 
         AppBarConfiguration appBarConfiguration =
@@ -71,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setStartDestination(NavController navController, int startDestination) {
+        NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.nav_graph);
+        navGraph.setStartDestination(startDestination);
+
+        navController.setGraph(navGraph);
+    }
 
     public static Activity getActivity() {
         return activity;

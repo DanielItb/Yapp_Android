@@ -35,5 +35,6 @@ public class MtsListFragment extends Fragment {
     }
 
     private void fabClicked(View view) {
+        navController.navigate(R.id.action_mtsListFragment_to_mtsFormFragment);
     }
 }
