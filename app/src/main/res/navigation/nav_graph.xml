@@ -49,7 +49,13 @@
         android:id="@+id/treatmentFormFragment"
         android:name="cat.itb.yapp.fragments.forms.TreatmentFormFragment"
         android:label="Treatment"
-        tools:layout="@layout/fragment_treatment_form" />
+        tools:layout="@layout/fragment_treatment_form" >
+        <argument
+            android:name="TreatmentDto"
+            app:argType="cat.itb.yapp.models.treatment.TreatmentDto"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
     <fragment
         android:id="@+id/treatmentListFragment"
         android:name="cat.itb.yapp.fragments.list.TreatmentListFragment"

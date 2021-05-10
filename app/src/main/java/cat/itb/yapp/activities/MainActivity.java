@@ -47,7 +47,14 @@ public class MainActivity extends AppCompatActivity {
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         final NavController navController = navHostFragment.getNavController();
 
-        //setStartDestination(navController, R.id.welcomeFragment);
+/*
+        String rol = UtilsSharedPreferences.getKey(this, UtilsSharedPreferences.KEY_TOKEN_FILE);
+        if (rol != null) {
+            setStartDestination(navController, R.id.mainFragment);
+        }
+        //
+*/
+
         navController.addOnDestinationChangedListener(this::destinationChange);
 
         AppBarConfiguration appBarConfiguration =

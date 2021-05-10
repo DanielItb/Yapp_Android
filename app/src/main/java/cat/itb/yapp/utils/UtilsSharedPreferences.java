@@ -10,7 +10,7 @@ public class UtilsSharedPreferences {
 
     private static String YAPP_PREF_FILE = "YaapPreferencesFile";
 
-    private static String KEY_TOKEN_FILE = "accessToken";
+    public static String KEY_TOKEN_FILE = "accessToken";
 
 
     public static String getToken (Activity activity) {
@@ -18,6 +18,11 @@ public class UtilsSharedPreferences {
         SharedPreferences prefs = activity.getSharedPreferences(YAPP_PREF_FILE, MODE_PRIVATE);
         return prefs.getString(KEY_TOKEN_FILE, "null");
 
+    }
+
+    public static String getKey(Activity activity, String key) {
+        SharedPreferences prefs = activity.getSharedPreferences(YAPP_PREF_FILE, MODE_PRIVATE);
+        return prefs.getString(key, "null");
     }
 
     public static void setToken(Activity activity, String token) {
