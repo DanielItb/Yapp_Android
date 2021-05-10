@@ -1,4 +1,4 @@
-package cat.itb.yapp.fragments;
+package cat.itb.yapp.fragments.list;
 
 import android.os.Bundle;
 
