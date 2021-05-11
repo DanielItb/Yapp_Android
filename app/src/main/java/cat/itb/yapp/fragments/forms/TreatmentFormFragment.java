@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,11 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import cat.itb.yapp.R;
+import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
@@ -72,6 +77,12 @@ public class TreatmentFormFragment extends Fragment {
 
         buttonCancel.setOnClickListener((v1 -> navController.popBackStack()));
         buttonSave.setOnClickListener(this::save);
+        buttonStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonStartDate.setText(LocalDate.now().toString());
+            }
+        });
     }
 
     private void fillUpInfoInLayout(TreatmentDto treatment) {
@@ -86,20 +97,22 @@ public class TreatmentFormFragment extends Fragment {
     }
 
     private void save(View v) {
-        TreatmentDto treatmentDto;
-        if (editing) treatmentDto = getEditedTreatment();
-        else treatmentDto = getNewTreatment();
+        CreateUpdateTreatmentDto createUpdateTreatmentDto;
+        if (editing) createUpdateTreatmentDto = getEditedTreatment();
+        else createUpdateTreatmentDto = getNewTreatment();
 
         TreatmentWebServiceClient webServiceClient = new RetrofitHttp().retrofit.create(TreatmentWebServiceClient.class);
 
-        Call<TreatmentDto> call;
-        if (editing) call = webServiceClient.updateTreatment(treatment);
-        else call = webServiceClient.updateTreatment(treatment); //TODO this
+        Call<TreatmentDto> call = null;
+        if (editing) call = webServiceClient.updateTreatment("treatment/" + treatment.getId(), createUpdateTreatmentDto);
+        //else call = webServiceClient.updateTreatment(treatmentDto); //TODO this
 
         call.enqueue(new Callback<TreatmentDto>() {
             @Override
             public void onResponse(Call<TreatmentDto> call, Response<TreatmentDto> response) {
+                Log.d("treatmentFrom", response.toString());
                 navController.popBackStack();
+
             }
 
             @Override
@@ -109,18 +122,24 @@ public class TreatmentFormFragment extends Fragment {
         });
     }
 
-    private TreatmentDto getNewTreatment() {
-        TreatmentDto treatmentDto = new TreatmentDto();
+    private CreateUpdateTreatmentDto getNewTreatment() {
+        CreateUpdateTreatmentDto treatmentDto = new CreateUpdateTreatmentDto();
+
+
 
         return treatmentDto;
     }
 
-    private TreatmentDto getEditedTreatment() {
-        TreatmentDto treatmentDto = treatment;
+    private CreateUpdateTreatmentDto getEditedTreatment() {
+        CreateUpdateTreatmentDto createUpdateTreatmentDto = new CreateUpdateTreatmentDto();
 
-        treatmentDto.setSessionsFinished(editTextSessions.getText().toString());
-        treatmentDto.setReason(editTextReason.getText().toString());
+        createUpdateTreatmentDto.setActive(switchActive.getShowText());
+        createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId())); //TODO cambiar
+        createUpdateTreatmentDto.setReason(editTextReason.getText().toString());
+        createUpdateTreatmentDto.setSessionsFinished(Integer.parseInt(editTextSessions.getText().toString()));
+        createUpdateTreatmentDto.setStartDate(buttonStartDate.getText().toString());
+        createUpdateTreatmentDto.setUserId(Long.parseLong(treatment.getSpecialistId())); //TODO cambiar
 
-        return treatmentDto;
+        return createUpdateTreatmentDto;
     }
 }

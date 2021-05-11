@@ -2,6 +2,7 @@ package cat.itb.yapp.webservices;
 
 import java.util.List;
 
+import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,6 +31,6 @@ public interface TreatmentWebServiceClient {
     Call<List<TreatmentDto>> getTreatments();
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @PUT("treatment/")
-    Call<TreatmentDto> updateTreatment(@Body TreatmentDto treatmentDto);
+    @PUT()
+    Call<TreatmentDto> updateTreatment(@Url String url, @Body CreateUpdateTreatmentDto createUpdateTreatmentDto);
 }
