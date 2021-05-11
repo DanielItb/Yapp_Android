@@ -60,11 +60,14 @@ public class UserListFragment extends Fragment {
         navController.navigate(R.id.action_userListFragment_to_userFormFragment);
     }
 
+    private void recyclerItemClicked(int position) {
+        //TODO
+    }
+
     private void setUpRecycler(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        UserAdapter adapter = new UserAdapter(listUsers);
+        UserAdapter adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
         recyclerView.setAdapter(adapter);
-
     }
 
 

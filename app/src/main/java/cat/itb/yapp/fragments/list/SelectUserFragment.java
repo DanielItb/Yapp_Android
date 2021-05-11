@@ -55,11 +55,14 @@ public class SelectUserFragment extends Fragment {
         return v;
     }
 
+    private void recyclerItemClicked(int position) {
+        //TODO
+    }
+
     private void setUpRecycler(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        UserAdapter adapter = new UserAdapter(listUsers);
+        UserAdapter adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
         recyclerView.setAdapter(adapter);
-
     }
 
     public void getUsers() {
