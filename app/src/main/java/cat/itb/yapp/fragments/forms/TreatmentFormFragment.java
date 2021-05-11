@@ -46,12 +46,13 @@ public class TreatmentFormFragment extends Fragment {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
 
-        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener("userId", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
                 String result = bundle.getString("bundleKey");
                 // Do something with the result
+                Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -87,6 +88,7 @@ public class TreatmentFormFragment extends Fragment {
 
         buttonCancel.setOnClickListener((v1 -> navController.popBackStack()));
         buttonSave.setOnClickListener(this::save);
+        buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
         buttonStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

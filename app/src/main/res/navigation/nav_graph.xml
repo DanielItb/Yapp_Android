@@ -55,6 +55,9 @@
             app:argType="cat.itb.yapp.models.treatment.TreatmentDto"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_treatmentFormFragment_to_selectUserFragment"
+            app:destination="@id/selectUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentListFragment"
@@ -126,4 +129,9 @@
         android:name="cat.itb.yapp.fragments.forms.PatientFormFragment"
         android:label="fragment_patient_profile"
         tools:layout="@layout/fragment_patient_profile" />
+    <fragment
+        android:id="@+id/selectUserFragment"
+        android:name="cat.itb.yapp.fragments.list.SelectUserFragment"
+        android:label="Select user"
+        tools:layout="@layout/fragment_select_user" />
 </navigation>
