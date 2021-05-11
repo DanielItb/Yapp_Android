@@ -38,6 +38,7 @@
     <style name="SwitchTheme" >
         <item name="colorOnSurface">@color/blue_main</item>
         <item name="colorSecondary">@color/blue_main</item>
+        <item name="android:checked">true</item>
     </style>
 
 <!--    <style name="BirthDateButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
