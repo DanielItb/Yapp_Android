@@ -39,9 +39,7 @@ public class SelectUserFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         navController = NavHostFragment.findNavController(this);
-
-        //getParentFragmentManager().setFragmentResult("userId", result);
-
+        getUsers();
     }
 
     @Override
@@ -56,7 +54,14 @@ public class SelectUserFragment extends Fragment {
     }
 
     private void recyclerItemClicked(int position) {
-        //TODO
+        Bundle result = new Bundle();
+        UserDto user = listUsers.get(position);
+
+        result.putLong("userId", user.getId());
+        result.putString("userName",user.getName());
+
+        getParentFragmentManager().setFragmentResult("userId", result);
+        navController.popBackStack();
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {

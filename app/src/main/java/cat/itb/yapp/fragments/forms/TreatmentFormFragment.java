@@ -41,6 +41,8 @@ public class TreatmentFormFragment extends Fragment {
     private boolean editing;
     private TreatmentDto treatment;
 
+    private Long userId;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +52,9 @@ public class TreatmentFormFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
                 // We use a String here, but any type that can be put in a Bundle is supported
-                String result = bundle.getString("bundleKey");
-                // Do something with the result
-                Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                userId = bundle.getLong("userId");
+                String userName = bundle.getString("userName");
+                buttonSpecialist.setText(userName);
             }
         });
     }
