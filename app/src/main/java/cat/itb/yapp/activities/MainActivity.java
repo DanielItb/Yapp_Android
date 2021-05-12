@@ -1,9 +1,10 @@
 package cat.itb.yapp.activities;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.NavGraph;
@@ -11,18 +12,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.user.ProfileUserDto;
-import cat.itb.yapp.models.user.User;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
@@ -67,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        setSupportActionBar(toolbar);
 
     }
 
