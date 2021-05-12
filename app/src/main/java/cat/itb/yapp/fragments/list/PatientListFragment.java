@@ -45,11 +45,15 @@ public class PatientListFragment extends Fragment {
         fab.setOnClickListener(this::fabClicked);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        patientAdapter = new PatientAdapter(listPatient);
+        patientAdapter = new PatientAdapter(listPatient, this::recyclerItemClicked);
         recyclerView.setAdapter(patientAdapter);
 
 
         return v;
+    }
+
+    private void recyclerItemClicked(int i) {
+        //TODO open form
     }
 
     private void fabClicked(View view) {
