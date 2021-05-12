@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -20,9 +20,9 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import cat.itb.yapp.R;
+import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
@@ -41,21 +41,23 @@ public class TreatmentFormFragment extends Fragment {
     private boolean editing;
     private TreatmentDto treatment;
 
-    private Long userId;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
 
-        getParentFragmentManager().setFragmentResultListener("userId", this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
-                // We use a String here, but any type that can be put in a Bundle is supported
-                userId = bundle.getLong("userId");
-                String userName = bundle.getString("userName");
-                buttonSpecialist.setText(userName);
-            }
+        final FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
+            treatment.setSpecialistId(String.valueOf(bundle.getLong("userId"))); //TODO Remove parse
+            String fullName = bundle.getString("fullName");
+            treatment.setSpecialistFullName(fullName);
+            buttonSpecialist.setText(fullName);
+        });
+        fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
+            treatment.setPatientId(String.valueOf(bundle.getInt("patientId"))); //TODO Remove parse
+            String fullName = bundle.getString("fullName");
+            treatment.setPatientFullName(fullName);
+            buttonPatient.setText(fullName);
         });
     }
 
@@ -85,11 +87,14 @@ public class TreatmentFormFragment extends Fragment {
             editing = true;
             fillUpInfoInLayout(treatment);
         } else {
+            treatment = new TreatmentDto();
             editing = false;
         }
 
-        buttonCancel.setOnClickListener((v1 -> navController.popBackStack()));
-        buttonSave.setOnClickListener(this::save);
+        buttonCancel.setOnClickListener(v1 -> navController.popBackStack());
+        buttonSave.setOnClickListener(v -> {
+            if(allRequiredCampsSet()) save();
+        });
         buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
         buttonStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +102,17 @@ public class TreatmentFormFragment extends Fragment {
                 buttonStartDate.setText(LocalDate.now().toString());
             }
         });
+    }
+
+    private boolean allRequiredCampsSet() {
+        boolean allGood = true;
+
+        String patientId = treatment.getPatientId();
+        String specialistId = treatment.getSpecialistId();
+
+        if (patientId == null || specialistId == null) allGood = false;
+
+        return allGood;
     }
 
     private void fillUpInfoInLayout(TreatmentDto treatment) {
@@ -110,16 +126,15 @@ public class TreatmentFormFragment extends Fragment {
         //switchActive.setChecked(treatment.get);
     }
 
-    private void save(View v) {
-        CreateUpdateTreatmentDto createUpdateTreatmentDto;
-        if (editing) createUpdateTreatmentDto = getEditedTreatment();
-        else createUpdateTreatmentDto = getNewTreatment();
+    private void save() {
+        final CreateUpdateTreatmentDto createUpdateTreatmentDto = getTreatment();
 
-        TreatmentWebServiceClient webServiceClient = new RetrofitHttp().retrofit.create(TreatmentWebServiceClient.class);
+        TreatmentWebServiceClient webServiceClient = MainActivity.getRetrofitHttp()
+                .retrofit.create(TreatmentWebServiceClient.class);
 
         Call<TreatmentDto> call = null;
         if (editing) call = webServiceClient.updateTreatment("treatment/" + treatment.getId(), createUpdateTreatmentDto);
-        //else call = webServiceClient.updateTreatment(treatmentDto); //TODO this
+        else call = webServiceClient.addTreatment(createUpdateTreatmentDto); //TODO this
 
         call.enqueue(new Callback<TreatmentDto>() {
             @Override
@@ -136,23 +151,15 @@ public class TreatmentFormFragment extends Fragment {
         });
     }
 
-    private CreateUpdateTreatmentDto getNewTreatment() {
-        CreateUpdateTreatmentDto treatmentDto = new CreateUpdateTreatmentDto();
-
-
-
-        return treatmentDto;
-    }
-
-    private CreateUpdateTreatmentDto getEditedTreatment() {
+    private CreateUpdateTreatmentDto getTreatment() {
         CreateUpdateTreatmentDto createUpdateTreatmentDto = new CreateUpdateTreatmentDto();
 
         createUpdateTreatmentDto.setActive(switchActive.getShowText());
-        createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId())); //TODO cambiar
+        createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId())); //TODO remove parse
         createUpdateTreatmentDto.setReason(editTextReason.getText().toString());
         createUpdateTreatmentDto.setSessionsFinished(Integer.parseInt(editTextSessions.getText().toString()));
         createUpdateTreatmentDto.setStartDate(buttonStartDate.getText().toString());
-        createUpdateTreatmentDto.setUserId(Long.parseLong(treatment.getSpecialistId())); //TODO cambiar
+        createUpdateTreatmentDto.setUserId(Long.parseLong(treatment.getSpecialistId())); //TODO remove parse
 
         return createUpdateTreatmentDto;
     }

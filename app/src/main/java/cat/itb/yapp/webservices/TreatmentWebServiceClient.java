@@ -33,4 +33,8 @@ public interface TreatmentWebServiceClient {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @PUT()
     Call<TreatmentDto> updateTreatment(@Url String url, @Body CreateUpdateTreatmentDto createUpdateTreatmentDto);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @POST()
+    Call<TreatmentDto> addTreatment(@Body CreateUpdateTreatmentDto createUpdateTreatmentDto);
 }

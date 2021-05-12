@@ -58,7 +58,7 @@ public class SelectUserFragment extends Fragment {
         UserDto user = listUsers.get(position);
 
         result.putLong("userId", user.getId());
-        result.putString("userName",user.getName());
+        result.putString("fullName", user.getName() + " " + user.getSurnames());
 
         getParentFragmentManager().setFragmentResult("userId", result);
         navController.popBackStack();
@@ -82,7 +82,7 @@ public class SelectUserFragment extends Fragment {
         final List<UserDto>[] userDtoList = new List[]{new ArrayList<>()};
 
 
-        RetrofitHttp retrofitHttp = new RetrofitHttp();
+        RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
         UserWebServiceClient userWebServiceClient = retrofitHttp.retrofit.create(UserWebServiceClient.class);
 
         Call<List<UserDto>> call;
