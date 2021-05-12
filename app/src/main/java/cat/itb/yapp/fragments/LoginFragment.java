@@ -27,12 +27,14 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.auth.LoginDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.models.user.ProfileUserDto;
+import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.retrofit.RetrofitHttpLogin;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 import cat.itb.yapp.webservices.AuthWebServiceClient;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
+import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -137,6 +139,7 @@ public class LoginFragment extends Fragment {
 
 
                     MainActivity.setRetrofitHttp(new RetrofitHttp());
+                    setUserInMainActivity();
                     navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
 
 
@@ -161,6 +164,24 @@ public class LoginFragment extends Fragment {
 
 
 
+    }
+
+    private void setUserInMainActivity() {
+        UserWebServiceClient webService = MainActivity.getRetrofitHttp().retrofit.create(UserWebServiceClient.class);
+
+        Call<UserDto> call = webService.getUserById("user/" + MainActivity.getUser().getId());
+
+        call.enqueue(new Callback<UserDto>() {
+            @Override
+            public void onResponse(Call<UserDto> call, Response<UserDto> response) {
+                MainActivity.setUserDto(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<UserDto> call, Throwable t) {
+                //TODO Y si esto falla que?
+            }
+        });
     }
 
 

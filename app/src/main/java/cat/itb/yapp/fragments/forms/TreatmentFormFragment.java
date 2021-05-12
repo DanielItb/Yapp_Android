@@ -39,7 +39,7 @@ public class TreatmentFormFragment extends Fragment {
             buttonSave;
     private SwitchCompat switchActive;
     private boolean editing;
-    private TreatmentDto treatment;
+    private TreatmentDto treatment = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,21 +81,26 @@ public class TreatmentFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        treatment = TreatmentFormFragmentArgs.fromBundle(getArguments()).getTreatmentDto();
-
-        if (treatment != null) {
-            editing = true;
-            fillUpInfoInLayout(treatment);
+        if (treatment == null) {
+            treatment = TreatmentFormFragmentArgs.fromBundle(getArguments()).getTreatmentDto();
+            if (treatment != null) {
+                editing = true;
+                fillUpInfoInLayout(treatment);
+            } else {
+                treatment = new TreatmentDto();
+                editing = false;
+            }
         } else {
-            treatment = new TreatmentDto();
-            editing = false;
+            fillUpInfoInLayout(treatment);
         }
+
 
         buttonCancel.setOnClickListener(v1 -> navController.popBackStack());
         buttonSave.setOnClickListener(v -> {
             if(allRequiredCampsSet()) save();
         });
         buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
+        buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectPatientFragment));
         buttonStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,7 +123,14 @@ public class TreatmentFormFragment extends Fragment {
     private void fillUpInfoInLayout(TreatmentDto treatment) {
         buttonPatient.setText(treatment.getPatientFullName());
         buttonSpecialist.setText(treatment.getSpecialistFullName());
-        buttonStartDate.setText(treatment.getStartDate());
+
+        String startDate = treatment.getStartDate();
+        if (startDate == null) {
+            buttonStartDate.setText(R.string.select_start_date);
+        } else {
+            buttonStartDate.setText(startDate);
+        }
+
 
         editTextSessions.setText(treatment.getSessionsFinished());
         editTextReason.setText(treatment.getReason());

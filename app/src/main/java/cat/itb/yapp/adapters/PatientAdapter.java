@@ -12,14 +12,15 @@ import java.util.List;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.patient.Patient;
+import cat.itb.yapp.models.patient.PatientDto;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> {
-    private final List<Patient> listPatient;
+    private final List<PatientDto> listPatient;
     private final RecyclerItemClickListener recyclerItemClickListener;
 
 
-    public PatientAdapter(List<Patient> listPatient, RecyclerItemClickListener recyclerItemClickListener) {
+    public PatientAdapter(List<PatientDto> listPatient, RecyclerItemClickListener recyclerItemClickListener) {
         this.listPatient = listPatient;
         this.recyclerItemClickListener = recyclerItemClickListener;
     }
@@ -43,7 +44,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             itemView.setOnClickListener(this);
         }
 
-        public void binData(Patient patient) {
+        public void binData(PatientDto patient) {
             patientNameTextView.setText(patient.getName());
             patientAgeTextView.setText(String.valueOf(patient.getAge()));
 //            patientReason.setText(patient.get);

@@ -20,4 +20,8 @@ public interface UserWebServiceClient {
     @GET()
     Call<List<UserDto>> getUsersBySpecialistId(@Url String url);
 
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET()
+    Call<UserDto> getUserById(@Url String url);
+
 }

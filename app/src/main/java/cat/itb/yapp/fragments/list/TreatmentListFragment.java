@@ -98,7 +98,7 @@ public class TreatmentListFragment extends Fragment {
         //CHECK USER ROLE
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
 
-            String endpointUserRole = "treatment/clinic/" +  specialistId;
+            String endpointUserRole = "treatment/clinic/" +  specialistId; //TODO Usar id clinica
             call = treatmentWebServiceClient.getTreatmentsByClinicId(endpointUserRole);
             Log.e("treatment", "all treatments in clinic");
 
