@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-        setSupportActionBar(toolbar);
 
     }
 

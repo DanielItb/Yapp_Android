@@ -34,17 +34,17 @@
             android:id="@+id/action_mainFragment_to_patientListFragment"
             app:destination="@id/patientListFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_mtsListFragment"
-            app:destination="@id/mtsListFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_userListFragment"
             app:destination="@id/userListFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_reportListFragment"
-            app:destination="@id/reportListFragment" />
-        <action
             android:id="@+id/action_mainFragment_to_personalProfileFragment"
             app:destination="@id/personalProfileFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_reportListFragment"
+            app:destination="@id/reportListFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentFormFragment"
@@ -135,4 +135,18 @@
         android:name="cat.itb.yapp.fragments.list.SelectUserFragment"
         android:label="Select user"
         tools:layout="@layout/fragment_select_user" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="cat.itb.yapp.fragments.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_mtsFormFragment"
+            app:destination="@id/mtsFormFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="cat.itb.yapp.activities.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

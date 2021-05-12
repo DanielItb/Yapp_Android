@@ -106,7 +106,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(getContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
     }
-
+/*
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_calendar, menu);
@@ -163,7 +163,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
     private void setupDateTimeInterpreter(final boolean shortDate) {
         mWeekView.setDateTimeInterpreter(new DateTimeInterpreter() {
             @Override

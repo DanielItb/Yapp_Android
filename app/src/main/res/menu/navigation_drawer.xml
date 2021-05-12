@@ -13,7 +13,7 @@
             android:title="@string/patients" />
 
         <item
-            android:id="@+id/mtsListFragment"
+            android:id="@+id/calendarFragment"
             android:icon="@drawable/calendar"
             android:title="@string/mts" />
 

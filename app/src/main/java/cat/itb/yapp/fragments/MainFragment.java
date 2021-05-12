@@ -39,7 +39,7 @@ public class MainFragment extends Fragment {
 
         usersCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_userListFragment));
         patientsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_patientListFragment));
-        mtsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_mtsListFragment));
+        mtsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_calendarFragment));
         reportCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_reportListFragment));
         treatmentCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_treatmentListFragment));
 
