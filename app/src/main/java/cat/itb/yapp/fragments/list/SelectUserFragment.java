@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,38 +28,40 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserListFragment extends Fragment {
+
+public class SelectUserFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;
     private List<UserDto> listUsers = null;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         navController = NavHostFragment.findNavController(this);
         getUsers();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_user_list, container, false);
-        recyclerView = v.findViewById(R.id.recyclerUser);
-        FloatingActionButton fab = v.findViewById(R.id.fabUsers);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_select_user, container, false);
 
-        fab.setOnClickListener(this::fabClicked);
-
-        if (listUsers != null) setUpRecycler(recyclerView);
+        recyclerView = v.findViewById(R.id.recyclerSelectUser);
 
         return v;
     }
 
-    private void fabClicked(View view) {
-        navController.navigate(R.id.action_userListFragment_to_userFormFragment);
-    }
-
     private void recyclerItemClicked(int position) {
-        //TODO
+        Bundle result = new Bundle();
+        UserDto user = listUsers.get(position);
+
+        result.putLong("userId", user.getId());
+        result.putString("fullName", user.getName() + " " + user.getSurnames());
+
+        getParentFragmentManager().setFragmentResult("userId", result);
+        navController.popBackStack();
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
@@ -69,7 +69,6 @@ public class UserListFragment extends Fragment {
         UserAdapter adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
         recyclerView.setAdapter(adapter);
     }
-
 
     public void getUsers() {
         //TODO: if is admin go to view admin ...
@@ -83,11 +82,11 @@ public class UserListFragment extends Fragment {
         final List<UserDto>[] userDtoList = new List[]{new ArrayList<>()};
 
 
-        RetrofitHttp retrofitHttp = new RetrofitHttp();
+        RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
         UserWebServiceClient userWebServiceClient = retrofitHttp.retrofit.create(UserWebServiceClient.class);
 
         Call<List<UserDto>> call;
-        
+
 
         Long specialistId = MainActivity.getUser().getId().longValue();
         //CHECK USER ROLE
@@ -119,8 +118,7 @@ public class UserListFragment extends Fragment {
                         listUsers = response.body();
 
                         setUpRecycler(recyclerView);
-//                        UserAdapter adapter = new UserAdapter(listUsers);
-//                        recyclerView.setAdapter(adapter);
+
 
                         userDtoList[0].forEach(t -> {
                             Log.e("user", "status response: " + t.toString());

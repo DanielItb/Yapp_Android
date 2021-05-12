@@ -17,6 +17,8 @@ import com.google.android.material.navigation.NavigationView;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.user.ProfileUserDto;
+import cat.itb.yapp.models.user.User;
+import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static ProfileUserDto profileUser;
     private MaterialToolbar toolbar;
     private View navHostFragmentLayout;
+    private static RetrofitHttp retrofitHttp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,5 +95,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setUser(ProfileUserDto user) {
         MainActivity.profileUser = user;
+    }
+
+    public static RetrofitHttp getRetrofitHttp() {
+        return retrofitHttp;
+    }
+
+    public static void setRetrofitHttp(RetrofitHttp retrofitHttp) {
+        MainActivity.retrofitHttp = retrofitHttp;
     }
 }

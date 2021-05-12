@@ -6,9 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,11 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDate;
+
 import cat.itb.yapp.R;
+import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
@@ -39,6 +45,20 @@ public class TreatmentFormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
+
+        final FragmentManager fragmentManager = getParentFragmentManager();
+        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
+            treatment.setSpecialistId(String.valueOf(bundle.getLong("userId"))); //TODO Remove parse
+            String fullName = bundle.getString("fullName");
+            treatment.setSpecialistFullName(fullName);
+            buttonSpecialist.setText(fullName);
+        });
+        fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
+            treatment.setPatientId(String.valueOf(bundle.getInt("patientId"))); //TODO Remove parse
+            String fullName = bundle.getString("fullName");
+            treatment.setPatientFullName(fullName);
+            buttonPatient.setText(fullName);
+        });
     }
 
     @Override
@@ -67,11 +87,32 @@ public class TreatmentFormFragment extends Fragment {
             editing = true;
             fillUpInfoInLayout(treatment);
         } else {
+            treatment = new TreatmentDto();
             editing = false;
         }
 
-        buttonCancel.setOnClickListener((v1 -> navController.popBackStack()));
-        buttonSave.setOnClickListener(this::save);
+        buttonCancel.setOnClickListener(v1 -> navController.popBackStack());
+        buttonSave.setOnClickListener(v -> {
+            if(allRequiredCampsSet()) save();
+        });
+        buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
+        buttonStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buttonStartDate.setText(LocalDate.now().toString());
+            }
+        });
+    }
+
+    private boolean allRequiredCampsSet() {
+        boolean allGood = true;
+
+        String patientId = treatment.getPatientId();
+        String specialistId = treatment.getSpecialistId();
+
+        if (patientId == null || specialistId == null) allGood = false;
+
+        return allGood;
     }
 
     private void fillUpInfoInLayout(TreatmentDto treatment) {
@@ -85,21 +126,22 @@ public class TreatmentFormFragment extends Fragment {
         //switchActive.setChecked(treatment.get);
     }
 
-    private void save(View v) {
-        TreatmentDto treatmentDto;
-        if (editing) treatmentDto = getEditedTreatment();
-        else treatmentDto = getNewTreatment();
+    private void save() {
+        final CreateUpdateTreatmentDto createUpdateTreatmentDto = getTreatment();
 
-        TreatmentWebServiceClient webServiceClient = new RetrofitHttp().retrofit.create(TreatmentWebServiceClient.class);
+        TreatmentWebServiceClient webServiceClient = MainActivity.getRetrofitHttp()
+                .retrofit.create(TreatmentWebServiceClient.class);
 
-        Call<TreatmentDto> call;
-        if (editing) call = webServiceClient.updateTreatment(treatment);
-        else call = webServiceClient.updateTreatment(treatment); //TODO this
+        Call<TreatmentDto> call = null;
+        if (editing) call = webServiceClient.updateTreatment("treatment/" + treatment.getId(), createUpdateTreatmentDto);
+        else call = webServiceClient.addTreatment(createUpdateTreatmentDto); //TODO this
 
         call.enqueue(new Callback<TreatmentDto>() {
             @Override
             public void onResponse(Call<TreatmentDto> call, Response<TreatmentDto> response) {
+                Log.d("treatmentFrom", response.toString());
                 navController.popBackStack();
+
             }
 
             @Override
@@ -109,18 +151,16 @@ public class TreatmentFormFragment extends Fragment {
         });
     }
 
-    private TreatmentDto getNewTreatment() {
-        TreatmentDto treatmentDto = new TreatmentDto();
+    private CreateUpdateTreatmentDto getTreatment() {
+        CreateUpdateTreatmentDto createUpdateTreatmentDto = new CreateUpdateTreatmentDto();
 
-        return treatmentDto;
-    }
+        createUpdateTreatmentDto.setActive(switchActive.getShowText());
+        createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId())); //TODO remove parse
+        createUpdateTreatmentDto.setReason(editTextReason.getText().toString());
+        createUpdateTreatmentDto.setSessionsFinished(Integer.parseInt(editTextSessions.getText().toString()));
+        createUpdateTreatmentDto.setStartDate(buttonStartDate.getText().toString());
+        createUpdateTreatmentDto.setUserId(Long.parseLong(treatment.getSpecialistId())); //TODO remove parse
 
-    private TreatmentDto getEditedTreatment() {
-        TreatmentDto treatmentDto = treatment;
-
-        treatmentDto.setSessionsFinished(editTextSessions.getText().toString());
-        treatmentDto.setReason(editTextReason.getText().toString());
-
-        return treatmentDto;
+        return createUpdateTreatmentDto;
     }
 }

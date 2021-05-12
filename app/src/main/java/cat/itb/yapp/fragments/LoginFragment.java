@@ -136,7 +136,7 @@ public class LoginFragment extends Fragment {
                     UtilsSharedPreferences.setToken(MainActivity.getActivity(), profileUserDto.getAccessToken());
 
 
-
+                    MainActivity.setRetrofitHttp(new RetrofitHttp());
                     navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
 
 
