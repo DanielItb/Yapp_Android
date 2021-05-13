@@ -39,8 +39,6 @@ public class TreatmentListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getTreatments();
-
         navController = NavHostFragment.findNavController(this);
     }
 
@@ -48,6 +46,7 @@ public class TreatmentListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_treatment_list, container, false);
         recyclerView = v.findViewById(R.id.recyclerTreatment);
+        getTreatments();
         FloatingActionButton fab = v.findViewById(R.id.fabTreatment);
 
         fab.setOnClickListener(this::fabClicked);
@@ -98,7 +97,7 @@ public class TreatmentListFragment extends Fragment {
         //CHECK USER ROLE
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
 
-            String endpointUserRole = "treatment/clinic/" +  specialistId;
+            String endpointUserRole = "treatment/clinic/" +  MainActivity.getUserDto().getClinicId();
             call = treatmentWebServiceClient.getTreatmentsByClinicId(endpointUserRole);
             Log.e("treatment", "all treatments in clinic");
 

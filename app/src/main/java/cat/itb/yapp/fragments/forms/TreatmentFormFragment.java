@@ -1,6 +1,11 @@
 package cat.itb.yapp.fragments.forms;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,22 +15,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
-import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.utils.UtilsDatePicker;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +40,7 @@ public class TreatmentFormFragment extends Fragment {
             buttonSave;
     private SwitchCompat switchActive;
     private boolean editing;
-    private TreatmentDto treatment;
+    private TreatmentDto treatment = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,44 +82,67 @@ public class TreatmentFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        treatment = TreatmentFormFragmentArgs.fromBundle(getArguments()).getTreatmentDto();
-
-        if (treatment != null) {
-            editing = true;
-            fillUpInfoInLayout(treatment);
+        if (treatment == null) {
+            treatment = TreatmentFormFragmentArgs.fromBundle(getArguments()).getTreatmentDto();
+            if (treatment != null) {
+                editing = true;
+                fillUpInfoInLayout(treatment);
+            } else {
+                treatment = new TreatmentDto();
+                editing = false;
+            }
         } else {
-            treatment = new TreatmentDto();
-            editing = false;
+            fillUpInfoInLayout(treatment);
         }
+
 
         buttonCancel.setOnClickListener(v1 -> navController.popBackStack());
         buttonSave.setOnClickListener(v -> {
             if(allRequiredCampsSet()) save();
         });
         buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
-        buttonStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonStartDate.setText(LocalDate.now().toString());
-            }
-        });
+        buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectPatientFragment));
+        buttonStartDate.setOnClickListener(v -> UtilsDatePicker.showDatePicker(this::dateSelected,
+                getParentFragmentManager()));
     }
+
+    private void dateSelected(Object o) {
+        LocalDate date =
+                Instant.ofEpochMilli((Long) o).atZone(ZoneId.systemDefault()).toLocalDate();
+
+        buttonStartDate.setText(date.toString());
+        treatment.setStartDate(date.toString());
+    }
+
 
     private boolean allRequiredCampsSet() {
         boolean allGood = true;
-
         String patientId = treatment.getPatientId();
         String specialistId = treatment.getSpecialistId();
+        CharSequence errorMsg = getText(R.string.must_fill);
 
-        if (patientId == null || specialistId == null) allGood = false;
+        if (patientId == null) {
+            allGood = false;
+            buttonPatient.setError(errorMsg);
+        } if (specialistId == null) {
+            allGood = false;
+            buttonSpecialist.setError(errorMsg);
+        } if (editTextSessions.getText().toString().isEmpty()) {
+            allGood= false;
+            editTextSessions.setError(errorMsg);
+        }
 
         return allGood;
     }
 
     private void fillUpInfoInLayout(TreatmentDto treatment) {
-        buttonPatient.setText(treatment.getPatientFullName());
-        buttonSpecialist.setText(treatment.getSpecialistFullName());
-        buttonStartDate.setText(treatment.getStartDate());
+        String startDate = treatment.getStartDate();
+        String patientName= treatment.getPatientFullName();
+        String specialistName = treatment.getSpecialistFullName();
+
+        if (startDate != null) buttonStartDate.setText(startDate);
+        if (patientName != null) buttonPatient.setText(treatment.getPatientFullName());
+        if (specialistName != null) buttonSpecialist.setText(treatment.getSpecialistFullName());
 
         editTextSessions.setText(treatment.getSessionsFinished());
         editTextReason.setText(treatment.getReason());
@@ -134,14 +158,13 @@ public class TreatmentFormFragment extends Fragment {
 
         Call<TreatmentDto> call = null;
         if (editing) call = webServiceClient.updateTreatment("treatment/" + treatment.getId(), createUpdateTreatmentDto);
-        else call = webServiceClient.addTreatment(createUpdateTreatmentDto); //TODO this
+        else call = webServiceClient.addTreatment(createUpdateTreatmentDto);
 
         call.enqueue(new Callback<TreatmentDto>() {
             @Override
             public void onResponse(Call<TreatmentDto> call, Response<TreatmentDto> response) {
                 Log.d("treatmentFrom", response.toString());
                 navController.popBackStack();
-
             }
 
             @Override
