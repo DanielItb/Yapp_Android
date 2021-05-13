@@ -133,7 +133,7 @@ public class LoginFragment extends Fragment {
                     profileUserDto = response.body();
 
                     MainActivity.setUser(profileUserDto);
-                    setUpNavDrawerInfo(profileUserDto.getUsername(), "No email in dto D:", profileUserDto.getPhoto());
+                    setUpNavDrawerInfo(profileUserDto.getUsername(), profileUserDto.getPhoto());
 
                     UtilsSharedPreferences.setToken(MainActivity.getActivity(), profileUserDto.getAccessToken());
 
@@ -174,7 +174,10 @@ public class LoginFragment extends Fragment {
         call.enqueue(new Callback<UserDto>() {
             @Override
             public void onResponse(Call<UserDto> call, Response<UserDto> response) {
-                MainActivity.setUserDto(response.body());
+                UserDto userDto = response.body();
+                MainActivity.setUserDto(userDto);
+
+                setEmailInDrawer(userDto.getEmail());
             }
 
             @Override
@@ -184,18 +187,21 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    private void setEmailInDrawer(String email) {
+        MaterialTextView textViewMail = MainActivity.getActivity().findViewById(R.id.textViewEmailDrawer);
+        textViewMail.setText(email);
+    }
 
-    private void setUpNavDrawerInfo(String username, String mail, String photoUrl) {
-        MaterialTextView textViewUsername, textViewMail;
+
+    private void setUpNavDrawerInfo(String username, String photoUrl) {
+        MaterialTextView textViewUsername;
         ShapeableImageView imageViewProfile;
         FragmentActivity mainActivity = getActivity();
 
         textViewUsername = mainActivity.findViewById(R.id.textViewUsernameDrawer);
-        textViewMail = mainActivity.findViewById(R.id.textViewEmailDrawer);
         imageViewProfile = mainActivity.findViewById(R.id.shapeableImageViewUser);
 
         textViewUsername.setText(username);
-        textViewMail.setText(mail);
         Picasso.with(requireContext()).load(photoUrl).into(imageViewProfile);
     }
 
