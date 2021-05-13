@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment {
         // TESTING HARDCODE
         // username = ADMIN, username2 = USER ADMIN, username3 USER
         // TODO: remove
-        usernameTextInput.setText("adminc4");
+        usernameTextInput.setText("userc4");
         passwordTextInput.setText("password");
 
 

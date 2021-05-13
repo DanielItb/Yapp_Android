@@ -1,5 +1,8 @@
 package cat.itb.yapp.models.mts;
 
+import lombok.Data;
+
+@Data
 public class MtsDto {
     /// mts
     private String id;

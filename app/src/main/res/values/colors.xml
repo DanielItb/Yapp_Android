@@ -14,4 +14,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue_main">#2424EF</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="mtsBefore">#EF5350</color>
+    <color name="mtsAfter">#64DD17</color>
 </resources>
