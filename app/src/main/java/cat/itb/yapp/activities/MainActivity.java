@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.user.ProfileUserDto;
 import cat.itb.yapp.models.user.User;
+import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private static Activity activity;
 
     private static ProfileUserDto profileUser;
+    private static UserDto userDto;
     private MaterialToolbar toolbar;
     private View navHostFragmentLayout;
     private static RetrofitHttp retrofitHttp;
@@ -104,5 +106,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setRetrofitHttp(RetrofitHttp retrofitHttp) {
         MainActivity.retrofitHttp = retrofitHttp;
+    }
+
+    public static UserDto getUserDto() {
+        return userDto;
+    }
+
+    public static void setUserDto(UserDto userDto) {
+        MainActivity.userDto = userDto;
     }
 }

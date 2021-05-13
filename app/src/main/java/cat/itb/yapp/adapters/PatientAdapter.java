@@ -12,36 +12,48 @@ import java.util.List;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.patient.Patient;
+import cat.itb.yapp.models.patient.PatientDto;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> {
-    private List<Patient> listPatient;
+    private final List<PatientDto> listPatient;
+    private final RecyclerItemClickListener recyclerItemClickListener;
 
 
-    public PatientAdapter(List<Patient> listPatient) {
+    public PatientAdapter(List<PatientDto> listPatient, RecyclerItemClickListener recyclerItemClickListener) {
         this.listPatient = listPatient;
+        this.recyclerItemClickListener = recyclerItemClickListener;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private final RecyclerItemClickListener recyclerItemClickListener;
         TextView patientNameTextView;
         TextView patientReasonTextView;
         TextView patientAgeTextView;
         CircleImageView patientImageTextView;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(RecyclerItemClickListener recyclerItemClickListener, @NonNull View itemView) {
             super(itemView);
+            this.recyclerItemClickListener = recyclerItemClickListener;
             patientNameTextView = itemView.findViewById(R.id.namePatientTextView);
             patientAgeTextView = itemView.findViewById(R.id.agePatientTextView);
 //            patientReason = itemView.findViewById(R.id.reasonPatientTextView);
             patientImageTextView = itemView.findViewById(R.id.circleImageView);
+
+            itemView.setOnClickListener(this);
         }
 
-        public void binData(Patient patient) {
+        public void binData(PatientDto patient) {
             patientNameTextView.setText(patient.getName());
             patientAgeTextView.setText(String.valueOf(patient.getAge()));
 //            patientReason.setText(patient.get);
             patientImageTextView.setImageResource(R.drawable.kid);
+        }
+
+        @Override
+        public void onClick(View v) {
+            recyclerItemClickListener.onRecyclerItemClick(getAdapterPosition());
         }
     }
 
@@ -49,7 +61,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_list_item, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(recyclerItemClickListener, v);
     }
 
     @Override

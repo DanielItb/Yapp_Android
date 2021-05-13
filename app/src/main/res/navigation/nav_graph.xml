@@ -25,8 +25,7 @@
         android:id="@+id/mainFragment"
         android:name="cat.itb.yapp.fragments.MainFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_main"
-        app:startDestination="@id/action_mainFragment_to_userListFragment">
+        tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_treatmentListFragment"
             app:destination="@id/treatmentListFragment" />
@@ -59,6 +58,9 @@
         <action
             android:id="@+id/action_treatmentFormFragment_to_selectUserFragment"
             app:destination="@id/selectUserFragment" />
+        <action
+            android:id="@+id/action_treatmentFormFragment_to_selectPatientFragment"
+            app:destination="@id/selectPatientFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentListFragment"
@@ -135,6 +137,11 @@
         android:name="cat.itb.yapp.fragments.list.SelectUserFragment"
         android:label="Select user"
         tools:layout="@layout/fragment_select_user" />
+    <fragment
+        android:id="@+id/selectPatientFragment"
+        android:name="cat.itb.yapp.fragments.list.SelectPatientFragment"
+        android:label="fragment_select_patient"
+        tools:layout="@layout/fragment_select_patient" />
     <fragment
         android:id="@+id/calendarFragment"
         android:name="cat.itb.yapp.fragments.CalendarFragment"
