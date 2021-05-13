@@ -1,6 +1,11 @@
 package cat.itb.yapp.fragments.forms;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,22 +15,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
-import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.utils.UtilsDatePicker;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -101,13 +102,18 @@ public class TreatmentFormFragment extends Fragment {
         });
         buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
         buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectPatientFragment));
-        buttonStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonStartDate.setText(LocalDate.now().toString());
-            }
-        });
+        buttonStartDate.setOnClickListener(v -> UtilsDatePicker.showDatePicker(this::dateSelected,
+                getParentFragmentManager()));
     }
+
+    private void dateSelected(Object o) {
+        LocalDate date =
+                Instant.ofEpochMilli((Long) o).atZone(ZoneId.systemDefault()).toLocalDate();
+
+        buttonStartDate.setText(date.toString());
+        treatment.setStartDate(date.toString());
+    }
+
 
     private boolean allRequiredCampsSet() {
         boolean allGood = true;
@@ -130,16 +136,13 @@ public class TreatmentFormFragment extends Fragment {
     }
 
     private void fillUpInfoInLayout(TreatmentDto treatment) {
-        buttonPatient.setText(treatment.getPatientFullName());
-        buttonSpecialist.setText(treatment.getSpecialistFullName());
-
         String startDate = treatment.getStartDate();
-        if (startDate == null) {
-            buttonStartDate.setText(R.string.select_start_date);
-        } else {
-            buttonStartDate.setText(startDate);
-        }
+        String patientName= treatment.getPatientFullName();
+        String specialistName = treatment.getSpecialistFullName();
 
+        if (startDate != null) buttonStartDate.setText(startDate);
+        if (patientName != null) buttonPatient.setText(treatment.getPatientFullName());
+        if (specialistName != null) buttonSpecialist.setText(treatment.getSpecialistFullName());
 
         editTextSessions.setText(treatment.getSessionsFinished());
         editTextReason.setText(treatment.getReason());
