@@ -77,19 +77,16 @@ public class UserListFragment extends Fragment {
 
 
         //TODO: if is admin go to view admin ...
-        Log.e("user", "id: " + MainActivity.getUser().getId());
-        Log.e("user", "username: " + MainActivity.getUser().getUsername());
 
         MainActivity.getUser().getRoles().forEach(rol -> {
             Log.e("user", "role: " + rol);
         });
 
-        RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
-        UserWebServiceClient userWebServiceClient = retrofitHttp.retrofit.create(UserWebServiceClient.class);
-
-        long specialistId = MainActivity.getUser().getId().longValue();
         //CHECK USER ROLE
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+            RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
+            UserWebServiceClient userWebServiceClient = retrofitHttp.retrofit.create(UserWebServiceClient.class);
+
             String endpointUserRole = "user/";
             Call<List<UserDto>> call = userWebServiceClient.getUsers(endpointUserRole);
             Log.e("user", "all users in clinic");
