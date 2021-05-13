@@ -199,11 +199,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
                 }
 
 
-
-
-                Log.e("calendar", "event.getName()");
-                Log.e("calendar", event.getName());
-                Log.e("calendar", "event.getName() end");
+                events.add(event);
             }
         }
         return events;
