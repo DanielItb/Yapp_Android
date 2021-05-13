@@ -111,11 +111,20 @@ public class TreatmentFormFragment extends Fragment {
 
     private boolean allRequiredCampsSet() {
         boolean allGood = true;
-
         String patientId = treatment.getPatientId();
         String specialistId = treatment.getSpecialistId();
+        CharSequence errorMsg = getText(R.string.must_fill);
 
-        if (patientId == null || specialistId == null) allGood = false;
+        if (patientId == null) {
+            allGood = false;
+            buttonPatient.setError(errorMsg);
+        } if (specialistId == null) {
+            allGood = false;
+            buttonSpecialist.setError(errorMsg);
+        } if (editTextSessions.getText().toString().isEmpty()) {
+            allGood= false;
+            editTextSessions.setError(errorMsg);
+        }
 
         return allGood;
     }
@@ -146,7 +155,7 @@ public class TreatmentFormFragment extends Fragment {
 
         Call<TreatmentDto> call = null;
         if (editing) call = webServiceClient.updateTreatment("treatment/" + treatment.getId(), createUpdateTreatmentDto);
-        else call = webServiceClient.addTreatment(createUpdateTreatmentDto); //TODO this
+        else call = webServiceClient.addTreatment(createUpdateTreatmentDto);
 
         call.enqueue(new Callback<TreatmentDto>() {
             @Override
