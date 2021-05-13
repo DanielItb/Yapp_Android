@@ -30,6 +30,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -148,16 +149,23 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(getContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
     }
+        private HashMap<Integer, MtsDto> allEvents = new HashMap<>() ;
 
+
+
+    @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (MainFragment.listMts == null){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        while (cont < 1) {
+        int i = 0;
+        if (cont < 1) {
+            System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
             for (MtsDto mts : MainFragment.listMts) {
-
                 String date = mts.getDate().replace('T', ' ');
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime mtsDate = LocalDateTime.parse(date, formatter);
@@ -173,7 +181,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
                 Calendar startTime = Calendar.getInstance();
                 startTime.set(Calendar.HOUR_OF_DAY, hour);
                 startTime.set(Calendar.MINUTE, min);
-//                startTime.set(Calendar.DAY_OF_MONTH, day);
+                startTime.set(Calendar.DAY_OF_MONTH, day);
                 startTime.set(Calendar.MONTH, month - 1);
                 startTime.set(Calendar.YEAR, year);
 
@@ -190,15 +198,19 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
                     event.setColor(getResources().getColor(R.color.mtsAfter));
                 }
 
-                events.add(event);
 
-                System.out.println("Ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
 
-                cont++;
+
+                Log.e("calendar", "event.getName()");
+                Log.e("calendar", event.getName());
+                Log.e("calendar", "event.getName() end");
             }
         }
         return events;
     }
+
+
+
 
     protected String getEventTitle(java.util.Calendar time) {
         return String.format("Event of %02d:%02d %s/%d", time.get(java.util.Calendar.HOUR_OF_DAY), time.get(java.util.Calendar.MINUTE), time.get(java.util.Calendar.MONTH) + 1, time.get(java.util.Calendar.DAY_OF_MONTH));
@@ -226,6 +238,9 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
             }
         });
     }
+
+
+
 
 
     /*https://github.com/alamkanak/Android-Week-View/tree/develop/sample/src/main*/
