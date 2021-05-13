@@ -46,7 +46,9 @@
             android:id="@+id/sessionsEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="number" />
+            android:inputType="number"
+            android:text="0"
+            tools:ignore="HardcodedText" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

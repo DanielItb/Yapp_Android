@@ -153,7 +153,6 @@ public class TreatmentFormFragment extends Fragment {
             public void onResponse(Call<TreatmentDto> call, Response<TreatmentDto> response) {
                 Log.d("treatmentFrom", response.toString());
                 navController.popBackStack();
-
             }
 
             @Override
