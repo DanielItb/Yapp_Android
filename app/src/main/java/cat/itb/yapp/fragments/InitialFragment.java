@@ -14,22 +14,28 @@ import com.google.android.material.button.MaterialButton;
 
 import cat.itb.yapp.R;
 
-public class WelcomeFragment extends Fragment {
-    private MaterialButton continueButton;
+
+public class InitialFragment extends Fragment {
+    private MaterialButton registerButton, loginButton;
     private NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_welcome, container, false);
-        continueButton = v.findViewById(R.id.continueWelcomeButton);
+        View v = inflater.inflate(R.layout.fragment_initial, container, false);
 
-        continueButton.setOnClickListener(v1 -> navController.navigate(R.id.action_welcomeFragment_to_registerFormFragment));
+        registerButton = v.findViewById(R.id.registerInitialButton);
+        loginButton = v.findViewById(R.id.loginInitialButton);
+
+        registerButton.setOnClickListener(v1 -> navController.navigate(R.id.action_initialFragment_to_welcomeFragment));
+        loginButton.setOnClickListener(v1 -> navController.navigate(R.id.action_initialFragment_to_loginFragment));
         return v;
     }
+
 }

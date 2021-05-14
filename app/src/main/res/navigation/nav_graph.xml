@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/initialFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -121,7 +121,11 @@
         android:id="@+id/welcomeFragment"
         android:name="cat.itb.yapp.fragments.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" />
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_registerFormFragment"
+            app:destination="@id/registerFormFragment" />
+    </fragment>
     <fragment
         android:id="@+id/reportFormFragment"
         android:name="cat.itb.yapp.fragments.forms.ReportFormFragment"
@@ -163,5 +167,26 @@
         <action
             android:id="@+id/action_calendarFragment_to_mtsFormFragment"
             app:destination="@id/mtsFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/initialFragment"
+        android:name="cat.itb.yapp.fragments.InitialFragment"
+        android:label="fragment_initial"
+        tools:layout="@layout/fragment_initial" >
+        <action
+            android:id="@+id/action_initialFragment_to_welcomeFragment"
+            app:destination="@id/welcomeFragment" />
+        <action
+            android:id="@+id/action_initialFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFormFragment"
+        android:name="cat.itb.yapp.fragments.forms.RegisterFormFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register_form" >
+        <action
+            android:id="@+id/action_registerFormFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 </navigation>
