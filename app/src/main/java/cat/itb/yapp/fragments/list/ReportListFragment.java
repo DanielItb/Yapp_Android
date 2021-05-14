@@ -42,16 +42,18 @@ public class ReportListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
-        getReports();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_report_list, container, false);
         recyclerView = v.findViewById(R.id.recyclerReport);
+        getReports();
         FloatingActionButton fab = v.findViewById(R.id.fabReport);
 
         fab.setOnClickListener(this::fabClicked);
+
+        if (reportList != null) setUpRecycler(recyclerView);
 
         return v;
     }
@@ -65,7 +67,6 @@ public class ReportListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         ReportAdapter adapter = new ReportAdapter(reportList, ReportListFragment.this::loadForm);
         recyclerView.setAdapter(adapter);
-
     }
 
 //

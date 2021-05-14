@@ -40,13 +40,15 @@ public class UserListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
-        getUsers();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_user_list, container, false);
+
         recyclerView = v.findViewById(R.id.recyclerUser);
+        getUsers();
+
         FloatingActionButton fab = v.findViewById(R.id.fabUsers);
 
         fab.setOnClickListener(this::fabClicked);
@@ -117,6 +119,7 @@ public class UserListFragment extends Fragment {
             }
 
         } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
+            
             Log.e("user", "estoy");
             listUsers = new ArrayList<>(1);
             listUsers.add(MainActivity.getUserDto());
