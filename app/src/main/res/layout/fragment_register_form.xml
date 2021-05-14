@@ -226,26 +226,29 @@
 
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancelClinicButtonRegister"
-                style="@style/CancelButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/saveClinicButtonRegister"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneClinicInputLayoutRegister"/>
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/cancelClinicButtonRegister"-->
+<!--                style="@style/CancelButton"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/saveClinicButtonRegister"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/phoneClinicInputLayoutRegister"/>-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/saveClinicButtonRegister"
                 style="@style/SaveButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
+                android:text="@string/register"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneClinicInputLayoutRegister" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
