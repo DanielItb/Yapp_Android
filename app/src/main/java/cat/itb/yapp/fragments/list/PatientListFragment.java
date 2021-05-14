@@ -65,7 +65,7 @@ public class PatientListFragment extends Fragment {
     private void fabClicked(View view) {
         navController.navigate(R.id.action_patientListFragment_to_patientFormFragment);
     }
-
+//
     private void setUpRecycler(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         PatientAdapter adapter = new PatientAdapter(patientList, this::recyclerItemClicked);

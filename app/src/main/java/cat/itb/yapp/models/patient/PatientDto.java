@@ -1,9 +1,11 @@
 package cat.itb.yapp.models.patient;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class PatientDto {
+public class PatientDto implements Serializable {
     private Integer id;
     private String name;
     private String surname;
