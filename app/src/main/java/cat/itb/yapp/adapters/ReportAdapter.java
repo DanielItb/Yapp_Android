@@ -3,6 +3,7 @@ package cat.itb.yapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,20 +16,34 @@ import cat.itb.yapp.models.user.User;
 
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> {
     private List<ReportDto> listReport;
+    private RecyclerItemClickListener recyclerItemClickListener;
 
-    public ReportAdapter(List<ReportDto> listReport) {
+    public ReportAdapter(List<ReportDto> listReport, RecyclerItemClickListener recyclerItemClickListener) {
         this.listReport = listReport;
+        this.recyclerItemClickListener = recyclerItemClickListener;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView patientNameReportTextView, diagnosisReportTextView;
+        private RecyclerItemClickListener recyclerItemClickListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, RecyclerItemClickListener recyclerItemClickListener) {
             super(itemView);
-            //Todo instanciar elementos del item
+            this.recyclerItemClickListener = recyclerItemClickListener;
+            patientNameReportTextView = itemView.findViewById(R.id.patientNameReportTextView);
+            diagnosisReportTextView = itemView.findViewById(R.id.diagnosisReportTextView);
+
+            itemView.setOnClickListener(this);
         }
 
         public void binData(ReportDto report){
-            //todo introducir los datos en los elementos
+            patientNameReportTextView.setText(report.getPatientFullName());
+            diagnosisReportTextView.setText(report.getDiagnosis());
+        }
+
+        @Override
+        public void onClick(View v) {
+            recyclerItemClickListener.onRecyclerItemClick(getAdapterPosition());
         }
     }
 
@@ -36,7 +51,7 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.report_list_item, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, recyclerItemClickListener);
     }
 
     @Override

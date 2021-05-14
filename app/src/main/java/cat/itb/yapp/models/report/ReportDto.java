@@ -1,9 +1,11 @@
 package cat.itb.yapp.models.report;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class ReportDto {
+public class ReportDto implements Serializable {
     private String id;
     private String diagnosis;
     private String objectives;

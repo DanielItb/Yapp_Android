@@ -27,7 +27,7 @@
     <string name="rol">Rol</string>
     <string name="specialist_type">Specialist Type</string>
     <string name="collegiate_number">Collegiate Number</string>
-    <string name="patient">PATIENT</string>
+    <string name="patient">Patient: </string>
     <string name="user">USER</string>
     <string name="treatments">Treatments</string>
     <string name="center">Clinic</string>
@@ -64,6 +64,7 @@
     <string name="username_user_list_item">Username:</string>
     <string name="surname_user_item_list">Surname:</string>
     <string name="diagnosis">Diagnosis</string>
+    <string name="diagnosis_item_list">Diagnosis: </string>
     <string name="objetives">Objetives</string>
     <string name="error_saving">Error saving the data</string>
     <string name="must_fill">Must be filled</string>

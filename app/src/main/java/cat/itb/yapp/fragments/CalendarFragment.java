@@ -200,6 +200,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
 
                 events.add(event);
+                cont++;
             }
         }
         return events;
