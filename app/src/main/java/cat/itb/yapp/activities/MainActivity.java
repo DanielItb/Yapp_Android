@@ -78,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
             toolbar.setVisibility(View.GONE);
         } else if (navDestination.getId() == R.id.mainFragment) {
             toolbar.setVisibility(View.VISIBLE);
+        }else if (navDestination.getId() == R.id.initialFragment){
+            toolbar.setVisibility(View.GONE);
+        }else if (navDestination.getId() == R.id.registerFormFragment){
+            toolbar.setVisibility(View.VISIBLE);
+        }else if (navDestination.getId() == R.id.welcomeFragment){
+            toolbar.setVisibility(View.GONE);
         }
     }
 

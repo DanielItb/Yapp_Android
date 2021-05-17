@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".fragments.WelcomeFragment"
     android:background="@color/white"
-    android:layout_marginHorizontal="20dp">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
