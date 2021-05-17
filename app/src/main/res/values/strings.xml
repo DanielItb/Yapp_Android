@@ -68,6 +68,7 @@
     <string name="objetives">Objetives</string>
     <string name="error_saving">Error saving the data</string>
     <string name="must_fill">Must be filled</string>
+    <string name="select_treatment">Select Treatment</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
