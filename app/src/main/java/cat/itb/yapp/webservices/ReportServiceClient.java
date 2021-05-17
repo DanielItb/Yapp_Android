@@ -2,12 +2,8 @@ package cat.itb.yapp.webservices;
 
 import java.util.List;
 
-import cat.itb.yapp.models.auth.LoginDto;
-import cat.itb.yapp.models.report.CreateReportDto;
+import cat.itb.yapp.models.report.CreateUpdateReportDto;
 import cat.itb.yapp.models.report.ReportDto;
-import cat.itb.yapp.models.report.ReportUserViewDto;
-import cat.itb.yapp.models.report.UpdateReportDto;
-import cat.itb.yapp.models.treatment.TreatmentDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -29,10 +25,10 @@ public interface ReportServiceClient {
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("report/")
-    Call<ReportUserViewDto> addReport(@Body CreateReportDto createReportDto);
+    Call<ReportDto> addReport(@Body CreateUpdateReportDto createUpdateReportDto);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @PUT()
-    Call<ReportUserViewDto> updateDto(@Url String url, @Body UpdateReportDto updateReportDto);
+    Call<ReportDto> updateDto(@Url String url, @Body CreateUpdateReportDto createUpdateReportDto);
 
 }

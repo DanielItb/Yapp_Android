@@ -13,14 +13,21 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.time.LocalDateTime;
+
 import cat.itb.yapp.R;
+import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.models.report.CreateUpdateReportDto;
 import cat.itb.yapp.models.report.ReportDto;
-import cat.itb.yapp.models.report.UpdateReportDto;
-import cat.itb.yapp.models.treatment.TreatmentDto;
+import cat.itb.yapp.webservices.ReportServiceClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ReportFormFragment extends Fragment {
     private NavController navController;
@@ -38,7 +45,7 @@ public class ReportFormFragment extends Fragment {
         final FragmentManager fragmentManager = getParentFragmentManager();
 
         fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
-            reportDto.setSpecialistId(String.valueOf(bundle.getLong("userId"))); //TODO Remove parse
+            reportDto.setSpecialistId(bundle.getLong("userId")); //TODO Remove parse
             String fullName = bundle.getString("fullName");
             String specialistType = bundle.getString("specialistType");
 
@@ -50,7 +57,7 @@ public class ReportFormFragment extends Fragment {
         });
 
         fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
-            reportDto.setPatientId(String.valueOf(bundle.getInt("patientId"))); //TODO Remove parse
+            reportDto.setPatientId(bundle.getInt("patientId")); //TODO Remove parse
             String fullName = bundle.getString("fullName");
             reportDto.setPatientFullName(fullName);
             buttonPatient.setText(fullName);
@@ -86,6 +93,7 @@ public class ReportFormFragment extends Fragment {
                 fillUpInfoInLayout(reportDto);
             } else { // If new
                 reportDto = new ReportDto();
+                reportDto.setDate(LocalDateTime.now().toString());
                 editing = false;
             }
         } else { //If new
@@ -102,35 +110,49 @@ public class ReportFormFragment extends Fragment {
     }
 
     private void save() {
-        if (editing) saveEdited();
-        else saveNew();
+        final CreateUpdateReportDto createUpdateReportDto = getCreateUpdateReportFromFrontEnd();
+
+        ReportServiceClient reportServiceClient = MainActivity.getRetrofitHttp()
+                .retrofit.create(ReportServiceClient.class);
+
+        Call<ReportDto> call;
+        if (editing) call = reportServiceClient.updateDto("report/" + reportDto.getId(),
+                createUpdateReportDto);
+        else call = reportServiceClient.addReport(createUpdateReportDto);
+
+        call.enqueue(new Callback<ReportDto>() {
+            @Override
+            public void onResponse(Call<ReportDto> call, Response<ReportDto> response) {
+                if (response.isSuccessful()) {
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReportDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
-    private void saveNew() {
-        final UpdateReportDto updateReportDto = getUpdateReportDto(reportDto);
-    }
+    private CreateUpdateReportDto getCreateUpdateReportFromFrontEnd() {
+        CreateUpdateReportDto createUpdateReportDto = new CreateUpdateReportDto();
 
-    private void saveEdited() {
-    }
+        createUpdateReportDto.setDiagnosis(editTextDiagnosis.getText().toString());
+        createUpdateReportDto.setObjectives(editTextObjectives.getText().toString());
+        createUpdateReportDto.setTreatmentId(reportDto.getTreatmentId());
+        createUpdateReportDto.setDate(reportDto.getDate()); //Todo get date on new dto
 
-    private UpdateReportDto getUpdateReportDto(ReportDto reportDto) {
-        UpdateReportDto updateReportDto = new UpdateReportDto();
-
-        updateReportDto.setActive(switchActive.getShowText());
-        updateReportDto.setDate(reportDto.getDate());//todo Date?
-        updateReportDto.setDiagnosis(reportDto.getDiagnosis());
-        updateReportDto.setDiagnosis(reportDto.getDiagnosis());
-
-
-        //TODO finish this
-        return updateReportDto;
+        return createUpdateReportDto;
     }
 
     private boolean allRequiredCampsSet() {
         boolean allGood = true;
-        String patientId = reportDto.getPatientId();
-        String specialistId = reportDto.getSpecialistId();
+        Integer patientId = reportDto.getPatientId();
+        Long specialistId = reportDto.getSpecialistId();
         CharSequence errorMsg = getText(R.string.must_fill);
 
         if (patientId == null) {

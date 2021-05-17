@@ -6,13 +6,14 @@ import lombok.Data;
 
 @Data
 public class ReportDto implements Serializable {
-    private String id;
+    private Integer id;
     private String diagnosis;
     private String objectives;
     private String date;
-    private String patientId;
+    private Integer patientId;
     private String patientFullName;
-    private String specialistId;
+    private Long specialistId;
     private String specialistFullName;
     private String specialistType;
+    private Integer treatmentId;
 }
