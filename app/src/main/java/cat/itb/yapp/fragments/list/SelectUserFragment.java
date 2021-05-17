@@ -63,6 +63,7 @@ public class SelectUserFragment extends Fragment {
 
         result.putLong("userId", user.getId());
         result.putString("fullName", user.getName() + " " + user.getSurnames());
+        result.putString("specialistType", user.getSpecialistType());
 
         getParentFragmentManager().setFragmentResult("userId", result);
         navController.popBackStack();

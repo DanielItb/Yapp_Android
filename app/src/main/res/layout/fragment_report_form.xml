@@ -33,6 +33,8 @@
         android:id="@+id/specialistTypeReportTextInput"
         style="@style/TextInputStyle"
         android:hint="@string/specialist_type"
+        app:endIconCheckable="false"
+        app:endIconMode="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectSpecialistReportButton">
@@ -41,6 +43,7 @@
             android:id="@+id/specialistTypeReportEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:focusable="false"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
 

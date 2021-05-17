@@ -24,7 +24,7 @@ import cat.itb.yapp.models.treatment.TreatmentDto;
 
 public class ReportFormFragment extends Fragment {
     private NavController navController;
-    private TextInputEditText editTextDiagnosis, editTextObjectives;
+    private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialist;
     private MaterialButton buttonPatient, buttonSpecialist, buttonCancel, buttonSave;
     private SwitchCompat switchActive;
     private ReportDto reportDto = null;
@@ -40,16 +40,21 @@ public class ReportFormFragment extends Fragment {
         fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
             reportDto.setSpecialistId(String.valueOf(bundle.getLong("userId"))); //TODO Remove parse
             String fullName = bundle.getString("fullName");
+            String specialistType = bundle.getString("specialistType");
+
             reportDto.setSpecialistFullName(fullName);
+            reportDto.setSpecialistType(specialistType);
+
             buttonSpecialist.setText(fullName);
+            editTextSpecialist.setText(specialistType);
         });
+
         fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
             reportDto.setPatientId(String.valueOf(bundle.getInt("patientId"))); //TODO Remove parse
             String fullName = bundle.getString("fullName");
             reportDto.setPatientFullName(fullName);
             buttonPatient.setText(fullName);
         });
-
     }
 
     @Override
@@ -63,6 +68,7 @@ public class ReportFormFragment extends Fragment {
         buttonCancel = v.findViewById(R.id.cancelReportButton);
         buttonSave = v.findViewById(R.id.saveReportButton);
         switchActive = v.findViewById(R.id.simpleSwitchReport);
+        editTextSpecialist = v.findViewById(R.id.specialistTypeReportEditText);
 
 
         return v;
@@ -134,7 +140,7 @@ public class ReportFormFragment extends Fragment {
             allGood = false;
             buttonSpecialist.setError(errorMsg);
         } if (editTextDiagnosis.getText().toString().isEmpty()) {
-            allGood= false; //TODO podemos mandarlo vacio?
+            allGood= false;
             editTextDiagnosis.setError(errorMsg);
         } if(editTextObjectives.getText().toString().isEmpty()) {
             allGood= false;
@@ -153,8 +159,7 @@ public class ReportFormFragment extends Fragment {
 
         if (patientName != null) buttonPatient.setText(patientName);
         if (specialistName != null) buttonSpecialist.setText(specialistName);
-        //TODO diagnosis
-        //if (specialistType != null)
+        if (specialistType != null) editTextSpecialist.setText(reportDto.getSpecialistType());
         if (diagnosis != null) editTextDiagnosis.setText(diagnosis);
         if (objectives != null) editTextObjectives.setText(objectives);
 
