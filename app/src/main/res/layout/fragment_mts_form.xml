@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/selectPatientMtsButton" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/startDateButton"
+        android:id="@+id/startDateMtsButton"
         style="@style/DateSelectorButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,10 +45,10 @@
         android:hint="@string/reason"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDateButton">
+        app:layout_constraintTop_toBottomOf="@+id/startDateMtsButton">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/MtsReasonEditText"
+            android:id="@+id/mtsReasonEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine"

@@ -152,7 +152,7 @@ public class ReportFormFragment extends Fragment {
 
     private void fillUpInfoInLayout(ReportDto reportDto) {
         String patientName = reportDto.getPatientFullName();
-        String specialistName = reportDto.getPatientFullName();
+        String specialistName = reportDto.getSpecialistFullName();
         String specialistType = reportDto.getSpecialistType();
         String diagnosis = reportDto.getDiagnosis();
         String objectives = reportDto.getObjectives();

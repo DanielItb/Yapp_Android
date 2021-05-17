@@ -115,12 +115,24 @@
     <fragment
         android:id="@+id/mtsFormFragment"
         android:name="cat.itb.yapp.fragments.forms.MtsFormFragment"
-        android:label="fragment_mts_form"
-        tools:layout="@layout/fragment_mts_form" />
+        android:label="Mts detail"
+        tools:layout="@layout/fragment_mts_form" >
+        <argument
+            android:name="MtsDto"
+            android:defaultValue="@null"
+            app:argType="cat.itb.yapp.models.mts.MtsDto"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_mtsFormFragment_to_selectUserFragment"
+            app:destination="@id/selectUserFragment" />
+        <action
+            android:id="@+id/action_mtsFormFragment_to_selectPatientFragment"
+            app:destination="@id/selectPatientFragment" />
+    </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="cat.itb.yapp.fragments.WelcomeFragment"
-        android:label="fragment_welcome"
+        android:label="Welcome to YAPP"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_registerFormFragment"
@@ -129,7 +141,7 @@
     <fragment
         android:id="@+id/reportFormFragment"
         android:name="cat.itb.yapp.fragments.forms.ReportFormFragment"
-        android:label="fragment_report_form"
+        android:label="Report detail"
         tools:layout="@layout/fragment_report_form">
         <argument
             android:name="ReportDto"
@@ -147,7 +159,7 @@
     <fragment
         android:id="@+id/patientFormFragment"
         android:name="cat.itb.yapp.fragments.forms.PatientFormFragment"
-        android:label="fragment_patient_profile"
+        android:label="Patient profile"
         tools:layout="@layout/fragment_patient_profile" >
         <argument
             android:name="PatientDto"
@@ -163,12 +175,12 @@
     <fragment
         android:id="@+id/selectPatientFragment"
         android:name="cat.itb.yapp.fragments.list.SelectPatientFragment"
-        android:label="fragment_select_patient"
+        android:label="Select patient"
         tools:layout="@layout/fragment_select_patient" />
     <fragment
         android:id="@+id/calendarFragment"
         android:name="cat.itb.yapp.fragments.CalendarFragment"
-        android:label="fragment_calendar"
+        android:label="Mts Calendar"
         tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_mtsFormFragment"
