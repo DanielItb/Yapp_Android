@@ -136,6 +136,12 @@
             android:defaultValue="@null"
             app:argType="cat.itb.yapp.models.report.ReportDto"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_reportFormFragment_to_selectUserFragment"
+            app:destination="@id/selectUserFragment" />
+        <action
+            android:id="@+id/action_reportFormFragment_to_selectPatientFragment"
+            app:destination="@id/selectPatientFragment" />
     </fragment>
 
     <fragment
