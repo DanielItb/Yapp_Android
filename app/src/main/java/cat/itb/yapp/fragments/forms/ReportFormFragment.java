@@ -32,9 +32,9 @@ import retrofit2.Response;
 public class ReportFormFragment extends Fragment {
     private NavController navController;
     private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialist;
-    private MaterialButton buttonPatient, buttonSpecialist, buttonCancel, buttonSave;
-    private SwitchCompat switchActive;
+    private MaterialButton buttonPatient, buttonSpecialist, buttonTreatment, buttonCancel, buttonSave;
     private ReportDto reportDto = null;
+    private String reason = null;
     private boolean editing;
 
     @Override
@@ -62,6 +62,13 @@ public class ReportFormFragment extends Fragment {
             reportDto.setPatientFullName(fullName);
             buttonPatient.setText(fullName);
         });
+
+        fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
+            reason = bundle.getString("reason");
+            reportDto.setTreatmentId(Integer.valueOf(bundle.getString("treatmentId")));
+
+            buttonTreatment.setText(reason);
+        }));
     }
 
     @Override
@@ -74,8 +81,8 @@ public class ReportFormFragment extends Fragment {
         buttonSpecialist = v.findViewById(R.id.selectSpecialistReportButton);
         buttonCancel = v.findViewById(R.id.cancelReportButton);
         buttonSave = v.findViewById(R.id.saveReportButton);
-        switchActive = v.findViewById(R.id.simpleSwitchReport);
         editTextSpecialist = v.findViewById(R.id.specialistTypeReportEditText);
+        buttonTreatment = v.findViewById(R.id.selectTreatmentButton);
 
 
         return v;
@@ -107,6 +114,7 @@ public class ReportFormFragment extends Fragment {
 
         buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectUserFragment));
         buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectPatientFragment));
+        buttonTreatment.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectTreatmentFragment));
     }
 
     private void save() {
@@ -184,8 +192,6 @@ public class ReportFormFragment extends Fragment {
         if (specialistType != null) editTextSpecialist.setText(reportDto.getSpecialistType());
         if (diagnosis != null) editTextDiagnosis.setText(diagnosis);
         if (objectives != null) editTextObjectives.setText(objectives);
-
-        //TODO active button
-
+        if (reason != null) buttonTreatment.setText(reason);
     }
 }

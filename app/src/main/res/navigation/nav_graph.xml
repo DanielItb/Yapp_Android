@@ -142,6 +142,9 @@
         <action
             android:id="@+id/action_reportFormFragment_to_selectPatientFragment"
             app:destination="@id/selectPatientFragment" />
+        <action
+            android:id="@+id/action_reportFormFragment_to_selectTreatmentFragment"
+            app:destination="@id/selectTreatmentFragment" />
     </fragment>
 
     <fragment
@@ -195,4 +198,9 @@
             android:id="@+id/action_registerFormFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/selectTreatmentFragment"
+        android:name="cat.itb.yapp.fragments.list.SelectTreatmentFragment"
+        android:label="fragment_select_treatment"
+        tools:layout="@layout/fragment_select_treatment" />
 </navigation>
