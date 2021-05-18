@@ -14,14 +14,13 @@ public class PatientDto implements Serializable {
     private String email;
     private String urlPhoto;
     //
+    private String dateOfBirth;
     private Float age;
     private String homeAddress;
     private String schoolName;
     private String course;
     private String paymentType;
-    private boolean active = true;
     //clinic
     private Integer clinicId;
-    private String clinicName;
 
 }

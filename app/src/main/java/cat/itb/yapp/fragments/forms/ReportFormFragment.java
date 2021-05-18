@@ -103,7 +103,7 @@ public class ReportFormFragment extends Fragment {
                 reportDto.setDate(LocalDateTime.now().toString());
                 editing = false;
             }
-        } else { //If new
+        } else { //If load data
             fillUpInfoInLayout(reportDto);
         }
 

@@ -73,7 +73,7 @@ public class TreatmentFormFragment extends Fragment {
         buttonStartDate = v.findViewById(R.id.startDateButton);
         buttonCancel = v.findViewById(R.id.cancelButton);
         buttonSave = v.findViewById(R.id.saveButton);
-        switchActive = v.findViewById(R.id.simpleSwitch);
+//        switchActive = v.findViewById(R.id.simpleSwitch);
 
         return v;
     }
@@ -177,7 +177,7 @@ public class TreatmentFormFragment extends Fragment {
     private CreateUpdateTreatmentDto getTreatment() {
         CreateUpdateTreatmentDto createUpdateTreatmentDto = new CreateUpdateTreatmentDto();
 
-        createUpdateTreatmentDto.setActive(switchActive.getShowText());
+//        createUpdateTreatmentDto.setActive(switchActive.getShowText());
         createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId())); //TODO remove parse
         createUpdateTreatmentDto.setReason(editTextReason.getText().toString());
         createUpdateTreatmentDto.setSessionsFinished(Integer.parseInt(editTextSessions.getText().toString()));
