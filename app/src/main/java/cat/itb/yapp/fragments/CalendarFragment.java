@@ -247,9 +247,6 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
             Log.e("user", "role: " + rol);
         });
 
-        final List<MtsDto>[] mtsDtoList = new List[]{new ArrayList<>()};
-
-
         RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
         MtsServiceClient mtsServiceClient = retrofitHttp.retrofit.create(MtsServiceClient.class);
 
@@ -287,16 +284,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
                         mWeekView.notifyDatasetChanged();
 
-
                         listMts.forEach(object -> Log.d("mtsLisit", object.toString()));
-//                        setUpRecycler(recyclerView);
-//                        UserAdapter adapter = new UserAdapter(listUsers);
-//                        recyclerView.setAdapter(adapter);
-
-                        mtsDtoList[0].forEach(t -> {
-                            Log.e("mts", "status response: " + t.toString());
-                        });
-
                     } else {
                         Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get mts by specialistId", Toast.LENGTH_SHORT).show();
                         Log.e("mts", "status response: " + response.code()); //401 Unauthorized
