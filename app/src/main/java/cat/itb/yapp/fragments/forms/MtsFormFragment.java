@@ -1,6 +1,13 @@
 package cat.itb.yapp.fragments.forms;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,25 +17,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Calendar;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.mts.MtsCreateUpdateDto;
 import cat.itb.yapp.models.mts.MtsDto;
-import cat.itb.yapp.models.report.ReportDto;
-import cat.itb.yapp.models.report.UpdateReportDto;
-import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
-import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.webservices.MtsServiceClient;
-import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +42,6 @@ public class MtsFormFragment extends Fragment {
     private SwitchCompat switchActive;
     private MtsDto mtsDto = null;
     private boolean editing;
-
 
 
     @Override
@@ -82,6 +83,8 @@ public class MtsFormFragment extends Fragment {
         saveButton = v.findViewById(R.id.saveMtsButton);
         cancelButton = v.findViewById(R.id.cancelMtsButton);
         reasonEditText = v.findViewById(R.id.mtsReasonEditText);
+
+        dateButton.setOnClickListener(this::datePicker);
         return v;
     }
 
@@ -125,11 +128,11 @@ public class MtsFormFragment extends Fragment {
         int treatmentId = mtsDto.getTratmentId();
 
 
-
         if (patientName != null) patientButton.setText(patientName);
         if (specialistName != null) specialistButton.setText(specialistName);
         if (reason != null) reasonEditText.setText(reason);
         if (date != null) dateButton.setText(date);
+
 
     }
 
@@ -142,11 +145,13 @@ public class MtsFormFragment extends Fragment {
         if (patientId == null) {
             allGood = false;
             patientButton.setError(errorMsg);
-        } if (specialistId == null) {
+        }
+        if (specialistId == null) {
             allGood = false;
             specialistButton.setError(errorMsg);
-        } if (reasonEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (reasonEditText.getText().toString().isEmpty()) {
+            allGood = false;
             reasonEditText.setError(errorMsg);
         }
 
@@ -159,17 +164,19 @@ public class MtsFormFragment extends Fragment {
         MtsServiceClient webServiceClient = MainActivity.getRetrofitHttp()
                 .retrofit.create(MtsServiceClient.class);
 
+
         Call<MtsDto> call = null;
-        if (editing) call = webServiceClient.updateMts("medicalsheet/" + mtsDto.getId(), mtsCreateUpdateDto);
+        if (editing)
+            call = webServiceClient.updateMts("medicalsheet/" + mtsDto.getId(), mtsCreateUpdateDto);
         else call = webServiceClient.addMts(mtsCreateUpdateDto);
 
         call.enqueue(new Callback<MtsDto>() {
             @Override
             public void onResponse(Call<MtsDto> call, Response<MtsDto> response) {
                 Log.d("mtsFrom", response.toString());
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     navController.popBackStack();
-                }else{
+                } else {
                     Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
                 }
 
@@ -196,5 +203,84 @@ public class MtsFormFragment extends Fragment {
     }
 
 
+    public void datePicker(View v) {
+        MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+        builder.setTitleText("Select date: ");
+        CalendarConstraints.DateValidator dateValidator = DateValidatorPointForward.now();
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        constraintsBuilder.setValidator(dateValidator);
+        builder.setCalendarConstraints(constraintsBuilder.build());
+        final MaterialDatePicker<Long> picker = builder.build();
+        picker.show(getChildFragmentManager(), picker.toString());
+        if (picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
+            @Override
+            public void onPositiveButtonClick(Long selection) {
+                Calendar today = Calendar.getInstance();
+                long now = today.getTimeInMillis();
 
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(selection);
+           
+                int year = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH) + 1;
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                String finalMonth;
+                String finalDay;
+
+                if (mMonth < 10){
+                    finalMonth = "0" + mMonth;
+                }else{
+                    finalMonth = String.valueOf(mMonth);
+                }
+
+                if (mDay < 10){
+                    finalDay = "0" + mDay;
+                }else{
+                    finalDay = String.valueOf(mDay);
+                }
+                String date = year + "-" + finalMonth + "-" + finalDay;
+
+                timePicker(date);
+            }
+        })) ;
+    }
+
+
+    public void timePicker(String date) {
+            // Get Current Time
+            int mHour = 0;
+            int mMinute = 0;
+
+            // Launch Time Picker Dialog
+            TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                    String finalHour;
+                    String finalMinute;
+
+                    if (hourOfDay < 10){
+                        finalHour = "0" + hourOfDay;
+                    }else{
+                        finalHour = String.valueOf(hourOfDay);
+                    }
+
+                    if (minute < 10){
+                        finalMinute = "0" + minute;
+                    }else{
+                        finalMinute = String.valueOf(minute);
+                    }
+                    
+                    String finalDate = date + "T" + finalHour + ":" + finalMinute + ":00" ;
+                    dateButton.setText(finalDate);
+                    mtsDto.setDate(finalDate);
+
+                }
+            }, mHour, mMinute, false);
+            timePickerDialog.show();
+    }
 }
+
+
+
+
