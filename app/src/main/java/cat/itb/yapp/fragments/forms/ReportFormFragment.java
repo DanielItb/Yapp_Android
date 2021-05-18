@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import cat.itb.yapp.R;
@@ -31,7 +33,8 @@ import retrofit2.Response;
 
 public class ReportFormFragment extends Fragment {
     private NavController navController;
-    private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialist;
+    private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialist, editTextDate;
+    private TextInputLayout textInputDate;
     private MaterialButton buttonPatient, buttonSpecialist, buttonTreatment, buttonCancel, buttonSave;
     private ReportDto reportDto = null;
     private String reason = null;
@@ -83,6 +86,8 @@ public class ReportFormFragment extends Fragment {
         buttonSave = v.findViewById(R.id.saveReportButton);
         editTextSpecialist = v.findViewById(R.id.specialistTypeReportEditText);
         buttonTreatment = v.findViewById(R.id.selectTreatmentButton);
+        editTextDate = v.findViewById(R.id.dateReportEditText);
+        textInputDate = v.findViewById(R.id.dateReportInputLayout);
 
 
         return v;
@@ -100,8 +105,9 @@ public class ReportFormFragment extends Fragment {
                 fillUpInfoInLayout(reportDto);
             } else { // If new
                 reportDto = new ReportDto();
-                reportDto.setDate(LocalDateTime.now().toString());
+                reportDto.setDate(LocalDate.now().toString());
                 editing = false;
+                fillUpInfoInLayout(reportDto);
             }
         } else { //If new
             fillUpInfoInLayout(reportDto);
@@ -115,6 +121,7 @@ public class ReportFormFragment extends Fragment {
         buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectUserFragment));
         buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectPatientFragment));
         buttonTreatment.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectTreatmentFragment));
+        editTextDate.setOnClickListener(v -> editTextDate.setText("test")); //Todo
     }
 
     private void save() {
@@ -186,6 +193,7 @@ public class ReportFormFragment extends Fragment {
         String specialistType = reportDto.getSpecialistType();
         String diagnosis = reportDto.getDiagnosis();
         String objectives = reportDto.getObjectives();
+        String date = reportDto.getDate();
 
         if (patientName != null) buttonPatient.setText(patientName);
         if (specialistName != null) buttonSpecialist.setText(specialistName);
@@ -193,5 +201,6 @@ public class ReportFormFragment extends Fragment {
         if (diagnosis != null) editTextDiagnosis.setText(diagnosis);
         if (objectives != null) editTextObjectives.setText(objectives);
         if (reason != null) buttonTreatment.setText(reason);
+        if (date != null) editTextDate.setText(date);
     }
 }

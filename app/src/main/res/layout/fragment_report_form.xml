@@ -1,108 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.forms.ReportFormFragment"
-    android:paddingVertical="20dp">
+    tools:context=".fragments.forms.ReportFormFragment">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectPatientReportButton"
-        style="@style/DateSelectorButton"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/select_patient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingVertical="20dp">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectSpecialistReportButton"
-        style="@style/DateSelectorButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/select_specialist"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectPatientReportButton" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectTreatmentButton"
-        style="@style/DateSelectorButton"
-        android:text="@string/select_treatment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/selectSpecialistReportButton" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/specialistTypeReportTextInput"
-        style="@style/TextInputStyle"
-        android:hint="@string/specialist_type"
-        app:endIconCheckable="false"
-        app:endIconMode="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectTreatmentButton">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/specialistTypeReportEditText"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectPatientReportButton"
+            style="@style/DateSelectorButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_patient" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectSpecialistReportButton"
+            style="@style/DateSelectorButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_specialist" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/selectTreatmentButton"
+            style="@style/DateSelectorButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_treatment" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/specialistTypeReportTextInput"
+            style="@style/TextInputStyle"
+            android:hint="@string/specialist_type"
+            app:endIconCheckable="false"
+            app:endIconMode="none">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/specialistTypeReportEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/diagnosisReportInputLayout"
+            style="@style/TextInputStyle"
+            android:hint="@string/diagnosis">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/diagnosisReportEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine"
+                android:lines="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/objetivesReportInputLayout"
+            style="@style/TextInputStyle"
+            android:hint="@string/objetives">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/objetivesReportEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine"
+                android:lines="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dateReportInputLayout"
+            style="@style/TextInputStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:focusable="false"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="@string/date_clean"
+            app:endIconCheckable="false"
+            app:endIconMode="none">
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/diagnosisReportInputLayout"
-        style="@style/TextInputStyle"
-        android:hint="@string/diagnosis"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/specialistTypeReportTextInput">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dateReportEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/diagnosisReportEditText"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginTop="20dp"
+            android:id="@+id/cancelReportButton"
+            style="@style/CancelButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textMultiLine"
-            android:lines="3" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/objetivesReportInputLayout"
-        style="@style/TextInputStyle"
-        android:hint="@string/objetives"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/diagnosisReportInputLayout">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/objetivesReportEditText"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveReportButton"
+            style="@style/SaveButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textMultiLine"
-            android:lines="3" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/cancelReportButton"
-        style="@style/CancelButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/saveReportButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/saveReportButton"
-        style="@style/SaveButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>
