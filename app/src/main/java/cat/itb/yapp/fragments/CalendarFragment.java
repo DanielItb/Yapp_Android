@@ -26,6 +26,7 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.alamkanak.weekview.WeekViewLoader;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -104,7 +105,15 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
         threeDayButton.setOnClickListener(this);
         oneWeekButton.setOnClickListener(this);
 
+        FloatingActionButton fab = v.findViewById(R.id.fabTreatment);
+
+        fab.setOnClickListener(this::fabClicked);
+
         return v;
+    }
+
+    private void fabClicked(View view) {
+        navController.navigate(R.id.action_calendarFragment_to_mtsFormFragment);
     }
 
     @Override

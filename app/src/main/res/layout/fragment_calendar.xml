@@ -80,4 +80,9 @@
         app:todayHeaderTextColor="@color/black"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabTreatment"
+        style="@style/Fab"
+        tools:ignore="MissingConstraints" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
