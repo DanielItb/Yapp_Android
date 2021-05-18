@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.util.TypedValue;
@@ -24,6 +26,7 @@ import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
 import com.alamkanak.weekview.WeekViewLoader;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -36,7 +39,10 @@ import java.util.Locale;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.fragments.forms.ReportFormFragmentArgs;
+import cat.itb.yapp.fragments.list.ReportListFragmentDirections;
 import cat.itb.yapp.models.mts.MtsDto;
+import cat.itb.yapp.models.report.ReportDto;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsAuth;
@@ -48,6 +54,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CalendarFragment extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, View.OnClickListener {
+    private NavController navController;
     private WeekView mWeekView;
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
     private static final int TYPE_DAY_VIEW = 1;
@@ -62,6 +69,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
         setHasOptionsMenu(true);
 
 
@@ -97,7 +105,15 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
         threeDayButton.setOnClickListener(this);
         oneWeekButton.setOnClickListener(this);
 
+        FloatingActionButton fab = v.findViewById(R.id.fabTreatment);
+
+        fab.setOnClickListener(this::fabClicked);
+
         return v;
+    }
+
+    private void fabClicked(View view) {
+        navController.navigate(R.id.action_calendarFragment_to_mtsFormFragment);
     }
 
     @Override
@@ -142,7 +158,11 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
     @Override
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(getContext(), "Clicked " + event.getName(), Toast.LENGTH_SHORT).show();
+        CalendarFragmentDirections.ActionCalendarFragmentToMtsFormFragment dir =
+                CalendarFragmentDirections.actionCalendarFragmentToMtsFormFragment();
+        dir.setMtsDto(MainFragment.listMts.get(Integer.parseInt(String.valueOf(event.getId()))));
+
+        navController.navigate(dir);
     }
 
     @Override
@@ -162,10 +182,9 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
                 e.printStackTrace();
             }
         }
-        int i = 0;
         if (cont < 1) {
-            System.out.println("ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-            for (MtsDto mts : MainFragment.listMts) {
+            for (int j = 0; j < MainFragment.listMts.size(); j++) {
+                MtsDto mts = MainFragment.listMts.get(j);
                 String date = mts.getDate().replace('T', ' ');
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime mtsDate = LocalDateTime.parse(date, formatter);
@@ -190,14 +209,13 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
                 endTime.set(Calendar.MINUTE, 45);
                 endTime.set(Calendar.MONTH, month - 1);
 
-                WeekViewEvent event = new WeekViewEvent(Integer.parseInt(mts.getId()), mts.getPatientFullName(), startTime, endTime);
+                WeekViewEvent event = new WeekViewEvent(j, mts.getPatientFullName(), startTime, endTime);
 
                 if (mtsDate.isBefore(todayDate)) {
                     event.setColor(getResources().getColor(R.color.mtsBefore));
                 } else {
                     event.setColor(getResources().getColor(R.color.mtsAfter));
                 }
-
 
                 events.add(event);
                 cont++;

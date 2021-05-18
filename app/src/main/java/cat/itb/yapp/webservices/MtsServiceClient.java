@@ -3,19 +3,20 @@ package cat.itb.yapp.webservices;
 import java.util.List;
 
 import cat.itb.yapp.models.auth.LoginDto;
+import cat.itb.yapp.models.mts.MtsCreateUpdateDto;
 import cat.itb.yapp.models.mts.MtsDto;
+import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
+import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.models.user.UserDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Url;
 
 public interface MtsServiceClient {
-
-    @POST("login")
-    Call<LoginDto> login(@Body LoginDto loginDto);
 
     // ROLE_ADMIN
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
@@ -26,5 +27,14 @@ public interface MtsServiceClient {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET()
     Call<List<MtsDto>> getMtsBySpecialistId(@Url String url);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @PUT()
+    Call<MtsDto> updateMts(@Url String url, @Body MtsCreateUpdateDto mtsCreateUpdateDto);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @POST("treatment/")
+    Call<MtsDto> addMts(@Body MtsCreateUpdateDto mtsCreateUpdateDto);
 
 }
