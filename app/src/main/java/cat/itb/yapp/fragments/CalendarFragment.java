@@ -1,30 +1,22 @@
 package cat.itb.yapp.fragments;
 
 import android.graphics.RectF;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.alamkanak.weekview.WeekViewLoader;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -33,22 +25,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.forms.ReportFormFragmentArgs;
-import cat.itb.yapp.fragments.list.ReportListFragmentDirections;
 import cat.itb.yapp.models.mts.MtsDto;
-import cat.itb.yapp.models.report.ReportDto;
-import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.MtsServiceClient;
-import cat.itb.yapp.webservices.UserWebServiceClient;
-import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,12 +41,11 @@ import retrofit2.Response;
 public class CalendarFragment extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, View.OnClickListener {
     private NavController navController;
     private WeekView mWeekView;
-    private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+    private List<MtsDto> listMts = null;
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
-    int cont = 0;
 
     private MaterialButton oneDayButton, threeDayButton, oneWeekButton;
 
@@ -78,8 +62,8 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
-        mWeekView = (WeekView) v.findViewById(R.id.weekView);
 
+        mWeekView = (WeekView) v.findViewById(R.id.weekView);
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
 
@@ -97,6 +81,8 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
         // the week view. This is optional.
         setupDateTimeInterpreter(true);
 
+        getMts();
+
         oneDayButton = v.findViewById(R.id.oneDayButton);
         threeDayButton = v.findViewById(R.id.threeDayButton);
         oneWeekButton = v.findViewById(R.id.oneWeekButton);
@@ -111,6 +97,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
         return v;
     }
+
 
     private void fabClicked(View view) {
         navController.navigate(R.id.action_calendarFragment_to_mtsFormFragment);
@@ -160,7 +147,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     public void onEventClick(WeekViewEvent event, RectF eventRect) {
         CalendarFragmentDirections.ActionCalendarFragmentToMtsFormFragment dir =
                 CalendarFragmentDirections.actionCalendarFragmentToMtsFormFragment();
-        dir.setMtsDto(MainFragment.listMts.get(Integer.parseInt(String.valueOf(event.getId()))));
+        dir.setMtsDto(listMts.get(Integer.parseInt(String.valueOf(event.getId()))));
 
         navController.navigate(dir);
     }
@@ -169,22 +156,15 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
         Toast.makeText(getContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
     }
-        private HashMap<Integer, MtsDto> allEvents = new HashMap<>() ;
 
 
 
     @Override
     public List<? extends WeekViewEvent> onMonthChange(int newYear, int newMonth) {
-        while (MainFragment.listMts == null){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (cont < 1) {
-            for (int j = 0; j < MainFragment.listMts.size(); j++) {
-                MtsDto mts = MainFragment.listMts.get(j);
+        List<WeekViewEvent> events = new ArrayList<>();
+        if (listMts != null) {
+            for (int j = 0; j < listMts.size(); j++) {
+                MtsDto mts = listMts.get(j);
                 String date = mts.getDate().replace('T', ' ');
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime mtsDate = LocalDateTime.parse(date, formatter);
@@ -217,14 +197,18 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
                     event.setColor(getResources().getColor(R.color.mtsAfter));
                 }
 
-                events.add(event);
-                cont++;
+                if (eventMatches(event, newYear, newMonth)) {
+                    events.add(event);
+                }
+
             }
         }
         return events;
     }
 
-
+    private boolean eventMatches(WeekViewEvent event, int year, int month) {
+        return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month-1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
+    }
 
 
     protected String getEventTitle(java.util.Calendar time) {
@@ -255,6 +239,81 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     }
 
 
+    public List<MtsDto> getMts() {
+        Log.e("user", "id: " + MainActivity.getUser().getId());
+        Log.e("user", "username: " + MainActivity.getUser().getUsername());
+
+        MainActivity.getUser().getRoles().forEach(rol -> {
+            Log.e("user", "role: " + rol);
+        });
+
+        final List<MtsDto>[] mtsDtoList = new List[]{new ArrayList<>()};
+
+
+        RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
+        MtsServiceClient mtsServiceClient = retrofitHttp.retrofit.create(MtsServiceClient.class);
+
+        Call<List<MtsDto>> call = null;
+
+
+        Long specialistId = MainActivity.getUser().getId().longValue();
+        //CHECK USER ROLE
+        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+
+            String endpointUserRole = "medicalsheet/";
+            call = mtsServiceClient.getUsers(endpointUserRole);
+            Log.e("mts", "all mts in clinic");
+
+        } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
+
+            String endpointUserRole = "medicalsheet/specialist/" + specialistId;
+            call = mtsServiceClient.getMtsBySpecialistId(endpointUserRole);
+            Log.e("mts", "all mts by specialist");
+
+        } else {
+            Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error, usuario sin rol? ", Toast.LENGTH_SHORT).show();
+            call = null;
+        }
+
+        if (call != null) {
+            call.enqueue(new Callback<List<MtsDto>>() {
+                @Override
+                public void onResponse(Call<List<MtsDto>> call, Response<List<MtsDto>> response) {
+                    Log.e("mts", "onResponse okey");
+                    if (response.isSuccessful()) {
+                        Log.e("mts", "status response: " + response.code());
+
+                        listMts = response.body();
+
+                        mWeekView.notifyDatasetChanged();
+
+
+                        listMts.forEach(object -> Log.d("mtsLisit", object.toString()));
+//                        setUpRecycler(recyclerView);
+//                        UserAdapter adapter = new UserAdapter(listUsers);
+//                        recyclerView.setAdapter(adapter);
+
+                        mtsDtoList[0].forEach(t -> {
+                            Log.e("mts", "status response: " + t.toString());
+                        });
+
+                    } else {
+                        Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get mts by specialistId", Toast.LENGTH_SHORT).show();
+                        Log.e("mts", "status response: " + response.code()); //401 Unauthorized
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<MtsDto>> call, Throwable t) {
+                    Log.e("mts", "onResponse onFailure");
+                    Log.e("mts", "throwable.getMessage(): " + t.getMessage());
+                    Log.e("mts", "call.toString(): " + call.toString());
+                }
+            });
+
+        }
+        return listMts;
+    }
 
 
 
