@@ -20,9 +20,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/patientReportEditText"
+                style="@style/TextInputEditBlocked"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusable="false"/>
+                android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -42,10 +42,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/specialistTypeReportTextInput"
-            style="@style/TextInputStyle"
-            android:hint="@string/specialist_type"
-            app:endIconCheckable="false"
-            app:endIconMode="none">
+            style="@style/TextInputStyleBlocked"
+            android:hint="@string/specialist_type">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/specialistTypeReportEditText"

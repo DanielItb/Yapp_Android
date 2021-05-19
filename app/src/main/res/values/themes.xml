@@ -38,6 +38,10 @@
         <item name="endIconCheckable">false</item>
         <item name="endIconMode">none</item>
     </style>
+    
+    <style name="TextInputEditBlocked">
+        <item name="android:focusable">false</item>
+    </style>
 
     <!--TODO intentar que al activarse se ponga del color principal-->
     <!-- SWITCH FORMS STYLE -->

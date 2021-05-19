@@ -7,32 +7,56 @@
     tools:context=".fragments.forms.TreatmentFormFragment"
     android:paddingVertical="20dp">
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectPatientButton"
-        style="@style/DateSelectorButton"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/patientTreatmentInputLayout"
+        style="@style/TextInputStyleBlocked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_patient"
+        android:hint="@string/patient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/selectSpecialistButton"
-        style="@style/DateSelectorButton"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/patientTreatmentEditText"
+            style="@style/TextInputEditBlocked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/specialistTreatmentInputLayout"
+        style="@style/TextInputStyleBlocked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_specialist"
-        app:layout_constraintTop_toBottomOf="@+id/selectPatientButton" />
+        android:hint="@string/patient"
+        app:layout_constraintTop_toBottomOf="@+id/patientTreatmentInputLayout" >
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/startDateButton"
-        style="@style/DateSelectorButton"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/specialistTreatmentEditText"
+            style="@style/TextInputEditBlocked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/startDateTreatmentInputLayout"
+        style="@style/TextInputStyleBlocked"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_start_date"
-        app:layout_constraintTop_toBottomOf="@+id/selectSpecialistButton" />
+        android:hint="@string/start_date"
+        app:layout_constraintTop_toBottomOf="@+id/specialistTreatmentInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/startDateTreatmentEditText"
+            style="@style/TextInputEditBlocked"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/sessionsInputLayout"
@@ -40,7 +64,7 @@
         android:hint="@string/sessions_finished"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startDateButton">
+        app:layout_constraintTop_toBottomOf="@+id/startDateTreatmentInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/sessionsEditText"
