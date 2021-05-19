@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -18,12 +17,15 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.report.CreateUpdateReportDto;
 import cat.itb.yapp.models.report.ReportDto;
+import cat.itb.yapp.utils.UtilsDatePicker;
 import cat.itb.yapp.webservices.ReportServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,10 +33,10 @@ import retrofit2.Response;
 
 public class ReportFormFragment extends Fragment {
     private NavController navController;
-    private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialist;
-    private MaterialButton buttonPatient, buttonSpecialist, buttonTreatment, buttonCancel, buttonSave;
+    private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialistType, editTextDate,
+            editTextPatient, editTextSpecialist, editTextTreatment;
+    private MaterialButton buttonCancel, buttonSave;
     private ReportDto reportDto = null;
-    private String reason = null;
     private boolean editing;
 
     @Override
@@ -52,22 +54,23 @@ public class ReportFormFragment extends Fragment {
             reportDto.setSpecialistFullName(fullName);
             reportDto.setSpecialistType(specialistType);
 
-            buttonSpecialist.setText(fullName);
-            editTextSpecialist.setText(specialistType);
+            editTextSpecialist.setText(fullName);
+            editTextSpecialistType.setText(specialistType);
         });
 
         fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
             reportDto.setPatientId(bundle.getInt("patientId")); //TODO Remove parse
             String fullName = bundle.getString("fullName");
             reportDto.setPatientFullName(fullName);
-            buttonPatient.setText(fullName);
+            editTextPatient.setText(fullName);
         });
 
         fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
-            reason = bundle.getString("reason");
+            String reason = bundle.getString("reason");
             reportDto.setTreatmentId(Integer.valueOf(bundle.getString("treatmentId")));
+            reportDto.setTreatmentReason(reason);
 
-            buttonTreatment.setText(reason);
+            editTextTreatment.setText(reason);
         }));
     }
 
@@ -77,13 +80,13 @@ public class ReportFormFragment extends Fragment {
 
         editTextDiagnosis = v.findViewById(R.id.diagnosisReportEditText);
         editTextObjectives = v.findViewById(R.id.objetivesReportEditText);
-        buttonPatient = v.findViewById(R.id.selectPatientReportButton);
-        buttonSpecialist = v.findViewById(R.id.selectSpecialistReportButton);
         buttonCancel = v.findViewById(R.id.cancelReportButton);
         buttonSave = v.findViewById(R.id.saveReportButton);
-        editTextSpecialist = v.findViewById(R.id.specialistTypeReportEditText);
-        buttonTreatment = v.findViewById(R.id.selectTreatmentButton);
-
+        editTextSpecialistType = v.findViewById(R.id.specialistTypeReportEditText);
+        editTextDate = v.findViewById(R.id.dateReportEditText);
+        editTextPatient = v.findViewById(R.id.patientReportEditText);
+        editTextTreatment = v.findViewById(R.id.treatmentReportEditText);
+        editTextSpecialist = v.findViewById(R.id.specialistReportEditText);
 
         return v;
     }
@@ -100,8 +103,9 @@ public class ReportFormFragment extends Fragment {
                 fillUpInfoInLayout(reportDto);
             } else { // If new
                 reportDto = new ReportDto();
-                reportDto.setDate(LocalDateTime.now().toString());
+                reportDto.setDate(LocalDate.now().toString());
                 editing = false;
+                fillUpInfoInLayout(reportDto);
             }
         } else { //If load data
             fillUpInfoInLayout(reportDto);
@@ -112,9 +116,18 @@ public class ReportFormFragment extends Fragment {
             if (allRequiredCampsSet()) save();
         });
 
-        buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectUserFragment));
-        buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectPatientFragment));
-        buttonTreatment.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectTreatmentFragment));
+        editTextSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectUserFragment));
+        editTextPatient.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectPatientFragment));
+        editTextTreatment.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectTreatmentFragment));
+        editTextDate.setOnClickListener(v -> UtilsDatePicker.showDatePicker(this::dateSelected, getParentFragmentManager()));
+    }
+
+    private void dateSelected(Object o) {
+        LocalDate date =
+                Instant.ofEpochMilli((Long) o).atZone(ZoneId.systemDefault()).toLocalDate();
+
+        editTextDate.setText(date.toString());
+        reportDto.setDate(date.toString());
     }
 
     private void save() {
@@ -165,10 +178,10 @@ public class ReportFormFragment extends Fragment {
 
         if (patientId == null) {
             allGood = false;
-            buttonPatient.setError(errorMsg);
+            editTextPatient.setError(errorMsg);
         } if (specialistId == null) {
             allGood = false;
-            buttonSpecialist.setError(errorMsg);
+            editTextSpecialist.setError(errorMsg);
         } if (editTextDiagnosis.getText().toString().isEmpty()) {
             allGood= false;
             editTextDiagnosis.setError(errorMsg);
@@ -186,12 +199,15 @@ public class ReportFormFragment extends Fragment {
         String specialistType = reportDto.getSpecialistType();
         String diagnosis = reportDto.getDiagnosis();
         String objectives = reportDto.getObjectives();
+        String date = reportDto.getDate();
+        String reason = reportDto.getTreatmentReason();
 
-        if (patientName != null) buttonPatient.setText(patientName);
-        if (specialistName != null) buttonSpecialist.setText(specialistName);
-        if (specialistType != null) editTextSpecialist.setText(reportDto.getSpecialistType());
+        if (patientName != null) editTextPatient.setText(patientName);
+        if (specialistName != null) editTextSpecialist.setText(specialistName);
+        if (specialistType != null) editTextSpecialistType.setText(reportDto.getSpecialistType());
         if (diagnosis != null) editTextDiagnosis.setText(diagnosis);
         if (objectives != null) editTextObjectives.setText(objectives);
-        if (reason != null) buttonTreatment.setText(reason);
+        if (reason != null) editTextTreatment.setText(reason);
+        if (date != null) editTextDate.setText(date);
     }
 }

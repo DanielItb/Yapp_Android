@@ -61,9 +61,11 @@ public class SelectPatientFragment extends Fragment {
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        PatientAdapter adapter = new PatientAdapter(patientDtoList, this::recyclerItemClicked);
-        recyclerView.setAdapter(adapter);
+        if (getContext() != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            PatientAdapter adapter = new PatientAdapter(patientDtoList, this::recyclerItemClicked);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private void getPatients() {

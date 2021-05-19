@@ -35,9 +35,9 @@ import retrofit2.Response;
 public class TreatmentFormFragment extends Fragment {
 
     private NavController navController;
-    private TextInputEditText editTextSessions, editTextReason;
-    private MaterialButton buttonPatient, buttonSpecialist, buttonStartDate, buttonCancel,
-            buttonSave;
+    private TextInputEditText editTextSessions, editTextReason, editTextPatient, editTextSpecialist,
+            editTextStartDate;
+    private MaterialButton buttonCancel, buttonSave;
     private SwitchCompat switchActive;
     private boolean editing;
     private TreatmentDto treatment = null;
@@ -52,13 +52,13 @@ public class TreatmentFormFragment extends Fragment {
             treatment.setSpecialistId(String.valueOf(bundle.getLong("userId"))); //TODO Remove parse
             String fullName = bundle.getString("fullName");
             treatment.setSpecialistFullName(fullName);
-            buttonSpecialist.setText(fullName);
+            editTextSpecialist.setText(fullName);
         });
         fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
             treatment.setPatientId(String.valueOf(bundle.getInt("patientId"))); //TODO Remove parse
             String fullName = bundle.getString("fullName");
             treatment.setPatientFullName(fullName);
-            buttonPatient.setText(fullName);
+            editTextPatient.setText(fullName);
         });
     }
 
@@ -68,9 +68,9 @@ public class TreatmentFormFragment extends Fragment {
 
         editTextSessions = v.findViewById(R.id.sessionsEditText);
         editTextReason = v.findViewById(R.id.treatmentReasonEditText);
-        buttonPatient = v.findViewById(R.id.selectPatientButton);
-        buttonSpecialist = v.findViewById(R.id.selectSpecialistButton);
-        buttonStartDate = v.findViewById(R.id.startDateButton);
+        editTextSpecialist = v.findViewById(R.id.specialistTreatmentEditText);
+        editTextPatient = v.findViewById(R.id.patientTreatmentEditText);
+        editTextStartDate = v.findViewById(R.id.startDateTreatmentEditText);
         buttonCancel = v.findViewById(R.id.cancelButton);
         buttonSave = v.findViewById(R.id.saveButton);
 //        switchActive = v.findViewById(R.id.simpleSwitch);
@@ -100,9 +100,9 @@ public class TreatmentFormFragment extends Fragment {
         buttonSave.setOnClickListener(v -> {
             if(allRequiredCampsSet()) save();
         });
-        buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
-        buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectPatientFragment));
-        buttonStartDate.setOnClickListener(v -> UtilsDatePicker.showDatePicker(this::dateSelected,
+        editTextSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
+        editTextPatient.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectPatientFragment));
+        editTextStartDate.setOnClickListener(v -> UtilsDatePicker.showDatePicker(this::dateSelected,
                 getParentFragmentManager()));
     }
 
@@ -110,7 +110,7 @@ public class TreatmentFormFragment extends Fragment {
         LocalDate date =
                 Instant.ofEpochMilli((Long) o).atZone(ZoneId.systemDefault()).toLocalDate();
 
-        buttonStartDate.setText(date.toString());
+        editTextStartDate.setText(date.toString());
         treatment.setStartDate(date.toString());
     }
 
@@ -123,10 +123,10 @@ public class TreatmentFormFragment extends Fragment {
 
         if (patientId == null) {
             allGood = false;
-            buttonPatient.setError(errorMsg);
+            editTextPatient.setError(errorMsg);
         } if (specialistId == null) {
             allGood = false;
-            buttonSpecialist.setError(errorMsg);
+            editTextSpecialist.setError(errorMsg);
         } if (editTextSessions.getText().toString().isEmpty()) {
             allGood= false;
             editTextSessions.setError(errorMsg);
@@ -140,9 +140,9 @@ public class TreatmentFormFragment extends Fragment {
         String patientName= treatment.getPatientFullName();
         String specialistName = treatment.getSpecialistFullName();
 
-        if (startDate != null) buttonStartDate.setText(startDate);
-        if (patientName != null) buttonPatient.setText(treatment.getPatientFullName());
-        if (specialistName != null) buttonSpecialist.setText(treatment.getSpecialistFullName());
+        if (startDate != null) editTextStartDate.setText(startDate);
+        if (patientName != null) editTextPatient.setText(treatment.getPatientFullName());
+        if (specialistName != null) editTextSpecialist.setText(treatment.getSpecialistFullName());
 
         editTextSessions.setText(treatment.getSessionsFinished());
         editTextReason.setText(treatment.getReason());
@@ -156,7 +156,7 @@ public class TreatmentFormFragment extends Fragment {
         TreatmentWebServiceClient webServiceClient = MainActivity.getRetrofitHttp()
                 .retrofit.create(TreatmentWebServiceClient.class);
 
-        Call<TreatmentDto> call = null;
+        Call<TreatmentDto> call;
         if (editing) call = webServiceClient.updateTreatment("treatment/" + treatment.getId(), createUpdateTreatmentDto);
         else call = webServiceClient.addTreatment(createUpdateTreatmentDto);
 
@@ -164,7 +164,11 @@ public class TreatmentFormFragment extends Fragment {
             @Override
             public void onResponse(Call<TreatmentDto> call, Response<TreatmentDto> response) {
                 Log.d("treatmentFrom", response.toString());
-                navController.popBackStack();
+                if (response.isSuccessful()) {
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -181,7 +185,7 @@ public class TreatmentFormFragment extends Fragment {
         createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId())); //TODO remove parse
         createUpdateTreatmentDto.setReason(editTextReason.getText().toString());
         createUpdateTreatmentDto.setSessionsFinished(Integer.parseInt(editTextSessions.getText().toString()));
-        createUpdateTreatmentDto.setStartDate(buttonStartDate.getText().toString());
+        createUpdateTreatmentDto.setStartDate(editTextStartDate.getText().toString());
         createUpdateTreatmentDto.setUserId(Long.parseLong(treatment.getSpecialistId())); //TODO remove parse
 
         return createUpdateTreatmentDto;

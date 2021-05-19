@@ -61,10 +61,11 @@ public class TreatmentListFragment extends Fragment {
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        TreatmentAdapter adapter = new TreatmentAdapter(treatmentList, TreatmentListFragment.this::loadForm);
-        recyclerView.setAdapter(adapter);
-
+        if (getContext() != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            TreatmentAdapter adapter = new TreatmentAdapter(treatmentList, TreatmentListFragment.this::loadForm);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private void loadForm(int position) {
