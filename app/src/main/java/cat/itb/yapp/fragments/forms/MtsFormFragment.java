@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.mts.MtsCreateUpdateDto;
 import cat.itb.yapp.models.mts.MtsDto;
+import cat.itb.yapp.utils.DatePickerUtils;
+import cat.itb.yapp.utils.TimePickerUtils;
 import cat.itb.yapp.webservices.MtsServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,6 +88,8 @@ public class MtsFormFragment extends Fragment {
         reasonEditText = v.findViewById(R.id.mtsReasonEditText);
 
         dateButton.setOnClickListener(this::datePicker);
+
+//        dateButton.setOnClickListener(v1 -> setMtsDateAndTime());
         return v;
     }
 
@@ -278,6 +283,20 @@ public class MtsFormFragment extends Fragment {
                 }
             }, mHour, mMinute, false);
             timePickerDialog.show();
+    }
+
+
+
+    public void setMtsDateAndTime(){
+        DatePickerUtils datePickerUtils = new DatePickerUtils();
+        String date;
+
+        date = datePickerUtils.datePicker(getChildFragmentManager());
+
+//        date = TimePickerUtils.timePicker(date, getContext());
+
+        dateButton.setText(date);
+        mtsDto.setDate(date);
     }
 }
 

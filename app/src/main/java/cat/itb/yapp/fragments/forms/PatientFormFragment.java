@@ -15,9 +15,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Calendar;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
@@ -64,7 +68,9 @@ public class PatientFormFragment extends Fragment {
         courseEditText = v.findViewById(R.id.courseEditText);
         reasonEditTExt = v.findViewById(R.id.patientReasonEditText);
         deleteButton = v.findViewById(R.id.deletePatientButton);
-        birthDateButton.setOnClickListener(this::datePickerCall);
+
+
+        birthDateButton.setOnClickListener(this::datePicker);
 
         deleteButton.setOnClickListener(v1 -> deletePatient());
 
@@ -190,9 +196,11 @@ public class PatientFormFragment extends Fragment {
         if (patientEmail != null) emailEditText.setText(patientEmail);
         if (patientSchool != null) schoolEditText.setText(patientSchool);
         if (patientCourse != null) courseEditText.setText(patientCourse);
-        if (patientPaymentType != null) paymentTypeAutoCompleteTextView.setText(patientPaymentType);
+        if (patientPaymentType != null) paymentTypeAutoCompleteTextView.setText(patientPaymentType, false);
         if (patientBirthDate != null) birthDateButton.setText(patientBirthDate);
         if (patientReason != null) reasonEditTExt.setText(patientReason);
+
+
     }
 
 
@@ -222,19 +230,44 @@ public class PatientFormFragment extends Fragment {
 
 
 
-    public void datePickerCall(View v) {
-        datePicker();
-    }
-
-    public void datePicker() {
+    public void datePicker(View v) {
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Select date: ");
+
         final MaterialDatePicker<Long> picker = builder.build();
         picker.show(getChildFragmentManager(), picker.toString());
         if (picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @Override
             public void onPositiveButtonClick(Long selection) {
-                birthDateButton.setText(String.valueOf(picker.getHeaderText()));
+                Calendar today = Calendar.getInstance();
+                long now = today.getTimeInMillis();
+
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(selection);
+
+                int year = c.get(Calendar.YEAR);
+                int mMonth = c.get(Calendar.MONTH) + 1;
+                int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                String finalMonth;
+                String finalDay;
+
+                if (mMonth < 10){
+                    finalMonth = "0" + mMonth;
+                }else{
+                    finalMonth = String.valueOf(mMonth);
+                }
+
+                if (mDay < 10){
+                    finalDay = "0" + mDay;
+                }else{
+                    finalDay = String.valueOf(mDay);
+                }
+                String date = year + "-" + finalMonth + "-" + finalDay;
+
+                birthDateButton.setText(date);
+
+
             }
         })) ;
     }
