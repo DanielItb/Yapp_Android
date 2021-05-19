@@ -19,6 +19,7 @@ import java.util.List;
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.mts.MtsDto;
+import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.MtsServiceClient;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 
 public class MainFragment extends Fragment {
     private NavController navController;
+    private UserDto userDto;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,13 @@ public class MainFragment extends Fragment {
         treatmentCardView = v.findViewById(R.id.treatmentCardViewButton);
         centerCardView = v.findViewById(R.id.centerCardViewButton);
 
-        usersCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_userListFragment));
+        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+            usersCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_userListFragment));
+        }else{
+            userDto = MainActivity.getUserDto();
+        }
+
+
         patientsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_patientListFragment));
         mtsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_calendarFragment));
         reportCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_reportListFragment));

@@ -46,9 +46,10 @@ public class PatientListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_patient_list, container, false);
         patientList = null;
-        getPatients();
+
         FloatingActionButton fab = v.findViewById(R.id.fabPatients);
         recyclerView = v.findViewById(R.id.recyclerPatient);
+        getPatients();
 
         fab.setOnClickListener(this::fabClicked);
 

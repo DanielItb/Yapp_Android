@@ -39,7 +39,6 @@ public class PatientFormFragment extends Fragment {
     private MaterialButton birthDateButton, saveButton, deleteButton;
     private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText, phoneNumberEditText, emailEditText, schoolEditText, courseEditText, reasonEditTExt;
     private AutoCompleteTextView paymentTypeAutoCompleteTextView;
-    private String patientName, patientSurname, patientAge, patientAddress, patientPhone, patientEmail, patientSchool, patientCourse, patientPaymentType, patientBirthDate, patientReason;
     private boolean editing;
     private PatientDto patientDto = null;
 
@@ -175,17 +174,17 @@ public class PatientFormFragment extends Fragment {
 
 
     private void fillUpInfoInLayout(PatientDto patientDto) {
-        patientName = patientDto.getName();
-        patientSurname = patientDto.getSurname();
-        patientAge = String.valueOf(patientDto.getAge());
-        patientAddress = patientDto.getHomeAddress();
-        patientPhone = patientDto.getPhoneNumber();
-        patientEmail = patientDto.getEmail();
-        patientSchool = patientDto.getSchoolName();
-        patientCourse = patientDto.getCourse();
-        patientPaymentType = patientDto.getPaymentType();
-        patientBirthDate = patientDto.getDateOfBirth();
-        patientReason = patientDto.getReason();
+        String patientName = patientDto.getName();
+        String patientSurname = patientDto.getSurname();
+        String patientAge = String.valueOf(patientDto.getAge());
+        String patientAddress = patientDto.getHomeAddress();
+        String patientPhone = patientDto.getPhoneNumber();
+        String patientEmail = patientDto.getEmail();
+        String patientSchool = patientDto.getSchoolName();
+        String patientCourse = patientDto.getCourse();
+        String patientPaymentType = patientDto.getPaymentType();
+        String patientBirthDate = patientDto.getDateOfBirth();
+        String patientReason = patientDto.getReason();
         // TODO urlPhoto
 
         if (patientName != null) nameEditText.setText(patientName);

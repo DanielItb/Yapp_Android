@@ -103,6 +103,8 @@
         <item name="android:layout_marginEnd">20dp</item>
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">@color/mtsBefore</item>
+
     </style>
 
     <!-- HEADER GRADIENT STYLE -->
