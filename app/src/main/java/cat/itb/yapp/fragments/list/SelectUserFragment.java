@@ -70,9 +70,11 @@ public class SelectUserFragment extends Fragment {
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        UserAdapter adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
-        recyclerView.setAdapter(adapter);
+        if (getContext() != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            UserAdapter adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     public void getUsers() {

@@ -102,9 +102,11 @@ public class SelectTreatmentFragment extends Fragment {
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        TreatmentAdapter adapter = new TreatmentAdapter(treatmentDtoList, this::recyclerItemClicked);
-        recyclerView.setAdapter(adapter);
+        if (getContext() != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            TreatmentAdapter adapter = new TreatmentAdapter(treatmentDtoList, this::recyclerItemClicked);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private void recyclerItemClicked(int i) {

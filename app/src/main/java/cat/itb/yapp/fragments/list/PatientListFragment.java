@@ -67,10 +67,11 @@ public class PatientListFragment extends Fragment {
     }
 //
     private void setUpRecycler(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        PatientAdapter adapter = new PatientAdapter(patientList, this::recyclerItemClicked);
-        recyclerView.setAdapter(adapter);
-
+        if (getContext() != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            PatientAdapter adapter = new PatientAdapter(patientList, this::recyclerItemClicked);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     public void getPatients() {
