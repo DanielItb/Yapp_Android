@@ -34,7 +34,7 @@ public interface MtsServiceClient {
     Call<MtsDto> updateMts(@Url String url, @Body MtsCreateUpdateDto mtsCreateUpdateDto);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @POST("treatment/")
+    @POST("mts/")
     Call<MtsDto> addMts(@Body MtsCreateUpdateDto mtsCreateUpdateDto);
 
 }

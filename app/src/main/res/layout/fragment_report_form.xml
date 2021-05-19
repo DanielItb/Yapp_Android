@@ -22,7 +22,7 @@
                 android:id="@+id/patientReportEditText"
                 style="@style/TextInputEditBlocked"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -34,9 +34,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/specialistReportEditText"
+                style="@style/TextInputEditBlocked"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusable="false"/>
+                android:layout_height="match_parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,9 +47,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/specialistTypeReportEditText"
+                style="@style/TextInputEditBlocked"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:focusable="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,9 +61,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/treatmentReportEditText"
+                style="@style/TextInputEditBlocked"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:focusable="false"/>
+                android:layout_height="match_parent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,7 +98,7 @@
             style="@style/TextInputStyleBlocked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/date_clean" >
+            android:hint="@string/date_clean">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dateReportEditText"
@@ -109,11 +109,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:layout_marginTop="20dp"
             android:id="@+id/cancelReportButton"
             style="@style/CancelButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveReportButton"

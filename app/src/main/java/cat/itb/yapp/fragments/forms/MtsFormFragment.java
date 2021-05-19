@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -37,9 +36,8 @@ import retrofit2.Response;
 
 public class MtsFormFragment extends Fragment {
     private NavController navController;
-    private MaterialButton patientButton, specialistButton, dateButton, saveButton, cancelButton;
-    private TextInputEditText reasonEditText;
-    private SwitchCompat switchActive;
+    private MaterialButton saveButton, cancelButton;
+    private TextInputEditText reasonEditText, patientEditText, specialistEditText, dateEditText;
     private MtsDto mtsDto = null;
     private boolean editing;
 
@@ -59,7 +57,7 @@ public class MtsFormFragment extends Fragment {
             mtsDto.setSpecialistFullName(fullName);
             mtsDto.setSpecialistType(specialistType);
 
-            specialistButton.setText(fullName);
+            specialistEditText.setText(fullName);
 //            editTextSpecialist.setText(specialistType);
         });
 
@@ -67,8 +65,16 @@ public class MtsFormFragment extends Fragment {
             mtsDto.setPatientId(bundle.getInt("patientId"));
             String fullName = bundle.getString("fullName");
             mtsDto.setPatientFullName(fullName);
-            patientButton.setText(fullName);
+            patientEditText.setText(fullName);
         });
+
+        fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
+            String reason = bundle.getString("reason");
+            mtsDto.setTreatmentId(Integer.parseInt(bundle.getString("treatmentId")));
+            mtsDto.setReason(reason);
+
+            reasonEditText.setText(reason);
+        }));
 
     }
 
@@ -77,14 +83,14 @@ public class MtsFormFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_mts_form, container, false);
 
 
-        patientButton = v.findViewById(R.id.selectPatientMtsButton);
-        specialistButton = v.findViewById(R.id.selectSpecialistMtsButton);
-        dateButton = v.findViewById(R.id.startDateMtsButton);
+        patientEditText = v.findViewById(R.id.patientMtsEditText);
+        specialistEditText = v.findViewById(R.id.specialistMtsEditText);
+        dateEditText = v.findViewById(R.id.dateMtsEditText);
         saveButton = v.findViewById(R.id.saveMtsButton);
         cancelButton = v.findViewById(R.id.cancelMtsButton);
         reasonEditText = v.findViewById(R.id.mtsReasonEditText);
 
-        dateButton.setOnClickListener(this::datePicker);
+        dateEditText.setOnClickListener(this::datePicker);
         return v;
     }
 
@@ -111,12 +117,9 @@ public class MtsFormFragment extends Fragment {
             if (allRequiredCampsSet()) save();
         });
 
-        specialistButton.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectUserFragment));
-        patientButton.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectPatientFragment));
-
-
-        System.out.println(mtsDto.toString());
-
+        specialistEditText.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectUserFragment));
+        patientEditText.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectPatientFragment));
+        reasonEditText.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectTreatmentFragment));
     }
 
 
@@ -125,32 +128,31 @@ public class MtsFormFragment extends Fragment {
         String specialistName = mtsDto.getSpecialistFullName();
         String reason = mtsDto.getReason();
         String date = mtsDto.getDate();
-        int treatmentId = mtsDto.getTratmentId();
 
-
-        if (patientName != null) patientButton.setText(patientName);
-        if (specialistName != null) specialistButton.setText(specialistName);
+        if (patientName != null) patientEditText.setText(patientName);
+        if (specialistName != null) specialistEditText.setText(specialistName);
         if (reason != null) reasonEditText.setText(reason);
-        if (date != null) dateButton.setText(date);
+        if (date != null) dateEditText.setText(date);
 
 
     }
 
     private boolean allRequiredCampsSet() {
         boolean allGood = true;
-        String patientId = String.valueOf(mtsDto.getPatientId());
-        String specialistId = String.valueOf(mtsDto.getSpecialistId());
-        CharSequence errorMsg = getText(R.string.must_fill);
+        Integer patientId = mtsDto.getPatientId();
+        Long specialistId = mtsDto.getSpecialistId();
+        Integer treatment = mtsDto.getTreatmentId();
+        final CharSequence errorMsg = getText(R.string.must_fill);
 
         if (patientId == null) {
             allGood = false;
-            patientButton.setError(errorMsg);
+            patientEditText.setError(errorMsg);
         }
         if (specialistId == null) {
             allGood = false;
-            specialistButton.setError(errorMsg);
+            specialistEditText.setError(errorMsg);
         }
-        if (reasonEditText.getText().toString().isEmpty()) {
+        if (treatment == null) {
             allGood = false;
             reasonEditText.setError(errorMsg);
         }
@@ -165,10 +167,12 @@ public class MtsFormFragment extends Fragment {
                 .retrofit.create(MtsServiceClient.class);
 
 
-        Call<MtsDto> call = null;
+        Call<MtsDto> call;
         if (editing)
             call = webServiceClient.updateMts("medicalsheet/" + mtsDto.getId(), mtsCreateUpdateDto);
         else call = webServiceClient.addMts(mtsCreateUpdateDto);
+
+        Log.d("mtsDto", mtsCreateUpdateDto.toString());
 
         call.enqueue(new Callback<MtsDto>() {
             @Override
@@ -177,7 +181,7 @@ public class MtsFormFragment extends Fragment {
                 if (response.isSuccessful()) {
                     navController.popBackStack();
                 } else {
-                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -196,7 +200,7 @@ public class MtsFormFragment extends Fragment {
         mtsCreateUpdateDto.setPatientId(mtsDto.getPatientId());
         mtsCreateUpdateDto.setSpecialistId(mtsDto.getSpecialistId());
         mtsCreateUpdateDto.setDate(mtsDto.getDate());
-        mtsCreateUpdateDto.setTreatmentId(mtsDto.getTratmentId());
+        mtsCreateUpdateDto.setTreatmentId(mtsDto.getTreatmentId());
 
 
         return mtsCreateUpdateDto;
@@ -272,7 +276,7 @@ public class MtsFormFragment extends Fragment {
                     }
                     
                     String finalDate = date + "T" + finalHour + ":" + finalMinute + ":00" ;
-                    dateButton.setText(finalDate);
+                    dateEditText.setText(finalDate);
                     mtsDto.setDate(finalDate);
 
                 }
