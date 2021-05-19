@@ -1,41 +1,48 @@
 package cat.itb.yapp.fragments.forms;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.time.LocalDateTime;
-
 import cat.itb.yapp.R;
+import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
 import cat.itb.yapp.models.patient.PatientDto;
-import cat.itb.yapp.models.report.ReportDto;
-import cat.itb.yapp.models.treatment.TreatmentDto;
+import cat.itb.yapp.webservices.PatientWebServiceClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class PatientFormFragment extends Fragment {
-    private MaterialButton birthDateButton, saveButton;
-    private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText, phoneNumberEditText, emailEditText, schoolEditText, courseEditText;
+    // TODO cargar la foto y borrar paciente
+    private NavController navController;
+    private MaterialButton birthDateButton, saveButton, deleteButton;
+    private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText, phoneNumberEditText, emailEditText, schoolEditText, courseEditText, reasonEditTExt;
     private AutoCompleteTextView paymentTypeAutoCompleteTextView;
-
+    private String patientName, patientSurname, patientAge, patientAddress, patientPhone, patientEmail, patientSchool, patientCourse, patientPaymentType, patientBirthDate, patientReason;
     private boolean editing;
     private PatientDto patientDto = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
     }
 
     @Override
@@ -55,7 +62,11 @@ public class PatientFormFragment extends Fragment {
         emailEditText = v.findViewById(R.id.emailEditText);
         schoolEditText = v.findViewById(R.id.schoolEditText);
         courseEditText = v.findViewById(R.id.courseEditText);
+        reasonEditTExt = v.findViewById(R.id.patientReasonEditText);
+        deleteButton = v.findViewById(R.id.deletePatientButton);
         birthDateButton.setOnClickListener(this::datePickerCall);
+
+        deleteButton.setOnClickListener(v1 -> deletePatient());
 
 
         paymentTypeAutoCompleteTextView = v.findViewById(R.id.autoComplete);
@@ -78,46 +89,138 @@ public class PatientFormFragment extends Fragment {
                 editing = true;
                 fillUpInfoInLayout(patientDto);
             } else { // If new
-                patientDto = new ReportDto();
-                patientDto.setDate(LocalDateTime.now().toString());
+                patientDto = new PatientDto();
+//                patientDto.setDate(LocalDateTime.now().toString());
                 editing = false;
             }
         } else { //If load data
             fillUpInfoInLayout(patientDto);
         }
 
-        buttonCancel.setOnClickListener(v -> navController.popBackStack());
-        buttonSave.setOnClickListener(v -> {
+//        buttonCancel.setOnClickListener(v -> navController.popBackStack());
+        saveButton.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });
 
-        buttonSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectUserFragment));
-        buttonPatient.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectPatientFragment));
-        buttonTreatment.setOnClickListener(v -> navController.navigate(R.id.action_reportFormFragment_to_selectTreatmentFragment));
+    }
+
+    private boolean allRequiredCampsSet() {
+        boolean allGood = true;
+        CharSequence errorMsg = getText(R.string.must_fill);
+
+        if (nameEditText.getText().toString().isEmpty()) {
+            allGood = false;
+            nameEditText.setError(errorMsg);
+        } if (surnameEditText.getText().toString().isEmpty()) {
+            allGood = false;
+            surnameEditText.setError(errorMsg);
+        } if (ageEditText.getText().toString().isEmpty()) {
+            allGood= false;
+            ageEditText.setError(errorMsg);
+        } if(addressEditText.getText().toString().isEmpty()) {
+            allGood= false;
+            addressEditText.setError(errorMsg);
+        } if(phoneNumberEditText.getText().toString().isEmpty()) {
+            allGood= false;
+            phoneNumberEditText.setError(errorMsg);
+        } if(schoolEditText.getText().toString().isEmpty()) {
+            allGood= false;
+            schoolEditText.setError(errorMsg);
+        } if(courseEditText.getText().toString().isEmpty()) {
+            allGood= false;
+            courseEditText.setError(errorMsg);
+        } if(reasonEditTExt.getText().toString().isEmpty()) {
+            allGood= false;
+            reasonEditTExt.setError(errorMsg);
+        }
+
+        return allGood;
+    }
+
+
+    private void save() {
+        final CreateUpdatePatientDto createUpdatePatientDto = getCreateUpdatePatientFromFrontEnd();
+
+        PatientWebServiceClient patientWebServiceClient = MainActivity.getRetrofitHttp()
+                .retrofit.create(PatientWebServiceClient.class);
+
+        Call<PatientDto> call;
+        if (editing) call = patientWebServiceClient.updateDto("patient/" + patientDto.getId(),
+                createUpdatePatientDto);
+        else call = patientWebServiceClient.addPatient(createUpdatePatientDto);
+
+        call.enqueue(new Callback<PatientDto>() {
+            @Override
+            public void onResponse(Call<PatientDto> call, Response<PatientDto> response) {
+                if (response.isSuccessful()) {
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PatientDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
 
     private void fillUpInfoInLayout(PatientDto patientDto) {
-//        private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText, phoneNumberEditText, emailEditText, schoolEditText, courseEditText;
-        String patientName = patientDto.getName();
-        String patientSurname = patientDto.getSurname();
-        String patientAge = String.valueOf(patientDto.getAge());
-        String patientAddress = patientDto.getHomeAddress();
-        String patientPhone = patientDto.getPhoneNumber();
-        String patientEmail = patientDto.getEmail();
-        String patientSchool = patientDto.getSchoolName();
-        String patientCourse = patientDto.getCourse();
-        String patientPaymentType = patientDto.getPaymentType();
-        String patientBirthDate = patientDto.getDateOfBirth();
+        patientName = patientDto.getName();
+        patientSurname = patientDto.getSurname();
+        patientAge = String.valueOf(patientDto.getAge());
+        patientAddress = patientDto.getHomeAddress();
+        patientPhone = patientDto.getPhoneNumber();
+        patientEmail = patientDto.getEmail();
+        patientSchool = patientDto.getSchoolName();
+        patientCourse = patientDto.getCourse();
+        patientPaymentType = patientDto.getPaymentType();
+        patientBirthDate = patientDto.getDateOfBirth();
+        patientReason = patientDto.getReason();
+        // TODO urlPhoto
 
-        if (patientName != null) buttonPatient.setText(patientName);
-        if (specialistName != null) buttonSpecialist.setText(specialistName);
-        if (specialistType != null) editTextSpecialist.setText(patientDto.getSpecialistType());
-        if (diagnosis != null) editTextDiagnosis.setText(diagnosis);
-        if (objectives != null) editTextObjectives.setText(objectives);
-        if (reason != null) buttonTreatment.setText(reason);
+        if (patientName != null) nameEditText.setText(patientName);
+        if (patientSurname != null) surnameEditText.setText(patientSurname);
+        ageEditText.setText(patientAge);
+        if (patientAddress != null) addressEditText.setText(patientAddress);
+        if (patientPhone != null) phoneNumberEditText.setText(patientPhone);
+        if (patientEmail != null) emailEditText.setText(patientEmail);
+        if (patientSchool != null) schoolEditText.setText(patientSchool);
+        if (patientCourse != null) courseEditText.setText(patientCourse);
+        if (patientPaymentType != null) paymentTypeAutoCompleteTextView.setText(patientPaymentType);
+        if (patientBirthDate != null) birthDateButton.setText(patientBirthDate);
+        if (patientReason != null) reasonEditTExt.setText(patientReason);
     }
-}
+
+
+    private CreateUpdatePatientDto getCreateUpdatePatientFromFrontEnd() {
+        CreateUpdatePatientDto createUpdatePatientDto = new CreateUpdatePatientDto();
+
+        createUpdatePatientDto.setName(nameEditText.getText().toString());
+        createUpdatePatientDto.setSurname(surnameEditText.getText().toString());
+        createUpdatePatientDto.setReason(reasonEditTExt.getText().toString());
+        createUpdatePatientDto.setPhoneNumber(phoneNumberEditText.getText().toString());
+        createUpdatePatientDto.setEmail(emailEditText.getText().toString());
+        createUpdatePatientDto.setDateOfBirth(birthDateButton.getText().toString());
+        createUpdatePatientDto.setHomeAddress(addressEditText.getText().toString());
+        createUpdatePatientDto.setSchoolName(schoolEditText.getText().toString());
+        createUpdatePatientDto.setCourse(courseEditText.getText().toString());
+        createUpdatePatientDto.setPaymentType(paymentTypeAutoCompleteTextView.getText().toString());
+        createUpdatePatientDto.setClinicId(patientDto.getClinicId());
+        // TODO urlPhoto
+
+        return createUpdatePatientDto;
+    }
+
+
+    public void deletePatient(){
+        Toast.makeText(getContext(), "Teste delete button success", Toast.LENGTH_SHORT).show();
+    }
+
+
 
     public void datePickerCall(View v) {
         datePicker();

@@ -72,6 +72,19 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- DELETE BUTTON FORM STYLE -->
+    <style name="DeleteButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:text">@string/deleteButton</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:backgroundTint">@color/mtsBefore</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
     <!-- CANCEL BUTTON FORMS STYLE -->
     <style name="CancelButton">
         <item name="android:text">@string/cancel</item>

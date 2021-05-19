@@ -39,17 +39,20 @@ public class PatientListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         navController = NavHostFragment.findNavController(this);
-        getPatients();
+//        getPatients();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_patient_list, container, false);
-
+        patientList = null;
+        getPatients();
         FloatingActionButton fab = v.findViewById(R.id.fabPatients);
         recyclerView = v.findViewById(R.id.recyclerPatient);
 
         fab.setOnClickListener(this::fabClicked);
+
+        if (patientList != null) setUpRecycler(recyclerView);
 
         return v;
     }

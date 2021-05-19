@@ -209,23 +209,29 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/registerDateInputLayout"
+                android:id="@+id/reasonPatientInputLayout"
                 style="@style/TextInputStyle"
-                android:hint="@string/register_date"
+                android:hint="@string/reason"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/paymentInputLayout"
-                android:visibility="invisible">
-
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registerDateEditText"
+                    android:id="@+id/patientReasonEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginVertical="20dp"
-                    android:focusable="false"/>
-
+                    android:inputType="textMultiLine"
+                    android:lines="3" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/deletePatientButton"
+                style="@style/DeleteButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reasonPatientInputLayout" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/saveButtonPatientForm"
@@ -233,7 +239,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/paymentInputLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/deletePatientButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
