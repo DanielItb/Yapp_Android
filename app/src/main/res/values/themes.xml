@@ -33,6 +33,12 @@
        <item name="endIconCheckable">true</item>
    </style>
 
+    <style name="TextInputStyleBlocked" parent="TextInputStyle">
+        <item name="android:focusable">false</item>
+        <item name="endIconCheckable">false</item>
+        <item name="endIconMode">none</item>
+    </style>
+
     <!--TODO intentar que al activarse se ponga del color principal-->
     <!-- SWITCH FORMS STYLE -->
     <style name="SwitchTheme" >

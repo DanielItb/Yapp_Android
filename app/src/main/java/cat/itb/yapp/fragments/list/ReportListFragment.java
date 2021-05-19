@@ -16,25 +16,20 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.ReportAdapter;
-import cat.itb.yapp.adapters.TreatmentAdapter;
 import cat.itb.yapp.models.report.ReportDto;
-import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.ReportServiceClient;
-import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReportListFragment extends Fragment {
-    private RecyclerView recyclerView;
     private NavController navController;
     private List<ReportDto> reportList = null;
 
@@ -47,8 +42,8 @@ public class ReportListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_report_list, container, false);
-        recyclerView = v.findViewById(R.id.recyclerReport);
-        getReports();
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerReport);
+        getReportsIntroRecycler(recyclerView);
         FloatingActionButton fab = v.findViewById(R.id.fabReport);
 
         fab.setOnClickListener(this::fabClicked);
@@ -64,12 +59,13 @@ public class ReportListFragment extends Fragment {
 
 
     private void setUpRecycler(RecyclerView recyclerView) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        ReportAdapter adapter = new ReportAdapter(reportList, ReportListFragment.this::loadForm);
-        recyclerView.setAdapter(adapter);
+        if (getContext() != null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+            ReportAdapter adapter = new ReportAdapter(reportList, ReportListFragment.this::loadForm);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
-//
     private void loadForm(int position) {
         ReportListFragmentDirections.ActionReportListFragmentToReportFormFragment dir =
                 ReportListFragmentDirections.actionReportListFragmentToReportFormFragment();
@@ -78,20 +74,12 @@ public class ReportListFragment extends Fragment {
         navController.navigate(dir);
     }
 
-
-
-    public void getReports() {
+    public void getReportsIntroRecycler(RecyclerView recyclerView) {
         //TODO: if is admin go to view admin ...
         Log.e("user", "id: "+ MainActivity.getUser().getId());
         Log.e("user", "username: "+MainActivity.getUser().getUsername());
 
-        MainActivity.getUser().getRoles().forEach(rol -> {
-            Log.e("user", "role: "+rol);
-        });
-
-        final List<ReportDto>[] reportDtoList = new List[]{new ArrayList<>()};
-
-
+        MainActivity.getUser().getRoles().forEach(rol -> Log.e("user", "role: "+rol));
 
         RetrofitHttp retrofitHttp = new RetrofitHttp();
         ReportServiceClient treatmentWebServiceClient = retrofitHttp.retrofit.create(ReportServiceClient.class);
@@ -127,12 +115,7 @@ public class ReportListFragment extends Fragment {
 
                         reportList = response.body();
                         setUpRecycler(recyclerView);
-
-                        reportDtoList[0].forEach(t-> {
-                            Log.e("report", "status response: " + t.toString());
-                        });
-
-                    }else {
+                    } else {
                         Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get report by specialistId", Toast.LENGTH_SHORT).show();
                         Log.e("report", "status response: " + response.code()); //401 Unauthorized
                     }

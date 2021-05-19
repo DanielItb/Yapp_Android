@@ -13,7 +13,7 @@
         android:id="@+id/patientTitleReportTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/patient"
+        android:text="@string/patient_with_two_points"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"

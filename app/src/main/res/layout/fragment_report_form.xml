@@ -8,30 +8,37 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingVertical="20dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectPatientReportButton"
-            style="@style/DateSelectorButton"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputStyleBlocked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_patient" />
+            android:hint="@string/patient">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectSpecialistReportButton"
-            style="@style/DateSelectorButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/select_specialist" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/patientReportEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/selectTreatmentButton"
-            style="@style/DateSelectorButton"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputStyleBlocked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/select_treatment" />
+            android:hint="@string/specialist">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/specialistReportEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/specialistTypeReportTextInput"
@@ -48,6 +55,19 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputStyleBlocked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/treatment">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/treatmentReportEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/diagnosisReportInputLayout"
@@ -77,14 +97,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/dateReportInputLayout"
-            style="@style/TextInputStyle"
+            style="@style/TextInputStyleBlocked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:hint="@string/date_clean"
-            app:endIconCheckable="false"
-            app:endIconMode="none">
-
+            android:hint="@string/date_clean" >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dateReportEditText"
