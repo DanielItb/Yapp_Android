@@ -22,14 +22,16 @@ public class RetrofitHttp {
     public RetrofitHttp() {
         super();
 
+/*
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+*/
 
         httpClient = new OkHttpClient.Builder()
 
 
-                .addInterceptor(logging)
+                //.addInterceptor(logging)
                 .addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
