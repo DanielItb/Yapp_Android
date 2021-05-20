@@ -90,7 +90,7 @@ public class UserFormFragment extends Fragment {
             fillUpInfoInLayout(userDto);
         }
 
-//        buttonCancel.setOnClickListener(v -> navController.popBackStack());
+        cancelButton.setOnClickListener(v -> navController.popBackStack());
         saveButton.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });

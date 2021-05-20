@@ -173,6 +173,35 @@ public class PatientFormFragment extends Fragment {
     }
 
 
+
+
+    private void delete(){
+        PatientWebServiceClient patientWebServiceClient = MainActivity.getRetrofitHttp()
+                .retrofit.create(PatientWebServiceClient.class);
+
+        Call<PatientDto> call;
+
+        call = patientWebServiceClient.deletePatientDto(patientDto.getId());
+
+        call.enqueue(new Callback<PatientDto>() {
+            @Override
+            public void onResponse(Call<PatientDto> call, Response<PatientDto> response) {
+                if (response.isSuccessful()) {
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PatientDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
     private void fillUpInfoInLayout(PatientDto patientDto) {
         String patientName = patientDto.getName();
         String patientSurname = patientDto.getSurname();
@@ -237,7 +266,7 @@ public class PatientFormFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //TODO delete
-                Toast.makeText(getContext(), "Test delete button success", Toast.LENGTH_SHORT).show();
+                delete();
             }
         });
         builder.show();
