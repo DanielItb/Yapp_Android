@@ -10,6 +10,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
@@ -39,7 +41,13 @@ public class MainFragment extends Fragment {
         reportCardView = v.findViewById(R.id.reportCardViewButton);
         treatmentCardView = v.findViewById(R.id.treatmentCardViewButton);
         centerCardView = v.findViewById(R.id.centerCardViewButton);
+        ImageView userMenuImageView = v.findViewById(R.id.userIconImageView);
+        TextView userMenuTextView = v.findViewById(R.id.usersTextViewMain);
 
+        if (!UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+            userMenuImageView.setImageResource(R.drawable.profile_icon_main);
+            userMenuTextView.setText(R.string.profile);
+        }
 
 
         usersCardView.setOnClickListener(v1 -> rolUserAction());

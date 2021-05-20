@@ -1,5 +1,6 @@
 package cat.itb.yapp.fragments.forms;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -71,7 +71,7 @@ public class PatientFormFragment extends Fragment {
 
         birthDateButton.setOnClickListener(this::datePicker);
 
-        deleteButton.setOnClickListener(v1 -> deletePatient());
+        deleteButton.setOnClickListener(v1 -> deletePatientDialog());
 
 
         paymentTypeAutoCompleteTextView = v.findViewById(R.id.autoComplete);
@@ -223,8 +223,24 @@ public class PatientFormFragment extends Fragment {
     }
 
 
-    public void deletePatient(){
-        Toast.makeText(getContext(), "Teste delete button success", Toast.LENGTH_SHORT).show();
+    public void deletePatientDialog(){
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle("CAUTION!");
+        builder.setMessage("Do you want delete this patient?");
+        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO delete
+                Toast.makeText(getContext(), "Test delete button success", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.show();
     }
 
 
