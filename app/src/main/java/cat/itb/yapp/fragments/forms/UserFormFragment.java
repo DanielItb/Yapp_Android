@@ -34,7 +34,7 @@ public class UserFormFragment extends Fragment {
     private AutoCompleteTextView rolUserAutoCompleteTextView, specialistTypeAutoCompleteTextView;
     private MaterialButton saveButton, cancelButton;
     private CircleImageView circleImageView;
-    private boolean editing;
+    private boolean editing, myProfile;
     private UserDto userDto = null;
 
     @Override
@@ -76,8 +76,18 @@ public class UserFormFragment extends Fragment {
 
         //If starts for first time
         if (userDto == null) {
-            userDto = UserFormFragmentArgs.fromBundle(getArguments()).getUserDto();
-            if (userDto != null) { //If editing
+            UserFormFragmentArgs userFormFragmentArgs =
+                    UserFormFragmentArgs.fromBundle(getArguments());
+
+            userDto = userFormFragmentArgs.getUserDto();
+            myProfile = userFormFragmentArgs.getMyProfile();
+
+            if (myProfile) {
+                editing = true;
+                userDto = MainActivity.getUserDto();
+                fillUpInfoInLayout(userDto);
+
+            } else if (userDto != null) { //If editing
                 editing = true;
                 fillUpInfoInLayout(userDto);
             } else { // If new

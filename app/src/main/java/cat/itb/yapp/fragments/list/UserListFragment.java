@@ -1,18 +1,17 @@
 package cat.itb.yapp.fragments.list;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -60,13 +59,18 @@ public class UserListFragment extends Fragment {
     }
 
     private void fabClicked(View view) {
-        navController.navigate(R.id.action_userListFragment_to_userFormFragment);
+        UserListFragmentDirections.ActionUserListFragmentToUserFormFragment dir =
+                UserListFragmentDirections.actionUserListFragmentToUserFormFragment();
+
+        dir.setMyProfile(false);
+        navController.navigate(dir);
     }
 
     private void recyclerItemClicked(int position) {
         UserListFragmentDirections.ActionUserListFragmentToUserFormFragment dir =
                 UserListFragmentDirections.actionUserListFragmentToUserFormFragment();
         dir.setUserDto(listUsers.get(position));
+        dir.setMyProfile(false);
 
         navController.navigate(dir);
     }

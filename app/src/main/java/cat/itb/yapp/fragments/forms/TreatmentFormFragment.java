@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -38,7 +37,6 @@ public class TreatmentFormFragment extends Fragment {
     private TextInputEditText editTextSessions, editTextReason, editTextPatient, editTextSpecialist,
             editTextStartDate;
     private MaterialButton buttonCancel, buttonSave;
-    private SwitchCompat switchActive;
     private boolean editing;
     private TreatmentDto treatment = null;
 
@@ -73,7 +71,6 @@ public class TreatmentFormFragment extends Fragment {
         editTextStartDate = v.findViewById(R.id.startDateTreatmentEditText);
         buttonCancel = v.findViewById(R.id.cancelButton);
         buttonSave = v.findViewById(R.id.saveButton);
-//        switchActive = v.findViewById(R.id.simpleSwitch);
 
         return v;
     }
