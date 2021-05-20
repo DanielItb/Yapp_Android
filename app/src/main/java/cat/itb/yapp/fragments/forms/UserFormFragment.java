@@ -1,13 +1,6 @@
 package cat.itb.yapp.fragments.forms;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +8,22 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
-import cat.itb.yapp.webservices.PatientWebServiceClient;
 import cat.itb.yapp.webservices.UserWebServiceClient;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +33,7 @@ public class UserFormFragment extends Fragment {
     private TextInputEditText usernameEditText, nameEditText, surnameEditText, phoneEditText, emailEditText, collegiateNumberEditText;
     private AutoCompleteTextView rolUserAutoCompleteTextView, specialistTypeAutoCompleteTextView;
     private MaterialButton saveButton, cancelButton;
+    private CircleImageView circleImageView;
     private boolean editing;
     private UserDto userDto = null;
 
@@ -56,7 +55,7 @@ public class UserFormFragment extends Fragment {
         collegiateNumberEditText = v.findViewById(R.id.collegiateNumberEditText);
         saveButton = v.findViewById(R.id.saveButtonUserForm);
         cancelButton = v.findViewById(R.id.cancelButtonUserForm);
-
+        circleImageView = v.findViewById(R.id.profile_image);
 
 
         final String[] rolTypes = getResources().getStringArray(R.array.rol_types);
@@ -104,11 +103,13 @@ public class UserFormFragment extends Fragment {
         if (nameEditText.getText().toString().isEmpty()) {
             allGood = false;
             nameEditText.setError(errorMsg);
-        } if (surnameEditText.getText().toString().isEmpty()) {
+        }
+        if (surnameEditText.getText().toString().isEmpty()) {
             allGood = false;
             surnameEditText.setError(errorMsg);
-        } if (phoneEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (phoneEditText.getText().toString().isEmpty()) {
+            allGood = false;
             phoneEditText.setError(errorMsg);
         }
 
@@ -155,7 +156,7 @@ public class UserFormFragment extends Fragment {
         String userRol = userDto.getRoles().get(0);
         String userSpecialistType = userDto.getSpecialistType();
 
-        // TODO urlPhoto
+        Picasso.with(requireContext()).load(userDto.getPhotoUrl()).into(circleImageView);
 
         if (userName != null) nameEditText.setText(userName);
         if (userSurname != null) surnameEditText.setText(userSurname);
@@ -164,7 +165,8 @@ public class UserFormFragment extends Fragment {
         if (userUserName != null) usernameEditText.setText(userUserName);
         collegiateNumberEditText.setText(userCollegiateNumber);
         if (userRol != null) rolUserAutoCompleteTextView.setText(userRol);
-        if (userSpecialistType != null) specialistTypeAutoCompleteTextView.setText(userSpecialistType);
+        if (userSpecialistType != null)
+            specialistTypeAutoCompleteTextView.setText(userSpecialistType);
     }
 
 
