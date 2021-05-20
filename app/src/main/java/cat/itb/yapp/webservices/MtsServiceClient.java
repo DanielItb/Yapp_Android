@@ -14,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 
 public interface MtsServiceClient {
@@ -27,6 +28,10 @@ public interface MtsServiceClient {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET()
     Call<List<MtsDto>> getMtsBySpecialistId(@Url String url);
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET("medicalsheet/patient/{id}")
+    Call<MtsDto> getMtsByPatientId(@Path("id") int id);
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

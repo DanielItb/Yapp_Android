@@ -9,7 +9,6 @@ public class CreateUpdateTreatmentDto {
     private String reason;
     private int sessionsFinished;
     private String startDate;
-    private boolean active;
     private int patientId;
     private Long userId;
 }

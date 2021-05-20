@@ -107,7 +107,7 @@ public class ReportFormFragment extends Fragment {
                 editing = false;
                 fillUpInfoInLayout(reportDto);
             }
-        } else { //If new
+        } else { //If load data
             fillUpInfoInLayout(reportDto);
         }
 

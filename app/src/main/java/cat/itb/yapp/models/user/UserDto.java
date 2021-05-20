@@ -1,12 +1,13 @@
 package cat.itb.yapp.models.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class UserDto {
+public class UserDto implements Serializable {
     private Long id;
     private String username;
     private String email;

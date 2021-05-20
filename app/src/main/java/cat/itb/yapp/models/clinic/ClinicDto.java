@@ -12,5 +12,5 @@ public class ClinicDto {
     private String photo;
     private String phoneNumber;
     private LocalDateTime registerDate;
-    private boolean active = true;
+
 }

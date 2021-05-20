@@ -53,6 +53,8 @@ public class PatientListFragment extends Fragment {
 
         fab.setOnClickListener(this::fabClicked);
 
+        if (patientList != null) setUpRecycler(recyclerView);
+
         return v;
     }
 

@@ -25,6 +25,6 @@ public class MtsDto implements Serializable{
     private String reason;
     //clinic
     private Integer clinicId;
-    private String clinicName;
+
 }
 

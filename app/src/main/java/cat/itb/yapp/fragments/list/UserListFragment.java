@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class UserListFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;
-    private List<UserDto> listUsers = null;
+    private List<UserDto> listUsers;
 
 
     @Override
@@ -46,6 +46,7 @@ public class UserListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_user_list, container, false);
 
+        listUsers = null;
         recyclerView = v.findViewById(R.id.recyclerUser);
         getUsers();
 
@@ -63,7 +64,11 @@ public class UserListFragment extends Fragment {
     }
 
     private void recyclerItemClicked(int position) {
-        //TODO
+        UserListFragmentDirections.ActionUserListFragmentToUserFormFragment dir =
+                UserListFragmentDirections.actionUserListFragmentToUserFormFragment();
+        dir.setUserDto(listUsers.get(position));
+
+        navController.navigate(dir);
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
