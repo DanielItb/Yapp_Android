@@ -5,6 +5,7 @@ import java.util.List;
 
 import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
 import cat.itb.yapp.models.patient.PatientDto;
+import cat.itb.yapp.models.user.RegisterDtoRoleAdmin;
 import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
 import retrofit2.Call;
@@ -32,8 +33,13 @@ public interface UserWebServiceClient {
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @POST("processregisteruser/")
+    @POST("auth/processregisteruser")
     Call<UserDto> addUser(@Body UpdateUserDto updateUserDto);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @POST("auth/processregisteradmin")
+    Call<RegisterDtoRoleAdmin> addAdmin(@Body RegisterDtoRoleAdmin registerDtoRoleAdmin);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @PUT()

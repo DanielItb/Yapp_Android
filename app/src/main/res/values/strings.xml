@@ -68,6 +68,10 @@
     <string name="objetives">Objetives</string>
     <string name="error_saving">Error saving the data</string>
     <string name="must_fill">Must be filled</string>
+    <string name="length_pass">Passwords must have at least 6 characters</string>
+    <string name="equal_pass">Both password-fields are not equal</string>
+    <string name="phone_length">Phone number must have 9 characters</string>
+    <string name="invalid_mail">Invalid email</string>
     <string name="select_treatment">Select Treatment</string>
     <string name="deleteButton">Delete</string>
     <string name="date_clean">Date</string>
@@ -75,6 +79,7 @@
     <string name="specialist">Specialist</string>
     <string name="treatment">Treatment</string>
     <string name="start_date">Start Date</string>
+    <string name="clinic_email">Clinic email</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
