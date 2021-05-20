@@ -176,7 +176,7 @@ public class UserFormFragment extends Fragment {
         collegiateNumberEditText.setText(userCollegiateNumber);
         if (userRol != null) rolUserAutoCompleteTextView.setText(userRol);
         if (userSpecialistType != null)
-            specialistTypeAutoCompleteTextView.setText(userSpecialistType);
+            specialistTypeAutoCompleteTextView.setText(userSpecialistType, false);
     }
 
 
