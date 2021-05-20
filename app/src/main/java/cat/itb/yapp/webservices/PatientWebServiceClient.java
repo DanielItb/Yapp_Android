@@ -21,8 +21,8 @@ public interface PatientWebServiceClient {
     @GET()
     Call<List<PatientDto>> getPatientsByClinicId(@Url String url);
 
-    // ROLE_USER
+/*    // ROLE_USER
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET()
-    Call<List<PatientDto>> getPatientsBySpecialistId(@Url String url);
+    Call<List<PatientDto>> getPatientsBySpecialistId(@Url String url);*/
 }
