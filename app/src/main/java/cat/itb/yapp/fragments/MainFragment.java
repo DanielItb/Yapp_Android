@@ -7,25 +7,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.models.mts.MtsDto;
 import cat.itb.yapp.models.user.UserDto;
-import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsAuth;
-import cat.itb.yapp.webservices.MtsServiceClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MainFragment extends Fragment {
@@ -51,13 +40,9 @@ public class MainFragment extends Fragment {
         treatmentCardView = v.findViewById(R.id.treatmentCardViewButton);
         centerCardView = v.findViewById(R.id.centerCardViewButton);
 
-        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
-            usersCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_userListFragment));
-        }else{
-            userDto = MainActivity.getUserDto();
-        }
 
 
+        usersCardView.setOnClickListener(v1 -> rolUserAction());
         patientsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_patientListFragment));
         mtsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_calendarFragment));
         reportCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_reportListFragment));
@@ -65,4 +50,22 @@ public class MainFragment extends Fragment {
 
         return v;
     }
+
+    public void rolUserAction(){
+        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+            navController.navigate(R.id.action_mainFragment_to_userListFragment);
+        }else{
+            userDto = MainActivity.getUserDto();
+            sendUserToForm(userDto);
+        }
+    }
+
+    private void sendUserToForm(UserDto userDto) {
+        MainFragmentDirections.ActionMainFragmentToUserFormFragment dir =
+                MainFragmentDirections.actionMainFragmentToUserFormFragment();
+        dir.setUserDto(userDto);
+
+        navController.navigate(dir);
+    }
+
 }

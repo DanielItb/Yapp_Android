@@ -32,7 +32,7 @@ public interface UserWebServiceClient {
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @POST("report/")
+    @POST("processregisteruser/")
     Call<UserDto> addUser(@Body UpdateUserDto updateUserDto);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

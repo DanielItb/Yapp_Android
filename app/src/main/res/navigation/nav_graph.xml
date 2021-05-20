@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_mainFragment_to_reportListFragment"
             app:destination="@id/reportListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_userFormFragment"
+            app:destination="@id/userFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentFormFragment"

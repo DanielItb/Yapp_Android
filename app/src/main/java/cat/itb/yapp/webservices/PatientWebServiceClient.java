@@ -33,7 +33,7 @@ public interface PatientWebServiceClient {
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @POST("report/")
+    @POST("patient/")
     Call<PatientDto> addPatient(@Body CreateUpdatePatientDto createUpdatePatientDto);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
