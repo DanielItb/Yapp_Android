@@ -258,9 +258,9 @@ public class PatientFormFragment extends Fragment {
 
     public void deletePatientDialog(){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
-        builder.setTitle("CAUTION!");
-        builder.setMessage("Do you want delete this patient?");
-        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.caution);
+        builder.setMessage(R.string.sure);
+        builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

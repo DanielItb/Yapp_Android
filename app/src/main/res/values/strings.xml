@@ -83,6 +83,13 @@
     <string name="ok">ok</string>
     <string name="check_email">Please, check your email and verify your account</string>
     <string name="thanks_for_joining">Thanks for joining YAPP</string>
+    <string name="caution">CAUTION!</string>
+    <string name="sure">Do you want delete this patient? Are you sure?</string>
+    <string name="back">Back</string>
+    <string name="search_patient">Search patient by name</string>
+    <string name="search_report">Search report by patient name</string>
+    <string name="search_treatment">Search treatment by patient name</string>
+    <string name="search_user">Search user by name or specialist type</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>

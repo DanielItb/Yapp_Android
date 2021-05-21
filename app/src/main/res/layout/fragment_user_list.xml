@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginEnd="20dp"
-        android:queryHint="Search user by name or specialist type"
+        android:queryHint="@string/search_user"
         android:iconifiedByDefault="false"
         />
 
