@@ -1,5 +1,6 @@
 package cat.itb.yapp.fragments.forms;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,15 +17,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.user.RegisterDtoRoleAdmin;
-import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.retrofit.RetrofitHttpLogin;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
@@ -65,6 +65,21 @@ public class RegisterFormFragment extends Fragment {
         specialistTypeAutoCompleteTextView = v.findViewById(R.id.autoCompleteSpecialistRegister);
         ArrayAdapter<String> adapterSpecialist = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_types, specialistTypes);
         specialistTypeAutoCompleteTextView.setAdapter(adapterSpecialist);
+
+        //TEST
+        usernameEditText.setText("Pacomer");
+        passwordEditText.setText("123456");
+        repeatPasswordEditText.setText("123456");
+        nameEditText.setText("Paco");
+        surnameEditText.setText("Paquito");
+        phoneEditText.setText("123456789");
+        emailEditText.setText("daniel.acostaromero@gmail.com");
+        collegiateNumberEditText.setText(String.valueOf(89451));
+        clinicNameEditTExt.setText("Mi clinica");
+        clinicPhoneEditTExt.setText("123456789");
+        clinicAddressEditText.setText("Mi clinica 123");
+        clinicEmailEditText.setText("wreb@gmail.com");
+        specialistTypeAutoCompleteTextView.setText("None");
 
 
         return v;
@@ -130,7 +145,7 @@ public class RegisterFormFragment extends Fragment {
             allGood = false;
             emailEditText.setError(errorMsg);
 
-        } if(!validate(emailEditText.getText().toString())) {
+        } if(validate(emailEditText.getText().toString())) {
             allGood = false;
             emailEditText.setError(errorInvalidEmailMsg);
 
@@ -154,7 +169,7 @@ public class RegisterFormFragment extends Fragment {
             allGood = false;
             clinicEmailEditText.setError(errorMsg);
 
-        } if(!validate(clinicEmailEditText.getText().toString())) {
+        } if(validate(clinicEmailEditText.getText().toString())) {
             allGood = false;
             clinicEmailEditText.setError(errorInvalidEmailMsg);
 
@@ -171,6 +186,8 @@ public class RegisterFormFragment extends Fragment {
             specialistTypeAutoCompleteTextView.setError(errorMsg);
         }
 
+        System.out.println("gggggggggggggggggggggggggggggggggggggggg " + allGood);
+
 
             return allGood;
     }
@@ -180,7 +197,7 @@ public class RegisterFormFragment extends Fragment {
 
     public static boolean validate(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-        return matcher.find();
+        return !matcher.find();
     }
 
 
@@ -199,8 +216,9 @@ public class RegisterFormFragment extends Fragment {
             @Override
             public void onResponse(Call<RegisterDtoRoleAdmin> call, Response<RegisterDtoRoleAdmin> response) {
                 if (response.isSuccessful()) {
-//                    navController.popBackStack();
-                    navController.navigate(R.id.action_registerFormFragment_to_loginFragment);
+//                    navController.navigate(R.id.action_registerFormFragment_to_loginFragment);
+                    confirmEmailDialog();
+
                 } else {
                     Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
                 }
@@ -231,8 +249,21 @@ public class RegisterFormFragment extends Fragment {
         registerDtoRoleAdmin.setEmailClinic(clinicEmailEditText.getText().toString());
         registerDtoRoleAdmin.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
 
-
         return registerDtoRoleAdmin;
+    }
+
+
+    public void confirmEmailDialog(){
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle(R.string.thanks_for_joining);
+        builder.setMessage(R.string.check_email);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                navController.navigate(R.id.action_registerFormFragment_to_loginFragment);
+            }
+        });
+        builder.show();
     }
 
 

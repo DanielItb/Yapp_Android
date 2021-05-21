@@ -80,6 +80,9 @@
     <string name="treatment">Treatment</string>
     <string name="start_date">Start Date</string>
     <string name="clinic_email">Clinic email</string>
+    <string name="ok">ok</string>
+    <string name="check_email">Please, check your email and verify your account</string>
+    <string name="thanks_for_joining">Thanks for joining YAPP</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>
