@@ -20,6 +20,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
@@ -28,6 +29,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +43,7 @@ public class PatientFormFragment extends Fragment {
     private AutoCompleteTextView paymentTypeAutoCompleteTextView;
     private boolean editing;
     private PatientDto patientDto = null;
+    private CircleImageView circleImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class PatientFormFragment extends Fragment {
         courseEditText = v.findViewById(R.id.courseEditText);
         reasonEditTExt = v.findViewById(R.id.patientReasonEditText);
         deleteButton = v.findViewById(R.id.deletePatientButton);
+        circleImageView = v.findViewById(R.id.profile_image);
 
 
         birthDateButton.setOnClickListener(this::datePicker);
@@ -214,7 +218,7 @@ public class PatientFormFragment extends Fragment {
         String patientPaymentType = patientDto.getPaymentType();
         String patientBirthDate = patientDto.getDateOfBirth();
         String patientReason = patientDto.getReason();
-        // TODO urlPhoto
+        Picasso.with(requireContext()).load(patientDto.getUrlPhoto()).into(circleImageView);
 
         if (patientName != null) nameEditText.setText(patientName);
         if (patientSurname != null) surnameEditText.setText(patientSurname);

@@ -1,13 +1,14 @@
 package cat.itb.yapp.models.mts;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import lombok.Data;
 
 @Data
-public class MtsDto implements Serializable {
+public class MtsDto implements Serializable{
     /// mts
-    private String id;
+    private Integer id;
     private String date;
     // patient
     private Integer patientId;
@@ -19,11 +20,11 @@ public class MtsDto implements Serializable {
     private Long specialistId;
     private String specialistFullName;
     private String specialistType;
-    private String reason;
-
     //treatment
-    private int tratmentId;
+    private Integer treatmentId;
+    private String reason;
     //clinic
     private Integer clinicId;
 
 }
+

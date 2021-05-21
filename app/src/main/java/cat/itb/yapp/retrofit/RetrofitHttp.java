@@ -22,7 +22,17 @@ public class RetrofitHttp {
     public RetrofitHttp() {
         super();
 
-        httpClient = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+/*
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+// set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+*/
+
+        httpClient = new OkHttpClient.Builder()
+
+
+                //.addInterceptor(logging)
+                .addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Log.e("login", UtilsSharedPreferences.getToken(MainActivity.getActivity()));

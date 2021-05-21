@@ -17,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
@@ -39,16 +40,15 @@ public class PatientListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         navController = NavHostFragment.findNavController(this);
-//        getPatients();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_patient_list, container, false);
-        patientList = null;
 
         FloatingActionButton fab = v.findViewById(R.id.fabPatients);
         recyclerView = v.findViewById(R.id.recyclerPatient);
+
         getPatients();
 
         fab.setOnClickListener(this::fabClicked);
@@ -87,27 +87,19 @@ public class PatientListFragment extends Fragment {
             Log.e("user", "role: " + rol);
         });
 
-        final List<PatientDto>[] patientDtoList = new List[]{new ArrayList<>()};
-
 
         RetrofitHttp retrofitHttp = new RetrofitHttp();
         PatientWebServiceClient patientWebServiceClient = retrofitHttp.retrofit.create(PatientWebServiceClient.class);
 
         Call<List<PatientDto>> call;
 
-        Long specialistId = MainActivity.getUser().getId().longValue();
+        Set<String> roles = MainActivity.getUser().getRoles();
         //CHECK USER ROLE
-        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+        if (UtilsAuth.getIsAdminRole(roles) || UtilsAuth.getIsUserRole(roles)) {
 
             String endpointUserRole = "patient/clinic/" + MainActivity.getUserDto().getClinicId();
             call = patientWebServiceClient.getPatientsByClinicId(endpointUserRole);
             Log.e("patient", "all patients in clinic");
-
-        } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
-
-            String endpointUserRole = "patient/" + specialistId;
-            call = patientWebServiceClient.getPatientsBySpecialistId(endpointUserRole);
-            Log.e("patient", "all patients by specialist");
 
         } else {
             Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error, usuario sin rol? ", Toast.LENGTH_SHORT).show();
@@ -124,11 +116,6 @@ public class PatientListFragment extends Fragment {
 
                         patientList = response.body();
                         setUpRecycler(recyclerView);
-
-                        patientDtoList[0].forEach(t -> {
-                            Log.e("patient", "status response: " + t.toString());
-                        });
-
                     } else {
                         Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get patients by specialistId", Toast.LENGTH_SHORT).show();
                         Log.e("patient", "status response: " + response.code()); //401 Unauthorized

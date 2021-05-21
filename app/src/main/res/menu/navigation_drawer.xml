@@ -36,7 +36,7 @@
             android:title="Subtitle">
             <menu>
                 <item
-                    android:id="@+id/personalProfileFragment"
+                    android:id="@+id/userFormFragment"
                     android:icon="@drawable/ic_baseline_person_24"
                     android:title="@string/profile" />
 

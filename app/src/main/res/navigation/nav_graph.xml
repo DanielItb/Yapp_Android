@@ -20,12 +20,16 @@
         android:id="@+id/userFormFragment"
         android:name="cat.itb.yapp.fragments.forms.UserFormFragment"
         android:label="User"
-        tools:layout="@layout/fragment_user_form" >
+        tools:layout="@layout/fragment_user_form">
         <argument
             android:name="UserDto"
             android:defaultValue="@null"
             app:argType="cat.itb.yapp.models.user.UserDto"
             app:nullable="true" />
+        <argument
+            android:name="myProfile"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -41,9 +45,6 @@
         <action
             android:id="@+id/action_mainFragment_to_userListFragment"
             app:destination="@id/userListFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_personalProfileFragment"
-            app:destination="@id/personalProfileFragment" />
         <action
             android:id="@+id/action_mainFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
@@ -137,6 +138,9 @@
         <action
             android:id="@+id/action_mtsFormFragment_to_selectPatientFragment"
             app:destination="@id/selectPatientFragment" />
+        <action
+            android:id="@+id/action_mtsFormFragment_to_selectTreatmentFragment"
+            app:destination="@id/selectTreatmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
