@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +33,8 @@ import retrofit2.Response;
 public class ReportListFragment extends Fragment {
     private NavController navController;
     private List<ReportDto> reportList = null;
+    private ReportAdapter adapter;
+    private SearchView filterReportSearchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,21 @@ public class ReportListFragment extends Fragment {
 
         fab.setOnClickListener(this::fabClicked);
 
+        filterReportSearchView = v.findViewById(R.id.filterReportSearchView);
+
         if (reportList != null) setUpRecycler(recyclerView);
+        filterReportSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         return v;
     }
@@ -61,7 +78,7 @@ public class ReportListFragment extends Fragment {
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            ReportAdapter adapter = new ReportAdapter(reportList, ReportListFragment.this::loadForm);
+            adapter = new ReportAdapter(reportList, ReportListFragment.this::loadForm);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -71,6 +88,7 @@ public class ReportListFragment extends Fragment {
                 ReportListFragmentDirections.actionReportListFragmentToReportFormFragment();
         dir.setReportDto(reportList.get(position));
 
+        filterReportSearchView.setQuery("", true);
         navController.navigate(dir);
     }
 

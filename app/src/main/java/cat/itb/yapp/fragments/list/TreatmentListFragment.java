@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,6 +36,8 @@ public class TreatmentListFragment extends Fragment {
     private RecyclerView recyclerView;
     private NavController navController;
     private List<TreatmentDto> treatmentList = null;
+    private TreatmentAdapter adapter;
+    private SearchView filterTreatmentSearchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,10 +51,24 @@ public class TreatmentListFragment extends Fragment {
         recyclerView = v.findViewById(R.id.recyclerTreatment);
         getTreatments();
         FloatingActionButton fab = v.findViewById(R.id.fabTreatment);
+        filterTreatmentSearchView = v.findViewById(R.id.filterTreatmentSearchView);
 
         fab.setOnClickListener(this::fabClicked);
 
         if (treatmentList != null) setUpRecycler(recyclerView);
+
+        filterTreatmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         return v;
     }
@@ -63,7 +80,7 @@ public class TreatmentListFragment extends Fragment {
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            TreatmentAdapter adapter = new TreatmentAdapter(treatmentList, TreatmentListFragment.this::loadForm);
+            adapter = new TreatmentAdapter(treatmentList, TreatmentListFragment.this::loadForm);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -73,6 +90,7 @@ public class TreatmentListFragment extends Fragment {
                 TreatmentListFragmentDirections.actionTreatmentListFragmentToTreatmentFormFragment();
         dir.setTreatmentDto(treatmentList.get(position));
 
+        filterTreatmentSearchView.setQuery("", true);
         navController.navigate(dir);
     }
 

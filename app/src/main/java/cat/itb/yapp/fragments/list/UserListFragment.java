@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,8 @@ public class UserListFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;
     private List<UserDto> listUsers;
+    private SearchView filterUserSearchView;
+    private UserAdapter adapter;
 
 
     @Override
@@ -47,6 +50,7 @@ public class UserListFragment extends Fragment {
 
         listUsers = null;
         recyclerView = v.findViewById(R.id.recyclerUser);
+        filterUserSearchView = v.findViewById(R.id.filterUserSearchView);
         getUsers();
 
         FloatingActionButton fab = v.findViewById(R.id.fabUsers);
@@ -54,6 +58,19 @@ public class UserListFragment extends Fragment {
         fab.setOnClickListener(this::fabClicked);
 
         if (listUsers != null) setUpRecycler(recyclerView);
+
+        filterUserSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         return v;
     }
@@ -72,13 +89,14 @@ public class UserListFragment extends Fragment {
         dir.setUserDto(listUsers.get(position));
         dir.setMyProfile(false);
 
+        filterUserSearchView.setQuery("", true);
         navController.navigate(dir);
     }
 
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            UserAdapter adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
+            adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
         }
     }

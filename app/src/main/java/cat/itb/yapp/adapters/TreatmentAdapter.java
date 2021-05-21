@@ -3,30 +3,38 @@ package cat.itb.yapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
+import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 
-public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Viewholder> {
-    private List<TreatmentDto> listTreatment;
-    private RecyclerItemClickListener recyclerItemClickListener;
+public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Viewholder> implements Filterable {
+    private final List<TreatmentDto> listTreatment;
+    private final List<TreatmentDto> listTreatmentFilter;
+    private final RecyclerItemClickListener recyclerItemClickListener;
 
     public TreatmentAdapter(List<TreatmentDto> listTreatment, RecyclerItemClickListener recyclerItemClickListener) {
         this.listTreatment = listTreatment;
+        listTreatmentFilter = new ArrayList<>(listTreatment);
         this.recyclerItemClickListener = recyclerItemClickListener;
     }
+
+
 
     public static class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView treatmentIdTextView;
         TextView startDateTreatmentTextView;
         TextView patientFullNameTreatmentTextView;
-        private RecyclerItemClickListener recyclerItemClickListener;
+        private final RecyclerItemClickListener recyclerItemClickListener;
 
         public Viewholder(@NonNull View itemView, RecyclerItemClickListener recyclerItemClickListener) {
             super(itemView);
@@ -68,5 +76,42 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     public int getItemCount() {
         return listTreatment.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return treatmentFilter;
+    }
+
+    private Filter treatmentFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<TreatmentDto> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0){
+                filteredList.addAll(listTreatmentFilter);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (TreatmentDto item : listTreatmentFilter) {
+                    if (item.getPatientFullName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            listTreatment.clear();
+            listTreatment.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 
 }

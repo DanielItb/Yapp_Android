@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -15,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +34,8 @@ public class PatientListFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<PatientDto> patientList;
     private NavController navController;
+    private PatientAdapter adapter;
+    private SearchView filterPatientSearchView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,12 +50,26 @@ public class PatientListFragment extends Fragment {
 
         FloatingActionButton fab = v.findViewById(R.id.fabPatients);
         recyclerView = v.findViewById(R.id.recyclerPatient);
+        filterPatientSearchView = v.findViewById(R.id.filterPatientSearchView);
 
         getPatients();
 
         fab.setOnClickListener(this::fabClicked);
 
         if (patientList != null) setUpRecycler(recyclerView);
+
+        filterPatientSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         return v;
     }
@@ -63,6 +79,7 @@ public class PatientListFragment extends Fragment {
                 PatientListFragmentDirections.actionPatientListFragmentToPatientFormFragment();
         dir.setPatientDto(patientList.get(position));
 
+        filterPatientSearchView.setQuery("", true);
         navController.navigate(dir);
     }
 
@@ -73,7 +90,7 @@ public class PatientListFragment extends Fragment {
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            PatientAdapter adapter = new PatientAdapter(patientList, this::recyclerItemClicked);
+            adapter = new PatientAdapter(patientList, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
         }
     }
