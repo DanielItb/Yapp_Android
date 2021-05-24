@@ -28,6 +28,11 @@ public interface PatientWebServiceClient {
     @GET()
     Call<List<PatientDto>> getPatientsByClinicId(@Url String url);
 
+    // ROLE_USER
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @GET()
+    Call<List<PatientDto>> getPatientsActiveByClinicId(@Url String url);
+
 /*    // ROLE_USER
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @GET()
@@ -42,6 +47,6 @@ public interface PatientWebServiceClient {
     Call<PatientDto> updateDto(@Url String url, @Body CreateUpdatePatientDto createUpdatePatientDto);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @DELETE("patient/{id}")
+    @DELETE("patient/deactivate/{id}")
     Call<PatientDto> deletePatientDto(@Path("id") int id);
 }

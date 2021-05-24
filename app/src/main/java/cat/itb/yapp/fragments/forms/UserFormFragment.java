@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -36,6 +38,7 @@ public class UserFormFragment extends Fragment {
     private CircleImageView circleImageView;
     private boolean editing, myProfile;
     private UserDto userDto = null;
+    private SwitchCompat editSwitch;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class UserFormFragment extends Fragment {
         saveButton = v.findViewById(R.id.saveButtonUserForm);
         cancelButton = v.findViewById(R.id.cancelButtonUserForm);
         circleImageView = v.findViewById(R.id.profile_image);
+        editSwitch = v.findViewById(R.id.editSwitchUser);
 
 
         final String[] rolTypes = getResources().getStringArray(R.array.rol_types);
@@ -85,13 +89,17 @@ public class UserFormFragment extends Fragment {
             if (myProfile) {
                 editing = true;
                 userDto = MainActivity.getUserDto();
+                notFocusable();
                 fillUpInfoInLayout(userDto);
 
             } else if (userDto != null) { //If editing
                 editing = true;
+                notFocusable();
                 fillUpInfoInLayout(userDto);
             } else { // If new
                 userDto = new UserDto();
+                editSwitch.setVisibility(View.GONE);
+                focusable();
 //                userDto.setDate(LocalDateTime.now().toString());
                 editing = false;
             }
@@ -104,6 +112,73 @@ public class UserFormFragment extends Fragment {
             if (allRequiredCampsSet()) save();
         });
 
+        editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    if (myProfile){
+                        focusableEdit();
+                    }else{
+                        focusable();
+                    }
+
+                }else{
+                    notFocusable();
+                }
+            }
+        });
+
+    }
+
+    public void notFocusable(){
+        usernameEditText.setFocusable(false);
+        nameEditText.setFocusable(false);
+        surnameEditText.setFocusable(false);
+        phoneEditText.setFocusable(false);
+        emailEditText.setFocusable(false);
+        collegiateNumberEditText.setFocusable(false);
+        rolUserAutoCompleteTextView.setFocusableInTouchMode(false);
+        rolUserAutoCompleteTextView.setFocusable(false);
+        rolUserAutoCompleteTextView.setClickable(false);
+        rolUserAutoCompleteTextView.setFocusable(false);
+        rolUserAutoCompleteTextView.setDropDownHeight(0);
+        specialistTypeAutoCompleteTextView.setFocusableInTouchMode(false);
+        specialistTypeAutoCompleteTextView.setFocusable(false);
+        specialistTypeAutoCompleteTextView.setClickable(false);
+        specialistTypeAutoCompleteTextView.setFocusable(false);
+        specialistTypeAutoCompleteTextView.setDropDownHeight(0);
+        saveButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.GONE);
+
+    }
+
+    public void focusable(){
+        usernameEditText.setFocusableInTouchMode(true);
+        nameEditText.setFocusableInTouchMode(true);
+        surnameEditText.setFocusableInTouchMode(true);
+        phoneEditText.setFocusableInTouchMode(true);
+        emailEditText.setFocusableInTouchMode(true);
+        collegiateNumberEditText.setFocusableInTouchMode(true);
+        rolUserAutoCompleteTextView.setFocusableInTouchMode(true);
+        rolUserAutoCompleteTextView.setFocusable(true);
+        rolUserAutoCompleteTextView.setClickable(true);
+        rolUserAutoCompleteTextView.setFocusable(true);
+        rolUserAutoCompleteTextView.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        specialistTypeAutoCompleteTextView.setFocusableInTouchMode(true);
+        specialistTypeAutoCompleteTextView.setFocusable(true);
+        specialistTypeAutoCompleteTextView.setClickable(true);
+        specialistTypeAutoCompleteTextView.setFocusable(true);
+        specialistTypeAutoCompleteTextView.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        saveButton.setVisibility(View.VISIBLE);
+        cancelButton.setVisibility(View.VISIBLE);
+    }
+
+    public void focusableEdit(){
+        nameEditText.setFocusableInTouchMode(true);
+        phoneEditText.setFocusableInTouchMode(true);
+        surnameEditText.setFocusableInTouchMode(true);
+        saveButton.setVisibility(View.VISIBLE);
+        cancelButton.setVisibility(View.VISIBLE);
     }
 
     private boolean allRequiredCampsSet() {

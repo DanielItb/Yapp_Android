@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -20,12 +22,14 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.fragments.list.PatientListFragment;
 import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
@@ -44,6 +48,8 @@ public class PatientFormFragment extends Fragment {
     private boolean editing;
     private PatientDto patientDto = null;
     private CircleImageView circleImageView;
+    private SwitchCompat editSwitch;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,7 @@ public class PatientFormFragment extends Fragment {
         reasonEditTExt = v.findViewById(R.id.patientReasonEditText);
         deleteButton = v.findViewById(R.id.deletePatientButton);
         circleImageView = v.findViewById(R.id.profile_image);
+        editSwitch = v.findViewById(R.id.editSwitchPatient);
 
 
         birthDateButton.setOnClickListener(this::datePicker);
@@ -81,6 +88,8 @@ public class PatientFormFragment extends Fragment {
         paymentTypeAutoCompleteTextView = v.findViewById(R.id.autoComplete);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_types, paymentTypes);
         paymentTypeAutoCompleteTextView.setAdapter(adapter);
+
+
 
 
         return v;
@@ -95,10 +104,14 @@ public class PatientFormFragment extends Fragment {
         if (patientDto == null) {
             patientDto = PatientFormFragmentArgs.fromBundle(getArguments()).getPatientDto();
             if (patientDto != null) { //If editing
+                deleteButton.setText(R.string.deleteButton);
                 editing = true;
+                notFocusable();
                 fillUpInfoInLayout(patientDto);
             } else { // If new
                 patientDto = new PatientDto();
+                editSwitch.setVisibility(View.GONE);
+                focusable();
 //                patientDto.setDate(LocalDateTime.now().toString());
                 editing = false;
             }
@@ -111,6 +124,59 @@ public class PatientFormFragment extends Fragment {
             if (allRequiredCampsSet()) save();
         });
 
+        editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    focusable();
+                }else{
+                    notFocusable();
+                }
+            }
+        });
+
+    }
+
+    public void notFocusable(){
+        birthDateButton.setEnabled(false);
+        nameEditText.setFocusable(false);
+        surnameEditText.setFocusable(false);
+        ageEditText.setFocusable(false);
+        addressEditText.setFocusable(false);
+        phoneNumberEditText.setFocusable(false);
+        emailEditText.setFocusable(false);
+        schoolEditText.setFocusable(false);
+        courseEditText.setFocusable(false);
+        reasonEditTExt.setFocusable(false);
+        deleteButton.setFocusable(false);
+        circleImageView.setFocusable(false);
+        paymentTypeAutoCompleteTextView.setFocusableInTouchMode(false);
+        paymentTypeAutoCompleteTextView.setFocusable(false);
+        paymentTypeAutoCompleteTextView.setClickable(false);
+        paymentTypeAutoCompleteTextView.setFocusable(false);
+        paymentTypeAutoCompleteTextView.setDropDownHeight(0);
+        saveButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
+
+    }
+
+    public void focusable(){
+        birthDateButton.setEnabled(true);
+        nameEditText.setFocusableInTouchMode(true);
+        nameEditText.setFocusableInTouchMode(true);
+        surnameEditText.setFocusableInTouchMode(true);
+        ageEditText.setFocusableInTouchMode(true);
+        addressEditText.setFocusableInTouchMode(true);
+        phoneNumberEditText.setFocusableInTouchMode(true);
+        emailEditText.setFocusableInTouchMode(true);
+        schoolEditText.setFocusableInTouchMode(true);
+        courseEditText.setFocusableInTouchMode(true);
+        reasonEditTExt.setFocusableInTouchMode(true);
+        deleteButton.setFocusableInTouchMode(true);
+        circleImageView.setFocusableInTouchMode(true);
+        paymentTypeAutoCompleteTextView.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        saveButton.setVisibility(View.VISIBLE);
+        deleteButton.setVisibility(View.VISIBLE);
     }
 
     private boolean allRequiredCampsSet() {
@@ -191,6 +257,7 @@ public class PatientFormFragment extends Fragment {
             @Override
             public void onResponse(Call<PatientDto> call, Response<PatientDto> response) {
                 if (response.isSuccessful()) {
+                    PatientListFragment.patientList.remove(patientDto);
                     navController.popBackStack();
                 } else {
                     Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
@@ -250,6 +317,7 @@ public class PatientFormFragment extends Fragment {
         createUpdatePatientDto.setCourse(courseEditText.getText().toString());
         createUpdatePatientDto.setPaymentType(paymentTypeAutoCompleteTextView.getText().toString());
         createUpdatePatientDto.setClinicId(patientDto.getClinicId());
+        // TODO al crear patient peta por que el id de clinica es null, se debería coger de alguna manera el id de la clinica
         // TODO urlPhoto
 
         return createUpdatePatientDto;

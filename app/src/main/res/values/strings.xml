@@ -90,6 +90,7 @@
     <string name="search_report">Search report by patient name</string>
     <string name="search_treatment">Search treatment by patient name</string>
     <string name="search_user">Search user by name or specialist type</string>
+    <string name="edit">Edit</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>

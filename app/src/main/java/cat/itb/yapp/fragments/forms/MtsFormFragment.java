@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -40,6 +42,7 @@ public class MtsFormFragment extends Fragment {
     private TextInputEditText reasonEditText, patientEditText, specialistEditText, dateEditText;
     private MtsDto mtsDto = null;
     private boolean editing;
+    private SwitchCompat editSwitch;
 
 
     @Override
@@ -89,6 +92,7 @@ public class MtsFormFragment extends Fragment {
         saveButton = v.findViewById(R.id.saveMtsButton);
         cancelButton = v.findViewById(R.id.cancelMtsButton);
         reasonEditText = v.findViewById(R.id.mtsReasonEditText);
+        editSwitch = v.findViewById(R.id.editSwitchMts);
 
         dateEditText.setOnClickListener(this::datePicker);
         return v;
@@ -103,10 +107,13 @@ public class MtsFormFragment extends Fragment {
             mtsDto = MtsFormFragmentArgs.fromBundle(getArguments()).getMtsDto();
             if (mtsDto != null) { //If editing
                 editing = true;
+                notFocusable();
                 fillUpInfoInLayout(mtsDto);
             } else { // If new
                 mtsDto = new MtsDto();
                 editing = false;
+                editSwitch.setVisibility(View.GONE);
+                focusable();
             }
         } else { //If new
             fillUpInfoInLayout(mtsDto);
@@ -120,7 +127,39 @@ public class MtsFormFragment extends Fragment {
         specialistEditText.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectUserFragment));
         patientEditText.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectPatientFragment));
         reasonEditText.setOnClickListener(v -> navController.navigate(R.id.action_mtsFormFragment_to_selectTreatmentFragment));
+
+        editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    focusable();
+                }else{
+                    notFocusable();
+                }
+            }
+        });
     }
+
+
+    public void notFocusable(){
+        patientEditText.setEnabled(false);
+        specialistEditText.setEnabled(false);
+        dateEditText.setEnabled(false);
+        reasonEditText.setEnabled(false);
+        saveButton.setVisibility(View.GONE);
+        cancelButton.setVisibility(View.GONE);
+    }
+
+    public void focusable(){
+        patientEditText.setEnabled(true);
+        specialistEditText.setEnabled(true);
+        dateEditText.setEnabled(true);
+        reasonEditText.setEnabled(true);
+        cancelButton.setVisibility(View.VISIBLE);
+        saveButton.setVisibility(View.VISIBLE);
+
+    }
+
 
 
     private void fillUpInfoInLayout(MtsDto mtsDto) {

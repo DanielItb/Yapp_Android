@@ -5,10 +5,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -39,6 +41,7 @@ public class TreatmentFormFragment extends Fragment {
     private MaterialButton buttonCancel, buttonSave;
     private boolean editing;
     private TreatmentDto treatment = null;
+    private SwitchCompat editSwitch;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,7 @@ public class TreatmentFormFragment extends Fragment {
         editTextStartDate = v.findViewById(R.id.startDateTreatmentEditText);
         buttonCancel = v.findViewById(R.id.cancelButton);
         buttonSave = v.findViewById(R.id.saveButton);
+        editSwitch = v.findViewById(R.id.editSwitchTreatments);
 
         return v;
     }
@@ -83,10 +87,13 @@ public class TreatmentFormFragment extends Fragment {
             treatment = TreatmentFormFragmentArgs.fromBundle(getArguments()).getTreatmentDto();
             if (treatment != null) {
                 editing = true;
+                notFocusable();
                 fillUpInfoInLayout(treatment);
             } else {
                 treatment = new TreatmentDto();
                 editing = false;
+                editSwitch.setVisibility(View.GONE);
+                focusable();
             }
         } else {
             fillUpInfoInLayout(treatment);
@@ -101,6 +108,37 @@ public class TreatmentFormFragment extends Fragment {
         editTextPatient.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectPatientFragment));
         editTextStartDate.setOnClickListener(v -> UtilsDatePicker.showDatePicker(this::dateSelected,
                 getParentFragmentManager()));
+
+        editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    focusable();
+                }else{
+                    notFocusable();
+                }
+            }
+        });
+    }
+
+    public void notFocusable(){
+        editTextSessions.setFocusable(false);
+        editTextReason.setFocusable(false);
+        editTextSpecialist.setEnabled(false);
+        editTextPatient.setEnabled(false);
+        editTextStartDate.setEnabled(false);
+        buttonCancel.setVisibility(View.GONE);
+        buttonSave.setVisibility(View.GONE);
+    }
+
+    public void focusable(){
+        editTextSessions.setFocusable(true);
+        editTextReason.setFocusable(true);
+        editTextSpecialist.setEnabled(true);
+        editTextPatient.setEnabled(true);
+        editTextStartDate.setEnabled(true);
+        buttonCancel.setVisibility(View.VISIBLE);
+        buttonSave.setVisibility(View.VISIBLE);
     }
 
     private void dateSelected(Object o) {
