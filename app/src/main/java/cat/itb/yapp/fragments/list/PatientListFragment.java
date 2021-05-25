@@ -18,14 +18,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.PatientAdapter;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
-import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -106,28 +104,14 @@ public class PatientListFragment extends Fragment {
         });
 
 
-        RetrofitHttp retrofitHttp = new RetrofitHttp();
+        RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
         PatientWebServiceClient patientWebServiceClient = retrofitHttp.retrofit.create(PatientWebServiceClient.class);
 
         Call<List<PatientDto>> call;
 
-        Set<String> roles = MainActivity.getUser().getRoles();
-        //CHECK USER ROLE
-        if (UtilsAuth.getIsAdminRole(roles)) {
-
-            String endpointUserRole = "patient/clinic/" + MainActivity.getUserDto().getClinicId();
-            call = patientWebServiceClient.getPatientsByClinicId(endpointUserRole);
-            Log.e("patient", "all patients in clinic");
-
-        }else if (UtilsAuth.getIsUserRole(roles)){
-            String endpointUserRole = "patient/true/clinic/" + MainActivity.getUserDto().getClinicId();
-            call = patientWebServiceClient.getPatientsActiveByClinicId(endpointUserRole);
-            Log.e("patient", "all patients active in clinic");
-
-        }else {
-            Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error, usuario sin rol? ", Toast.LENGTH_SHORT).show();
-            call = null;
-        }
+        String endpointUserRole = "patient/clinic/" + MainActivity.getUserDto().getClinicId();
+        call = patientWebServiceClient.getPatientsByClinicId(endpointUserRole);
+        Log.e("patient", "all patients in clinic");
 
         if (call != null) {
             call.enqueue(new Callback<List<PatientDto>>() {
