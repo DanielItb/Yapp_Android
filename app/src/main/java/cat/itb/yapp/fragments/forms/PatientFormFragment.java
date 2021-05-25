@@ -317,6 +317,11 @@ public class PatientFormFragment extends Fragment {
         createUpdatePatientDto.setCourse(courseEditText.getText().toString());
         createUpdatePatientDto.setPaymentType(paymentTypeAutoCompleteTextView.getText().toString());
         createUpdatePatientDto.setClinicId(patientDto.getClinicId());
+        if (createUpdatePatientDto.getClinicId() == null) {
+            createUpdatePatientDto.setClinicId(MainActivity.getUserDto().getClinicId());
+        }
+
+        createUpdatePatientDto.setUrlPhoto(patientDto.getUrlPhoto());
         // TODO al crear patient peta por que el id de clinica es null, se debería coger de alguna manera el id de la clinica
         // TODO urlPhoto
 
