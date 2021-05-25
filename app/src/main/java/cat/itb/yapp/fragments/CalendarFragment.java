@@ -31,6 +31,8 @@ import java.util.Locale;
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.mts.MtsDto;
+import cat.itb.yapp.models.treatment.TreatmentDto;
+import cat.itb.yapp.retrofit.DatabaseUtils;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.MtsServiceClient;
@@ -100,7 +102,26 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
 
     private void fabClicked(View view) {
-        navController.navigate(R.id.action_calendarFragment_to_mtsFormFragment);
+        DatabaseUtils.getTreatments(new Callback<List<TreatmentDto>>() {
+            @Override
+            public void onResponse(Call<List<TreatmentDto>> call, Response<List<TreatmentDto>> response) {
+                if (response.isSuccessful()) {
+                    List<TreatmentDto> treatmentDtos = response.body();
+                    if (treatmentDtos.size() > 0) {
+                        navController.navigate(R.id.action_calendarFragment_to_mtsFormFragment);
+                    } else {
+                        Toast.makeText(getContext(), "pa tu cara", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<TreatmentDto>> call, Throwable t) {
+
+            }
+        });
+
     }
 
     @Override
