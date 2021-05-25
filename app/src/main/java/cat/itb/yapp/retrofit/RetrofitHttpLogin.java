@@ -11,7 +11,7 @@ public class RetrofitHttpLogin {
     public Retrofit retrofit;
     private HttpLoggingInterceptor loggingInterceptor;
     public OkHttpClient.Builder httpClient;
-    public static String BASE_URL = "http://10.0.2.2:8080/api/";
+    public static String BASE_URL = "https://yapp-backend.herokuapp.com/api/";
 
     public RetrofitHttpLogin() {
         super();
