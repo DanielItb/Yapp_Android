@@ -92,6 +92,8 @@
     <string name="search_user">Search user by name or specialist type</string>
     <string name="edit">Edit</string>
     <string name="bad_credentials">Error! Bad credentials</string>
+    <string name="home">Home</string>
+    <string name="account">Account</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>

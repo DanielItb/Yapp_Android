@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
-
+        <item
+            android:id="@+id/mainFragment"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/home" />
         <item
             android:id="@+id/userListFragment"
             android:icon="@drawable/medico"
@@ -34,7 +37,7 @@
         android:id="@+id/personalGroup">
         <item
             android:id="@+id/subtitle"
-            android:title="Subtitle">
+            android:title="@string/account">
             <menu>
                 <item
                     android:id="@+id/userFormFragment"
