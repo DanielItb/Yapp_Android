@@ -1,6 +1,11 @@
 package cat.itb.yapp.fragments.list;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -8,13 +13,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
@@ -93,7 +91,7 @@ public class SelectUserFragment extends Fragment {
             RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
             UserWebServiceClient userWebServiceClient = retrofitHttp.retrofit.create(UserWebServiceClient.class);
 
-            String endpointUserRole = "user/";
+            String endpointUserRole = "user/clinic/" + MainActivity.getUserDto().getClinicId();
             Call<List<UserDto>> call = userWebServiceClient.getUsers(endpointUserRole);
             Log.e("user", "all users in clinic");
 

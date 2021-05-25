@@ -118,7 +118,7 @@ public class UserListFragment extends Fragment {
             RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
             UserWebServiceClient userWebServiceClient = retrofitHttp.retrofit.create(UserWebServiceClient.class);
 
-            String endpointUserRole = "user/";
+            String endpointUserRole = "user/clinic/" + MainActivity.getUserDto().getClinicId();
             Call<List<UserDto>> call = userWebServiceClient.getUsers(endpointUserRole);
             Log.e("user", "all users in clinic");
 
