@@ -20,12 +20,16 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.models.user.CreateUserDto;
 import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import de.hdodenhof.circleimageview.CircleImageView;
+import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -183,34 +187,46 @@ public class UserFormFragment extends Fragment {
 
     private boolean allRequiredCampsSet() {
         boolean allGood = true;
-        CharSequence errorMsg = getText(R.string.must_fill);
+        if (editing){
+            CharSequence errorMsg = getText(R.string.must_fill);
 
-        if (nameEditText.getText().toString().isEmpty()) {
-            allGood = false;
-            nameEditText.setError(errorMsg);
+            if (nameEditText.getText().toString().isEmpty()) {
+                allGood = false;
+                nameEditText.setError(errorMsg);
+            }
+            if (surnameEditText.getText().toString().isEmpty()) {
+                allGood = false;
+                surnameEditText.setError(errorMsg);
+            }
+            if (phoneEditText.getText().toString().isEmpty()) {
+                allGood = false;
+                phoneEditText.setError(errorMsg);
+            }
+        }else{
+
         }
-        if (surnameEditText.getText().toString().isEmpty()) {
-            allGood = false;
-            surnameEditText.setError(errorMsg);
-        }
-        if (phoneEditText.getText().toString().isEmpty()) {
-            allGood = false;
-            phoneEditText.setError(errorMsg);
-        }
+
 
         return allGood;
     }
 
     private void save() {
-        final UpdateUserDto updateUserDto = getCreateUpdateUserFromFrontEnd();
+        UpdateUserDto updateUserDto;
+        CreateUserDto userDtoCreate;
 
         UserWebServiceClient userWebServiceClient = MainActivity.getRetrofitHttp()
                 .retrofit.create(UserWebServiceClient.class);
 
         Call<UserDto> call;
-        if (editing) call = userWebServiceClient.updateDto("auth/updateuser/" + userDto.getId(),
-                updateUserDto);
-        else call = userWebServiceClient.addUser(updateUserDto);
+        if (editing) {
+            updateUserDto = getUpdateUserFromFrontEnd();
+            call = userWebServiceClient.updateDto("auth/updateuser/" + userDto.getId(),
+                    updateUserDto);
+        } else {
+            userDtoCreate = getCreateUserFromFrontEnd();
+            call = userWebServiceClient.addUser(userDtoCreate);
+        }
+
 
         call.enqueue(new Callback<UserDto>() {
             @Override
@@ -218,7 +234,11 @@ public class UserFormFragment extends Fragment {
                 if (response.isSuccessful()) {
                     navController.popBackStack();
                 } else {
-                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                    try {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -255,7 +275,7 @@ public class UserFormFragment extends Fragment {
     }
 
 
-    private UpdateUserDto getCreateUpdateUserFromFrontEnd() {
+    private UpdateUserDto getUpdateUserFromFrontEnd() {
         UpdateUserDto updateUserDto = new UpdateUserDto();
 
         updateUserDto.setName(nameEditText.getText().toString());
@@ -263,8 +283,32 @@ public class UserFormFragment extends Fragment {
         updateUserDto.setPhone(phoneEditText.getText().toString());
         updateUserDto.setActive(true);
 
+
         // TODO urlPhoto
 
         return updateUserDto;
     }
+
+    private CreateUserDto getCreateUserFromFrontEnd() {
+        CreateUserDto userDto = new CreateUserDto();
+
+        userDto.setName(nameEditText.getText().toString());
+        userDto.setPassword("password");
+        userDto.setPassword2("password");
+        userDto.setSurnames(surnameEditText.getText().toString());
+        userDto.setPhone(phoneEditText.getText().toString());
+        userDto.setEmail(emailEditText.getText().toString());
+        userDto.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
+        userDto.setUsername(usernameEditText.getText().toString());
+        userDto.setCollegiateNumber(Integer.parseInt(collegiateNumberEditText.getText().toString()));
+        userDto.setClinicId(MainActivity.getUserDto().getClinicId());
+
+
+
+
+        // TODO urlPhoto
+
+        return userDto;
+    }
+
 }

@@ -35,7 +35,7 @@ import retrofit2.Response;
 public class TreatmentListFragment extends Fragment {
     private RecyclerView recyclerView;
     private NavController navController;
-    private List<TreatmentDto> treatmentList = null;
+    public static List<TreatmentDto> treatmentList = null;
     private TreatmentAdapter adapter;
     private SearchView filterTreatmentSearchView;
 
