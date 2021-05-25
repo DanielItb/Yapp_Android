@@ -1,5 +1,6 @@
 package cat.itb.yapp.fragments.forms;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.Instant;
@@ -25,6 +27,7 @@ import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.fragments.list.TreatmentListFragment;
 import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.utils.UtilsDatePicker;
@@ -38,7 +41,7 @@ public class TreatmentFormFragment extends Fragment {
     private NavController navController;
     private TextInputEditText editTextSessions, editTextReason, editTextPatient, editTextSpecialist,
             editTextStartDate;
-    private MaterialButton buttonCancel, buttonSave;
+    private MaterialButton buttonDelete, buttonSave;
     private boolean editing;
     private TreatmentDto treatment = null;
     private SwitchCompat editSwitch;
@@ -72,9 +75,12 @@ public class TreatmentFormFragment extends Fragment {
         editTextSpecialist = v.findViewById(R.id.specialistTreatmentEditText);
         editTextPatient = v.findViewById(R.id.patientTreatmentEditText);
         editTextStartDate = v.findViewById(R.id.startDateTreatmentEditText);
-        buttonCancel = v.findViewById(R.id.cancelButton);
+        buttonDelete = v.findViewById(R.id.cancelButton);
         buttonSave = v.findViewById(R.id.saveButton);
         editSwitch = v.findViewById(R.id.editSwitchTreatments);
+
+
+
 
         return v;
     }
@@ -100,7 +106,7 @@ public class TreatmentFormFragment extends Fragment {
         }
 
 
-        buttonCancel.setOnClickListener(v1 -> navController.popBackStack());
+        buttonDelete.setOnClickListener(v1 -> deleteTreatmentDialog());
         buttonSave.setOnClickListener(v -> {
             if(allRequiredCampsSet()) save();
         });
@@ -127,7 +133,7 @@ public class TreatmentFormFragment extends Fragment {
         editTextSpecialist.setEnabled(false);
         editTextPatient.setEnabled(false);
         editTextStartDate.setEnabled(false);
-        buttonCancel.setVisibility(View.GONE);
+        buttonDelete.setVisibility(View.GONE);
         buttonSave.setVisibility(View.GONE);
     }
 
@@ -137,7 +143,7 @@ public class TreatmentFormFragment extends Fragment {
         editTextSpecialist.setEnabled(true);
         editTextPatient.setEnabled(true);
         editTextStartDate.setEnabled(true);
-        buttonCancel.setVisibility(View.VISIBLE);
+        buttonDelete.setVisibility(View.VISIBLE);
         buttonSave.setVisibility(View.VISIBLE);
     }
 
@@ -212,6 +218,58 @@ public class TreatmentFormFragment extends Fragment {
             }
         });
     }
+
+
+    private void delete(){
+        TreatmentWebServiceClient treatmentService = MainActivity.getRetrofitHttp()
+                .retrofit.create(TreatmentWebServiceClient.class);
+
+        Call<TreatmentDto> call;
+
+        call = treatmentService.deleteTreatmentDto(Integer.parseInt(treatment.getId()));
+
+        call.enqueue(new Callback<TreatmentDto>() {
+            @Override
+            public void onResponse(Call<TreatmentDto> call, Response<TreatmentDto> response) {
+                if (response.isSuccessful()) {
+                    TreatmentListFragment.treatmentList.remove(treatment);
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TreatmentDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+    public void deleteTreatmentDialog(){
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle(R.string.caution);
+        builder.setMessage(R.string.sure_treatment);
+        builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO delete
+                delete();
+            }
+        });
+        builder.show();
+    }
+
+
+
 
     private CreateUpdateTreatmentDto getTreatment() {
         CreateUpdateTreatmentDto createUpdateTreatmentDto = new CreateUpdateTreatmentDto();

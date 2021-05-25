@@ -30,6 +30,7 @@ import java.util.Locale;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.fragments.list.TreatmentListFragment;
 import cat.itb.yapp.models.mts.MtsDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.retrofit.DatabaseUtils;
@@ -43,7 +44,7 @@ import retrofit2.Response;
 public class CalendarFragment extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, View.OnClickListener {
     private NavController navController;
     private WeekView mWeekView;
-    private List<MtsDto> listMts = null;
+    public static List<MtsDto> listMts = null;
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
@@ -278,7 +279,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
         //CHECK USER ROLE
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
 
-            String endpointUserRole = "medicalsheet/";
+            String endpointUserRole = "medicalsheet/clinic/" + MainActivity.getUserDto().getClinicId();
             call = mtsServiceClient.getUsers(endpointUserRole);
             Log.e("mts", "all mts in clinic");
 

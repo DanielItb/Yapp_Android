@@ -1,5 +1,6 @@
 package cat.itb.yapp.fragments.forms;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.Instant;
@@ -25,6 +27,8 @@ import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.fragments.list.PatientListFragment;
+import cat.itb.yapp.fragments.list.ReportListFragment;
 import cat.itb.yapp.models.report.CreateUpdateReportDto;
 import cat.itb.yapp.models.report.ReportDto;
 import cat.itb.yapp.utils.UtilsDatePicker;
@@ -37,7 +41,7 @@ public class ReportFormFragment extends Fragment {
     private NavController navController;
     private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialistType, editTextDate,
             editTextPatient, editTextSpecialist, editTextTreatment;
-    private MaterialButton buttonCancel, buttonSave;
+    private MaterialButton buttonDelete, buttonSave;
     private ReportDto reportDto = null;
     private boolean editing;
     private SwitchCompat editSwitch;
@@ -83,7 +87,7 @@ public class ReportFormFragment extends Fragment {
 
         editTextDiagnosis = v.findViewById(R.id.diagnosisReportEditText);
         editTextObjectives = v.findViewById(R.id.objetivesReportEditText);
-        buttonCancel = v.findViewById(R.id.cancelReportButton);
+        buttonDelete = v.findViewById(R.id.cancelReportButton);
         buttonSave = v.findViewById(R.id.saveReportButton);
         editTextSpecialistType = v.findViewById(R.id.specialistTypeReportEditText);
         editTextDate = v.findViewById(R.id.dateReportEditText);
@@ -118,7 +122,7 @@ public class ReportFormFragment extends Fragment {
             fillUpInfoInLayout(reportDto);
         }
 
-        buttonCancel.setOnClickListener(v -> navController.popBackStack());
+        buttonDelete.setOnClickListener(v -> deleteReportDialog());
         buttonSave.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });
@@ -151,7 +155,7 @@ public class ReportFormFragment extends Fragment {
         editTextPatient.setEnabled(false);
         editTextTreatment.setEnabled(false);
         editTextSpecialist.setEnabled(false);
-        buttonCancel.setVisibility(View.GONE);
+        buttonDelete.setVisibility(View.GONE);
         buttonSave.setVisibility(View.GONE);
     }
 
@@ -163,7 +167,7 @@ public class ReportFormFragment extends Fragment {
         editTextPatient.setEnabled(true);
         editTextTreatment.setEnabled(true);
         editTextSpecialist.setEnabled(true);
-        buttonCancel.setVisibility(View.VISIBLE);
+        buttonDelete.setVisibility(View.VISIBLE);
         buttonSave.setVisibility(View.VISIBLE);
     }
 
@@ -203,6 +207,58 @@ public class ReportFormFragment extends Fragment {
         });
 
     }
+
+
+
+    private void delete(){
+        ReportServiceClient reportService = MainActivity.getRetrofitHttp()
+                .retrofit.create(ReportServiceClient.class);
+
+        Call<ReportDto> call;
+
+        call = reportService.deleteReportDto(reportDto.getId());
+
+        call.enqueue(new Callback<ReportDto>() {
+            @Override
+            public void onResponse(Call<ReportDto> call, Response<ReportDto> response) {
+                if (response.isSuccessful()) {
+                    ReportListFragment.reportList.remove(reportDto);
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReportDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+
+    public void deleteReportDialog(){
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle(R.string.caution);
+        builder.setMessage(R.string.sure_report);
+        builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO delete
+                delete();
+            }
+        });
+        builder.show();
+    }
+
 
     private CreateUpdateReportDto getCreateUpdateReportFromFrontEnd() {
         CreateUpdateReportDto createUpdateReportDto = new CreateUpdateReportDto();

@@ -32,7 +32,7 @@ import retrofit2.Response;
 
 public class ReportListFragment extends Fragment {
     private NavController navController;
-    private List<ReportDto> reportList = null;
+    public static List<ReportDto> reportList = null;
     private ReportAdapter adapter;
     private SearchView filterReportSearchView;
 
@@ -62,7 +62,7 @@ public class ReportListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                if (adapter != null) adapter.getFilter().filter(newText);
                 return false;
             }
         });
