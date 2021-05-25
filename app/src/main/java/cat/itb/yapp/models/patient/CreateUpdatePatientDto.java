@@ -18,5 +18,5 @@ public class CreateUpdatePatientDto {
     private String schoolName;
     private String course;
     private String paymentType;
-    private int clinicId;
+    private Integer clinicId;
 }
