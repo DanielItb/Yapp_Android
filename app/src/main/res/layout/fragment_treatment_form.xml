@@ -104,6 +104,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancelButton"
         style="@style/CancelButton"
+        android:text="@string/deleteButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/saveButton"

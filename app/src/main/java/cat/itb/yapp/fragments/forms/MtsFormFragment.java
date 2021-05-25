@@ -1,6 +1,7 @@
 package cat.itb.yapp.fragments.forms;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,22 +24,27 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.fragments.CalendarFragment;
+import cat.itb.yapp.fragments.list.PatientListFragment;
 import cat.itb.yapp.models.mts.MtsCreateUpdateDto;
 import cat.itb.yapp.models.mts.MtsDto;
+import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.webservices.MtsServiceClient;
+import cat.itb.yapp.webservices.PatientWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MtsFormFragment extends Fragment {
     private NavController navController;
-    private MaterialButton saveButton, cancelButton;
+    private MaterialButton saveButton, deleteButton;
     private TextInputEditText reasonEditText, patientEditText, specialistEditText, dateEditText;
     private MtsDto mtsDto = null;
     private boolean editing;
@@ -90,7 +96,7 @@ public class MtsFormFragment extends Fragment {
         specialistEditText = v.findViewById(R.id.specialistMtsEditText);
         dateEditText = v.findViewById(R.id.dateMtsEditText);
         saveButton = v.findViewById(R.id.saveMtsButton);
-        cancelButton = v.findViewById(R.id.cancelMtsButton);
+        deleteButton = v.findViewById(R.id.cancelMtsButton);
         reasonEditText = v.findViewById(R.id.mtsReasonEditText);
         editSwitch = v.findViewById(R.id.editSwitchMts);
 
@@ -119,7 +125,7 @@ public class MtsFormFragment extends Fragment {
             fillUpInfoInLayout(mtsDto);
         }
 
-        cancelButton.setOnClickListener(v -> navController.popBackStack());
+        deleteButton.setOnClickListener(v -> deleteMtsDialog());
         saveButton.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });
@@ -147,7 +153,7 @@ public class MtsFormFragment extends Fragment {
         dateEditText.setEnabled(false);
         reasonEditText.setEnabled(false);
         saveButton.setVisibility(View.GONE);
-        cancelButton.setVisibility(View.GONE);
+        deleteButton.setVisibility(View.GONE);
     }
 
     public void focusable(){
@@ -155,7 +161,7 @@ public class MtsFormFragment extends Fragment {
         specialistEditText.setEnabled(true);
         dateEditText.setEnabled(true);
         reasonEditText.setEnabled(true);
-        cancelButton.setVisibility(View.VISIBLE);
+        deleteButton.setVisibility(View.VISIBLE);
         saveButton.setVisibility(View.VISIBLE);
 
     }
@@ -231,6 +237,56 @@ public class MtsFormFragment extends Fragment {
             }
         });
     }
+
+
+    private void delete(){
+        MtsServiceClient mtsService = MainActivity.getRetrofitHttp()
+                .retrofit.create(MtsServiceClient.class);
+
+        Call<MtsDto> call;
+
+        call = mtsService.deleteMtsDto(mtsDto.getId());
+
+        call.enqueue(new Callback<MtsDto>() {
+            @Override
+            public void onResponse(Call<MtsDto> call, Response<MtsDto> response) {
+                if (response.isSuccessful()) {
+                    CalendarFragment.listMts.remove(mtsDto);
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_deleting, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MtsDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_deleting, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+    public void deleteMtsDialog(){
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle(R.string.caution);
+        builder.setMessage(R.string.sure);
+        builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO delete
+                delete();
+            }
+        });
+        builder.show();
+    }
+
 
 
     private MtsCreateUpdateDto getInfoFromLayout() {

@@ -120,6 +120,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancelReportButton"
             style="@style/CancelButton"
+            android:text="@string/deleteButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp" />

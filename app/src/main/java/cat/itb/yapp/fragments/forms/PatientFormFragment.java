@@ -82,7 +82,7 @@ public class PatientFormFragment extends Fragment {
 
         birthDateButton.setOnClickListener(this::datePicker);
 
-        deleteButton.setOnClickListener(v1 -> deletePatientDialog());
+
 
 
         paymentTypeAutoCompleteTextView = v.findViewById(R.id.autoComplete);
@@ -119,7 +119,7 @@ public class PatientFormFragment extends Fragment {
             fillUpInfoInLayout(patientDto);
         }
 
-//        buttonCancel.setOnClickListener(v -> navController.popBackStack());
+        deleteButton.setOnClickListener(v1 -> deletePatientDialog());
         saveButton.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });
@@ -260,13 +260,13 @@ public class PatientFormFragment extends Fragment {
                     PatientListFragment.patientList.remove(patientDto);
                     navController.popBackStack();
                 } else {
-                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.error_deleting, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<PatientDto> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), R.string.error_deleting, Toast.LENGTH_LONG).show();
             }
         });
 
