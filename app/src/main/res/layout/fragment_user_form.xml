@@ -185,7 +185,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/collegiatNumberInputLayout"
                 style="@style/TextInputStyleBlocked"
+                android:layout_marginBottom="20dp"
                 android:hint="@string/collegiate_number"
+                app:layout_constraintBottom_toTopOf="@+id/cancelButtonUserForm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/specialistTypeInputLayout">
 
@@ -194,7 +196,7 @@
                     style="@style/TextInputEditBlocked"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="text"/>
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -202,7 +204,6 @@
                 style="@style/CancelButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/saveButtonUserForm"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
