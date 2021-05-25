@@ -12,7 +12,7 @@
         android:id="@+id/logoLoginFragment"
         android:layout_width="200dp"
         android:layout_height="300dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="150dp"
         android:src="@drawable/logo_small_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -125,7 +125,7 @@
     <fragment
         android:id="@+id/mtsFormFragment"
         android:name="cat.itb.yapp.fragments.forms.MtsFormFragment"
-        android:label="Mts detail"
+        android:label="Medical tecnical sheet"
         tools:layout="@layout/fragment_mts_form" >
         <argument
             android:name="MtsDto"
@@ -154,7 +154,7 @@
     <fragment
         android:id="@+id/reportFormFragment"
         android:name="cat.itb.yapp.fragments.forms.ReportFormFragment"
-        android:label="Report detail"
+        android:label="Report"
         tools:layout="@layout/fragment_report_form">
         <argument
             android:name="ReportDto"
@@ -175,7 +175,7 @@
     <fragment
         android:id="@+id/patientFormFragment"
         android:name="cat.itb.yapp.fragments.forms.PatientFormFragment"
-        android:label="Patient profile"
+        android:label="Patient"
         tools:layout="@layout/fragment_patient_profile" >
         <argument
             android:name="PatientDto"

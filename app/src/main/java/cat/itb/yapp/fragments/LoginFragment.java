@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
@@ -41,16 +42,16 @@ import retrofit2.Response;
 
 public class LoginFragment extends Fragment {
 
-
+    private TextInputLayout usernameInputLayout, passwordInputLayout;
     public static RetrofitHttpLogin retrofitHttpLogin;
 
     ProfileUserDto profileUserDto;
 
     private NavController navController;
 
-    TextInputEditText usernameTextInput;
-    TextInputEditText passwordTextInput;
-    Button btnLogin;
+    private TextInputEditText usernameTextInput;
+    private TextInputEditText passwordTextInput;
+    private Button btnLogin;
 
 
     @Override
@@ -70,7 +71,8 @@ public class LoginFragment extends Fragment {
             Log.e("login", "accessToken is == null");
         }
 
-
+        usernameInputLayout = v.findViewById(R.id.usernameLoginInput);
+        passwordInputLayout = v.findViewById(R.id.passwordLoginInput);
         usernameTextInput = v.findViewById(R.id.usernameLoginEditText);
         passwordTextInput = v.findViewById(R.id.passwordLoginEditText);
         // TESTING HARDCODE
@@ -84,15 +86,18 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CharSequence error = getText(R.string.must_fill);
 
                 String username = usernameTextInput.getText().toString();
                 String password = passwordTextInput.getText().toString();
 
                 if (!username.isEmpty() && !password.isEmpty()) {
                     login();
-                } else {
-                    //TODO: show errors in layout
+                } if (username.isEmpty()) {
+                    usernameInputLayout.setError(error);
+                } if (password.isEmpty()){
+                    passwordInputLayout.setError(error);
+
                     Log.e("login", "wrong credentials, username or password is empty");
                 }
 
@@ -149,6 +154,13 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error bad credentials", Toast.LENGTH_SHORT).show();
                     Log.e("login", "status response: " + response.code()); //401 Unauthorized
                     //delete token
+
+                    CharSequence error = getText(R.string.bad_credentials);
+                    usernameInputLayout.setError(error);
+                    passwordInputLayout.setError(error);
+
+
+
                     UtilsSharedPreferences.setToken(MainActivity.getActivity(), null);
                 }
             }

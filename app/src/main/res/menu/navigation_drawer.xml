@@ -25,7 +25,8 @@
         <item
             android:id="@+id/treatmentListFragment"
             android:icon="@drawable/pocion_de_amor"
-            android:title="@string/treatments" />
+            android:title="@string/treatments"
+            />
 
     </group>
 
