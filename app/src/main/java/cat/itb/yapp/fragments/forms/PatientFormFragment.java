@@ -22,7 +22,6 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -141,7 +140,6 @@ public class PatientFormFragment extends Fragment {
         birthDateButton.setEnabled(false);
         nameEditText.setFocusable(false);
         surnameEditText.setFocusable(false);
-        ageEditText.setFocusable(false);
         addressEditText.setFocusable(false);
         phoneNumberEditText.setFocusable(false);
         emailEditText.setFocusable(false);
@@ -165,7 +163,6 @@ public class PatientFormFragment extends Fragment {
         nameEditText.setFocusableInTouchMode(true);
         nameEditText.setFocusableInTouchMode(true);
         surnameEditText.setFocusableInTouchMode(true);
-        ageEditText.setFocusableInTouchMode(true);
         addressEditText.setFocusableInTouchMode(true);
         phoneNumberEditText.setFocusableInTouchMode(true);
         emailEditText.setFocusableInTouchMode(true);
