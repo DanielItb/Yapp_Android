@@ -2,6 +2,11 @@ package cat.itb.yapp.fragments;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,20 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.UserListFragmentDirections;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.models.user.UserDto;
@@ -74,6 +71,7 @@ public class MainFragment extends Fragment {
         mtsCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_calendarFragment));
         reportCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_reportListFragment));
         treatmentCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_treatmentListFragment));
+        centerCardView.setOnClickListener(v1 -> navController.navigate(R.id.action_mainFragment_to_clinicFormFragment));
 
         return v;
     }

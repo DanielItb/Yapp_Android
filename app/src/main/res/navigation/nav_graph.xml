@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_mainFragment_to_treatmentFormFragment"
             app:destination="@id/treatmentFormFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_clinicFormFragment"
+            app:destination="@id/clinicFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/treatmentFormFragment"
@@ -224,7 +227,7 @@
         android:id="@+id/registerFormFragment"
         android:name="cat.itb.yapp.fragments.forms.RegisterFormFragment"
         android:label="Register"
-        tools:layout="@layout/fragment_register_form" >
+        tools:layout="@layout/fragment_register_form">
         <action
             android:id="@+id/action_registerFormFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -234,4 +237,9 @@
         android:name="cat.itb.yapp.fragments.list.SelectTreatmentFragment"
         android:label="fragment_select_treatment"
         tools:layout="@layout/fragment_select_treatment" />
+    <fragment
+        android:id="@+id/clinicFormFragment"
+        android:name="cat.itb.yapp.fragments.forms.ClinicFormFragment"
+        android:label="fragment_clinic_form"
+        tools:layout="@layout/fragment_clinic_form" />
 </navigation>
