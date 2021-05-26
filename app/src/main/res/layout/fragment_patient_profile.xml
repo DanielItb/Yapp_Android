@@ -50,10 +50,11 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="20dp"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -228,9 +229,9 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/deletePatientButton"
+                android:id="@+id/deletePatientButtonForm"
                 style="@style/CancelButton"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toTopOf="@+id/saveButtonPatientForm"
@@ -241,12 +242,12 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/saveButtonPatientForm"
                 style="@style/SaveButton"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/deletePatientButton"/>
+                app:layout_constraintTop_toBottomOf="@+id/deletePatientButtonForm"/>
 
 
 <!--            <com.google.android.material.button.MaterialButton-->
@@ -264,7 +265,7 @@
 <!--                app:layout_constraintStart_toStartOf="parent"-->
 <!--                app:layout_constraintTop_toBottomOf="@+id/deletePatientButton" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

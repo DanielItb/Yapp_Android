@@ -101,8 +101,7 @@ public class MainFragment extends Fragment {
 
                 }
             });
-        }
-        if (listPatientsDto == null){
+        }else if (listPatientsDto == null || listPatientsDto.size() == 0){
             DatabaseUtils.getPatients(new Callback<List<PatientDto>>() {
                 @Override
                 public void onResponse(Call<List<PatientDto>> call, Response<List<PatientDto>> response) {
@@ -122,22 +121,15 @@ public class MainFragment extends Fragment {
 
                 }
             });
-        }
-        if (listTreatmmentsDto == null){
+        }else if (listTreatmmentsDto == null || listTreatmmentsDto.size() == 0){
             DatabaseUtils.getTreatments(new Callback<List<TreatmentDto>>() {
                 @Override
                 public void onResponse(Call<List<TreatmentDto>> call, Response<List<TreatmentDto>> response) {
                     if (response.isSuccessful()) {
-                        String title = "Step 3";
+                        String title = "Final step";
                         listTreatmmentsDto = response.body();
                         if (listTreatmmentsDto.size() == 0){
-                            if (!UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())){
-                                title = "Step 2";
-                            }
-                            stepsDialog(title, "Now, create a treatment associate to any of your patients", "GO", 3);
-                        }else{
-                            title = "Well done!";
-                            stepsDialog(title, "Perfect! Now you can use all the features of YAPP", "OK!", 0);
+                            stepsDialog(title, "Create a treatment associate to any of your patients\nNow, you can use all the features of YAPP", "GO", 3);
                         }
 
                     }

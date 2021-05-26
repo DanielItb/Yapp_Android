@@ -23,6 +23,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
@@ -342,7 +344,11 @@ public class UserFormFragment extends Fragment {
         updateUserDto.setName(nameEditText.getText().toString());
         updateUserDto.setSurnames(surnameEditText.getText().toString());
         updateUserDto.setPhone(phoneEditText.getText().toString());
+        updateUserDto.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
         updateUserDto.setActive(true);
+        updateUserDto.setIsAdminRole(UtilsAuth.getIsAdminRole(new HashSet<>(userDto.getRoles())));
+
+
 
 
         // TODO urlPhoto

@@ -160,8 +160,8 @@ public class ReportFormFragment extends Fragment {
     }
 
     public void focusable(){
-        editTextDiagnosis.setFocusable(true);
-        editTextObjectives.setFocusable(true);
+        editTextDiagnosis.setFocusableInTouchMode(true);
+        editTextObjectives.setFocusableInTouchMode(true);
         editTextSpecialistType.setEnabled(true);
         editTextDate.setEnabled(true);
         editTextPatient.setEnabled(true);

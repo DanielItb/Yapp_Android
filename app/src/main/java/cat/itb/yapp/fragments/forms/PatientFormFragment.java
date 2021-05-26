@@ -74,7 +74,7 @@ public class PatientFormFragment extends Fragment {
         schoolEditText = v.findViewById(R.id.schoolEditText);
         courseEditText = v.findViewById(R.id.courseEditText);
         reasonEditTExt = v.findViewById(R.id.patientReasonEditText);
-        deleteButton = v.findViewById(R.id.deletePatientButton);
+        deleteButton = v.findViewById(R.id.deletePatientButtonForm);
         circleImageView = v.findViewById(R.id.profile_image);
         editSwitch = v.findViewById(R.id.editSwitchPatient);
 
@@ -146,7 +146,6 @@ public class PatientFormFragment extends Fragment {
         schoolEditText.setFocusable(false);
         courseEditText.setFocusable(false);
         reasonEditTExt.setFocusable(false);
-        deleteButton.setFocusable(false);
         circleImageView.setFocusable(false);
         paymentTypeAutoCompleteTextView.setFocusableInTouchMode(false);
         paymentTypeAutoCompleteTextView.setFocusable(false);
@@ -169,7 +168,6 @@ public class PatientFormFragment extends Fragment {
         schoolEditText.setFocusableInTouchMode(true);
         courseEditText.setFocusableInTouchMode(true);
         reasonEditTExt.setFocusableInTouchMode(true);
-        deleteButton.setFocusableInTouchMode(true);
         circleImageView.setFocusableInTouchMode(true);
         paymentTypeAutoCompleteTextView.setDropDownHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         saveButton.setVisibility(View.VISIBLE);
