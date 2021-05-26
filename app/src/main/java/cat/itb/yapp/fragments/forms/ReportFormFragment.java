@@ -2,6 +2,11 @@ package cat.itb.yapp.fragments.forms;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,12 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -27,7 +26,6 @@ import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.PatientListFragment;
 import cat.itb.yapp.fragments.list.ReportListFragment;
 import cat.itb.yapp.models.report.CreateUpdateReportDto;
 import cat.itb.yapp.models.report.ReportDto;
@@ -53,31 +51,17 @@ public class ReportFormFragment extends Fragment {
 
         final FragmentManager fragmentManager = getParentFragmentManager();
 
-        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
-            reportDto.setSpecialistId(bundle.getLong("userId"));
-            String fullName = bundle.getString("fullName");
-            String specialistType = bundle.getString("specialistType");
-
-            reportDto.setSpecialistFullName(fullName);
-            reportDto.setSpecialistType(specialistType);
-
-            editTextSpecialist.setText(fullName);
-            editTextSpecialistType.setText(specialistType);
-        });
-
-        fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
-            reportDto.setPatientId(bundle.getInt("patientId"));
-            String fullName = bundle.getString("fullName");
-            reportDto.setPatientFullName(fullName);
-            editTextPatient.setText(fullName);
-        });
-
         fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
-            String reason = bundle.getString("reason");
             reportDto.setTreatmentId(Integer.valueOf(bundle.getString("treatmentId")));
-            reportDto.setTreatmentReason(reason);
+            reportDto.setTreatmentReason(bundle.getString("reason"));
+            reportDto.setPatientFullName(bundle.getString("patientName"));
+            reportDto.setPatientId(bundle.getInt("patientId"));
+            reportDto.setSpecialistFullName(bundle.getString("specialistName"));
+            reportDto.setSpecialistId(bundle.getLong("specialistId"));
 
-            editTextTreatment.setText(reason);
+            editTextTreatment.setText(reportDto.getTreatmentReason());
+            editTextPatient.setText(reportDto.getPatientFullName());
+            editTextSpecialist.setText(reportDto.getSpecialistFullName());
         }));
     }
 
@@ -150,11 +134,8 @@ public class ReportFormFragment extends Fragment {
     public void notFocusable(){
         editTextDiagnosis.setFocusable(false);
         editTextObjectives.setFocusable(false);
-        editTextSpecialistType.setEnabled(false);
         editTextDate.setEnabled(false);
-        editTextPatient.setEnabled(false);
         editTextTreatment.setEnabled(false);
-        editTextSpecialist.setEnabled(false);
         buttonDelete.setVisibility(View.GONE);
         buttonSave.setVisibility(View.GONE);
     }
@@ -162,11 +143,8 @@ public class ReportFormFragment extends Fragment {
     public void focusable(){
         editTextDiagnosis.setFocusable(true);
         editTextObjectives.setFocusable(true);
-        editTextSpecialistType.setEnabled(true);
         editTextDate.setEnabled(true);
-        editTextPatient.setEnabled(true);
         editTextTreatment.setEnabled(true);
-        editTextSpecialist.setEnabled(true);
         buttonDelete.setVisibility(View.VISIBLE);
         buttonSave.setVisibility(View.VISIBLE);
     }
