@@ -115,9 +115,9 @@ public class PatientFormFragment extends Fragment {
         editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     focusable();
-                }else{
+                } else {
                     notFocusable();
                 }
             }
@@ -158,7 +158,7 @@ public class PatientFormFragment extends Fragment {
 
     }
 
-    public void focusable(){
+    public void focusable() {
         birthDateButton.setEnabled(true);
         nameEditText.setFocusableInTouchMode(true);
         nameEditText.setFocusableInTouchMode(true);
@@ -183,26 +183,33 @@ public class PatientFormFragment extends Fragment {
         if (nameEditText.getText().toString().isEmpty()) {
             allGood = false;
             nameEditText.setError(errorMsg);
-        } if (surnameEditText.getText().toString().isEmpty()) {
+        }
+        if (surnameEditText.getText().toString().isEmpty()) {
             allGood = false;
             surnameEditText.setError(errorMsg);
-        } if (ageEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (ageEditText.getText().toString().isEmpty()) {
+            allGood = false;
             ageEditText.setError(errorMsg);
-        } if(addressEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (addressEditText.getText().toString().isEmpty()) {
+            allGood = false;
             addressEditText.setError(errorMsg);
-        } if(phoneNumberEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (phoneNumberEditText.getText().toString().isEmpty()) {
+            allGood = false;
             phoneNumberEditText.setError(errorMsg);
-        } if(schoolEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (schoolEditText.getText().toString().isEmpty()) {
+            allGood = false;
             schoolEditText.setError(errorMsg);
-        } if(courseEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (courseEditText.getText().toString().isEmpty()) {
+            allGood = false;
             courseEditText.setError(errorMsg);
-        } if(reasonEditTExt.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (reasonEditTExt.getText().toString().isEmpty()) {
+            allGood = false;
             reasonEditTExt.setError(errorMsg);
         }
 
@@ -240,9 +247,7 @@ public class PatientFormFragment extends Fragment {
     }
 
 
-
-
-    private void delete(){
+    private void delete() {
         PatientWebServiceClient patientWebServiceClient = MainActivity.getRetrofitHttp()
                 .retrofit.create(PatientWebServiceClient.class);
 
@@ -292,7 +297,8 @@ public class PatientFormFragment extends Fragment {
         if (patientEmail != null) emailEditText.setText(patientEmail);
         if (patientSchool != null) schoolEditText.setText(patientSchool);
         if (patientCourse != null) courseEditText.setText(patientCourse);
-        if (patientPaymentType != null) paymentTypeAutoCompleteTextView.setText(patientPaymentType, false);
+        if (patientPaymentType != null)
+            paymentTypeAutoCompleteTextView.setText(patientPaymentType, false);
         if (patientBirthDate != null) birthDateButton.setText(patientBirthDate);
         if (patientReason != null) reasonEditTExt.setText(patientReason);
 
@@ -324,7 +330,7 @@ public class PatientFormFragment extends Fragment {
     }
 
 
-    public void deletePatientDialog(){
+    public void deletePatientDialog() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure);
@@ -342,7 +348,6 @@ public class PatientFormFragment extends Fragment {
         });
         builder.show();
     }
-
 
 
     public void datePicker(View v) {
@@ -364,15 +369,15 @@ public class PatientFormFragment extends Fragment {
                 String finalMonth;
                 String finalDay;
 
-                if (mMonth < 10){
+                if (mMonth < 10) {
                     finalMonth = "0" + mMonth;
-                }else{
+                } else {
                     finalMonth = String.valueOf(mMonth);
                 }
 
-                if (mDay < 10){
+                if (mDay < 10) {
                     finalDay = "0" + mDay;
-                }else{
+                } else {
                     finalDay = String.valueOf(mDay);
                 }
                 String date = year + "-" + finalMonth + "-" + finalDay;
