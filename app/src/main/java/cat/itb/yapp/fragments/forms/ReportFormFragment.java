@@ -26,7 +26,6 @@ import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.ReportListFragment;
 import cat.itb.yapp.models.report.CreateUpdateReportDto;
 import cat.itb.yapp.models.report.ReportDto;
 import cat.itb.yapp.utils.UtilsDatePicker;
@@ -200,7 +199,6 @@ public class ReportFormFragment extends Fragment {
             @Override
             public void onResponse(Call<ReportDto> call, Response<ReportDto> response) {
                 if (response.isSuccessful()) {
-                    ReportListFragment.reportList.remove(reportDto);
                     navController.popBackStack();
                 } else {
                     Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();

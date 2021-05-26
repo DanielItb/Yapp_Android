@@ -1,19 +1,18 @@
 package cat.itb.yapp.fragments.list;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,7 +31,7 @@ import retrofit2.Response;
 
 public class ReportListFragment extends Fragment {
     private NavController navController;
-    public static List<ReportDto> reportList = null;
+    private List<ReportDto> reportList = null;
     private ReportAdapter adapter;
     private SearchView filterReportSearchView;
 

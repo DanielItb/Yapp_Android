@@ -27,7 +27,6 @@ import java.time.ZoneId;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.TreatmentListFragment;
 import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.utils.UtilsDatePicker;
@@ -230,7 +229,6 @@ public class TreatmentFormFragment extends Fragment {
             @Override
             public void onResponse(Call<TreatmentDto> call, Response<TreatmentDto> response) {
                 if (response.isSuccessful()) {
-                    TreatmentListFragment.treatmentList.remove(treatment);
                     navController.popBackStack();
                 } else {
                     Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();

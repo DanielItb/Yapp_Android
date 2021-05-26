@@ -31,7 +31,7 @@ import retrofit2.Response;
 
 public class PatientListFragment extends Fragment {
     private RecyclerView recyclerView;
-    public static List<PatientDto> patientList;
+    private List<PatientDto> patientList;
     private NavController navController;
     private PatientAdapter adapter;
     private SearchView filterPatientSearchView;

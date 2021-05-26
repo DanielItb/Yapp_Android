@@ -28,7 +28,6 @@ import java.util.Calendar;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.PatientListFragment;
 import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
@@ -259,7 +258,6 @@ public class PatientFormFragment extends Fragment {
             @Override
             public void onResponse(Call<PatientDto> call, Response<PatientDto> response) {
                 if (response.isSuccessful()) {
-                    PatientListFragment.patientList.remove(patientDto);
                     navController.popBackStack();
                 } else {
                     Toast.makeText(getContext(), R.string.error_deleting, Toast.LENGTH_LONG).show();

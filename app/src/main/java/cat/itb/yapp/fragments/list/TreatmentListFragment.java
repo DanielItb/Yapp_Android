@@ -1,13 +1,6 @@
 package cat.itb.yapp.fragments.list;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +8,14 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
@@ -35,7 +33,7 @@ import retrofit2.Response;
 public class TreatmentListFragment extends Fragment {
     private RecyclerView recyclerView;
     private NavController navController;
-    public static List<TreatmentDto> treatmentList = null;
+    private List<TreatmentDto> treatmentList = null;
     private TreatmentAdapter adapter;
     private SearchView filterTreatmentSearchView;
 
