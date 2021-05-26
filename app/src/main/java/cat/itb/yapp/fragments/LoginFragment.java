@@ -145,7 +145,7 @@ public class LoginFragment extends Fragment {
 
                     MainActivity.setRetrofitHttp(new RetrofitHttp());
                     setUserInMainActivity();
-                    navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
+
 
 
 
@@ -190,6 +190,8 @@ public class LoginFragment extends Fragment {
                 MainActivity.setUserDto(userDto);
 
                 setEmailInDrawer(userDto.getEmail());
+
+                navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
             }
 
             @Override

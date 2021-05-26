@@ -33,7 +33,7 @@ import retrofit2.Response;
 public class UserListFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;
-    private List<UserDto> listUsers;
+    public static List<UserDto> listUsers;
     private SearchView filterUserSearchView;
     private UserAdapter adapter;
 

@@ -20,6 +20,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,8 +69,8 @@ public class RegisterFormFragment extends Fragment {
 
         //TEST
         usernameEditText.setText("Pacomer");
-        passwordEditText.setText("123456");
-        repeatPasswordEditText.setText("123456");
+        passwordEditText.setText("password");
+        repeatPasswordEditText.setText("password");
         nameEditText.setText("Paco");
         surnameEditText.setText("Paquito");
         phoneEditText.setText("123456789");
@@ -186,7 +187,6 @@ public class RegisterFormFragment extends Fragment {
             specialistTypeAutoCompleteTextView.setError(errorMsg);
         }
 
-        System.out.println("gggggggggggggggggggggggggggggggggggggggg " + allGood);
 
 
             return allGood;
@@ -220,7 +220,11 @@ public class RegisterFormFragment extends Fragment {
                     confirmEmailDialog();
 
                 } else {
-                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                    try {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
@@ -63,7 +65,10 @@ public class TreatmentListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                if (adapter != null) {
+                    adapter.getFilter().filter(newText);
+                }
+
                 return false;
             }
         });
@@ -136,7 +141,11 @@ public class TreatmentListFragment extends Fragment {
                         setUpRecycler(recyclerView);
 
                     }else {
-                        Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get treatment by specialistId", Toast.LENGTH_SHORT).show();
+                        try {
+                            Toast.makeText(MainActivity.getActivity().getApplicationContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         Log.e("treatment", "status response: " + response.code()); //401 Unauthorized
                     }
                 }

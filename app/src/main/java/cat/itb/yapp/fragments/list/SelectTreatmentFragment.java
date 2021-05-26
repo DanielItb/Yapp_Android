@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class SelectTreatmentFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;
     private List<TreatmentDto> treatmentDtoList = null;
+    private SearchView filterTreatmentSearchView;
+    private TreatmentAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,22 @@ public class SelectTreatmentFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_select_treatment, container, false);
 
         recyclerView = v.findViewById(R.id.recyclerSelectTreatment);
+
+        filterTreatmentSearchView = v.findViewById(R.id.filterSelectTreatmentSearchView);
+
+        filterTreatmentSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
 
         return v;
     }
@@ -104,7 +123,7 @@ public class SelectTreatmentFragment extends Fragment {
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            TreatmentAdapter adapter = new TreatmentAdapter(treatmentDtoList, this::recyclerItemClicked);
+            adapter = new TreatmentAdapter(treatmentDtoList, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
         }
     }

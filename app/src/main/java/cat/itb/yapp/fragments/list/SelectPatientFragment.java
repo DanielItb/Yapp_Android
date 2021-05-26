@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import java.util.List;
 
@@ -29,6 +30,8 @@ public class SelectPatientFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;
     private List<PatientDto> patientDtoList = null;
+    private SearchView filterPatientSearchView;
+    private PatientAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,22 @@ public class SelectPatientFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_select_patient, container, false);
 
+        filterPatientSearchView = v.findViewById(R.id.filterSelectPatientSearchView);
+
         recyclerView = v.findViewById(R.id.recyclerSelectPatient);
+
+        filterPatientSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
         return v;
     }
@@ -63,7 +81,7 @@ public class SelectPatientFragment extends Fragment {
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            PatientAdapter adapter = new PatientAdapter(patientDtoList, this::recyclerItemClicked);
+            adapter = new PatientAdapter(patientDtoList, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
         }
     }

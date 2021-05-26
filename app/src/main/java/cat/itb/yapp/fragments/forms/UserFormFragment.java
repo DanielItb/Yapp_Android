@@ -1,5 +1,6 @@
 package cat.itb.yapp.fragments.forms;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +18,24 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.fragments.list.PatientListFragment;
+import cat.itb.yapp.fragments.list.UserListFragment;
+import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.user.CreateUserDto;
 import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
+import cat.itb.yapp.utils.UtilsAuth;
+import cat.itb.yapp.webservices.PatientWebServiceClient;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import de.hdodenhof.circleimageview.CircleImageView;
 import lombok.SneakyThrows;
@@ -111,7 +120,13 @@ public class UserFormFragment extends Fragment {
             fillUpInfoInLayout(userDto);
         }
 
-        cancelButton.setOnClickListener(v -> navController.popBackStack());
+        if (!UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())){
+            cancelButton.setOnClickListener(v -> navController.popBackStack());
+        }else{
+            cancelButton.setText(R.string.deleteButton);
+            cancelButton.setOnClickListener(v -> deleteUserDialog());
+        }
+
         saveButton.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });
@@ -251,6 +266,54 @@ public class UserFormFragment extends Fragment {
     }
 
 
+    private void delete(){
+        UserWebServiceClient userService = MainActivity.getRetrofitHttp()
+                .retrofit.create(UserWebServiceClient.class);
+
+        Call<UserDto> call;
+
+        call = userService.deleteUserDto(userDto.getId());
+
+        call.enqueue(new Callback<UserDto>() {
+            @Override
+            public void onResponse(Call<UserDto> call, Response<UserDto> response) {
+                if (response.isSuccessful()) {
+                    UserListFragment.listUsers.remove(userDto);
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_deleting, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_deleting, Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    public void deleteUserDialog(){
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
+        builder.setTitle(R.string.caution);
+        builder.setMessage(R.string.sure);
+        builder.setNegativeButton(R.string.back, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO delete
+                delete();
+            }
+        });
+        builder.show();
+    }
+
+
     private void fillUpInfoInLayout(UserDto userDto) {
         String userName = userDto.getName();
         String userSurname = userDto.getSurnames();
@@ -281,7 +344,11 @@ public class UserFormFragment extends Fragment {
         updateUserDto.setName(nameEditText.getText().toString());
         updateUserDto.setSurnames(surnameEditText.getText().toString());
         updateUserDto.setPhone(phoneEditText.getText().toString());
+        updateUserDto.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
         updateUserDto.setActive(true);
+        updateUserDto.setIsAdminRole(UtilsAuth.getIsAdminRole(new HashSet<>(userDto.getRoles())));
+
+
 
 
         // TODO urlPhoto

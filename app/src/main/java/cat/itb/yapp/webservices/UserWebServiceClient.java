@@ -11,10 +11,12 @@ import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 
 public interface UserWebServiceClient {
@@ -45,5 +47,10 @@ public interface UserWebServiceClient {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @PUT()
     Call<UserDto> updateDto(@Url String url, @Body UpdateUserDto updateUserDto);
+
+
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    @DELETE("auth/deactivate/{id}")
+    Call<UserDto> deleteUserDto(@Path("id") long id);
 
 }
