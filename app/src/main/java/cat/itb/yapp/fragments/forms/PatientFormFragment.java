@@ -354,9 +354,6 @@ public class PatientFormFragment extends Fragment {
         if (picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @Override
             public void onPositiveButtonClick(Long selection) {
-                Calendar today = Calendar.getInstance();
-                long now = today.getTimeInMillis();
-
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(selection);
 
@@ -381,7 +378,6 @@ public class PatientFormFragment extends Fragment {
                 String date = year + "-" + finalMonth + "-" + finalDay;
 
                 birthDateButton.setText(date);
-
 
             }
         })) ;
