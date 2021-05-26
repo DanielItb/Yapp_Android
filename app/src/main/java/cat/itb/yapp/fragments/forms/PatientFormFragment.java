@@ -378,7 +378,8 @@ public class PatientFormFragment extends Fragment {
                 String date = year + "-" + finalMonth + "-" + finalDay;
 
                 birthDateButton.setText(date);
-
+                patientDto.setDateOfBirth(date);
+                ageEditText.setText(String.valueOf(patientDto.getAge()));
             }
         })) ;
     }
