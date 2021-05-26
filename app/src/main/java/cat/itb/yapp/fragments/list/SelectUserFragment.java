@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,8 @@ public class SelectUserFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView = null;
     private List<UserDto> listUsers = null;
+    private SearchView filterUserSearchView;
+    private UserAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,22 @@ public class SelectUserFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_select_user, container, false);
 
         recyclerView = v.findViewById(R.id.recyclerSelectUser);
+        filterUserSearchView = v.findViewById(R.id.filterSelectUserSearchView);
         getUsers();
+
+        filterUserSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
 
         return v;
     }
@@ -70,7 +88,7 @@ public class SelectUserFragment extends Fragment {
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            UserAdapter adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
+            adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
         }
     }

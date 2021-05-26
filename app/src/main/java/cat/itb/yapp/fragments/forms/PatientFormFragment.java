@@ -186,9 +186,6 @@ public class PatientFormFragment extends Fragment {
         } if (surnameEditText.getText().toString().isEmpty()) {
             allGood = false;
             surnameEditText.setError(errorMsg);
-        } if (ageEditText.getText().toString().isEmpty()) {
-            allGood= false;
-            ageEditText.setError(errorMsg);
         } if(addressEditText.getText().toString().isEmpty()) {
             allGood= false;
             addressEditText.setError(errorMsg);

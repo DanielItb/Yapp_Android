@@ -89,6 +89,7 @@
     <string name="sure_report">Do you want delete this report? Are you sure?</string>
     <string name="sure_treatment">Do you want delete this treatment? Are you sure?</string>
     <string name="sure_mts">Do you want delete this Mts? Are you sure?</string>
+    <string name="sure_user">Do you want delete this user? Are you sure?</string>
     <string name="back">Back</string>
     <string name="search_patient">Search patient by name</string>
     <string name="search_report">Search report by patient name</string>
