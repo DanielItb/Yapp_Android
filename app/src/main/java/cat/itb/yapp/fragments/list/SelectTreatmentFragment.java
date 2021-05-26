@@ -114,6 +114,10 @@ public class SelectTreatmentFragment extends Fragment {
         TreatmentDto treatmentDto = treatmentDtoList.get(i);
 
         result.putString("treatmentId", treatmentDto.getId());
+        result.putString("patientName", treatmentDto.getPatientFullName());
+        result.putInt("patientId", Integer.parseInt(treatmentDto.getPatientId()));
+        result.putString("specialistName", treatmentDto.getSpecialistFullName());
+        result.putLong("specialistId", Long.parseLong(treatmentDto.getSpecialistId()));
         result.putString("reason", treatmentDto.getReason());
 
         getParentFragmentManager().setFragmentResult("treatment", result);

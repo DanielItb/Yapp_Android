@@ -15,7 +15,8 @@
         android:hint="@string/patient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/reasonMtsInputLayout"
+        android:enabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/patientMtsEditText"
@@ -33,7 +34,8 @@
         android:hint="@string/specialist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPatientMts">
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPatientMts"
+        android:enabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/specialistMtsEditText"
@@ -67,7 +69,7 @@
         android:hint="@string/treatment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDateMts">
+        app:layout_constraintTop_toBottomOf="@+id/editSwitchMts">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mtsReasonEditText"
@@ -84,10 +86,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="40dp"
         android:text="@string/edit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reasonMtsInputLayout"
+        app:layout_constraintTop_toTopOf="parent"
         app:useMaterialThemeColors="false" />
 
 

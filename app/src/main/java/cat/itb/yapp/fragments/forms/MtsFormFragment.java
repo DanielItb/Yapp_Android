@@ -78,11 +78,16 @@ public class MtsFormFragment extends Fragment {
         });
 
         fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
-            String reason = bundle.getString("reason");
             mtsDto.setTreatmentId(Integer.parseInt(bundle.getString("treatmentId")));
-            mtsDto.setReason(reason);
+            mtsDto.setReason(bundle.getString("reason"));
+            mtsDto.setPatientFullName(bundle.getString("patientName"));
+            mtsDto.setPatientId(bundle.getInt("patientId"));
+            mtsDto.setSpecialistFullName(bundle.getString("specialistName"));
+            mtsDto.setSpecialistId(bundle.getLong("specialistId"));
 
-            reasonEditText.setText(reason);
+            reasonEditText.setText(mtsDto.getReason());
+            patientEditText.setText(mtsDto.getPatientFullName());
+            specialistEditText.setText(mtsDto.getSpecialistFullName());
         }));
 
     }
@@ -148,8 +153,6 @@ public class MtsFormFragment extends Fragment {
 
 
     public void notFocusable(){
-        patientEditText.setEnabled(false);
-        specialistEditText.setEnabled(false);
         dateEditText.setEnabled(false);
         reasonEditText.setEnabled(false);
         saveButton.setVisibility(View.GONE);
@@ -157,15 +160,11 @@ public class MtsFormFragment extends Fragment {
     }
 
     public void focusable(){
-        patientEditText.setEnabled(true);
-        specialistEditText.setEnabled(true);
         dateEditText.setEnabled(true);
         reasonEditText.setEnabled(true);
         deleteButton.setVisibility(View.VISIBLE);
         saveButton.setVisibility(View.VISIBLE);
-
     }
-
 
 
     private void fillUpInfoInLayout(MtsDto mtsDto) {
@@ -318,7 +317,7 @@ public class MtsFormFragment extends Fragment {
 
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(selection);
-           
+
                 int year = c.get(Calendar.YEAR);
                 int mMonth = c.get(Calendar.MONTH) + 1;
                 int mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -368,7 +367,7 @@ public class MtsFormFragment extends Fragment {
                     }else{
                         finalMinute = String.valueOf(minute);
                     }
-                    
+
                     String finalDate = date + "T" + finalHour + ":" + finalMinute + ":00" ;
                     dateEditText.setText(finalDate);
                     mtsDto.setDate(finalDate);
