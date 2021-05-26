@@ -29,6 +29,7 @@ import cat.itb.yapp.models.auth.LoginDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.models.user.ProfileUserDto;
 import cat.itb.yapp.models.user.UserDto;
+import cat.itb.yapp.retrofit.DatabaseUtils;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.retrofit.RetrofitHttpLogin;
 import cat.itb.yapp.utils.UtilsAuth;
@@ -144,6 +145,7 @@ public class LoginFragment extends Fragment {
 
 
                     MainActivity.setRetrofitHttp(new RetrofitHttp());
+                    DatabaseUtils.setRetrofitHttp(new RetrofitHttp());
                     setUserInMainActivity();
 
 

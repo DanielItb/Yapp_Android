@@ -1,15 +1,15 @@
 package cat.itb.yapp.models.clinic;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class ClinicDto {
-    private Integer id;
+@Getter
+@Setter
+@AllArgsConstructor
+public class CreateUpdateClinicDto {
     private String name;
     private String address;
-    private String photo;
     private String phoneNumber;
     private String email;
-    private String registerDate;
-
 }

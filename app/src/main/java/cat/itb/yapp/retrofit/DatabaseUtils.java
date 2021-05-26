@@ -3,23 +3,48 @@ package cat.itb.yapp.retrofit;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cat.itb.yapp.activities.MainActivity;
+import cat.itb.yapp.models.clinic.ClinicDto;
+import cat.itb.yapp.models.clinic.CreateUpdateClinicDto;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.utils.UtilsAuth;
+import cat.itb.yapp.webservices.ClinicWebServiceClient;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DatabaseUtils {
+    private static RetrofitHttp retrofitHttp;
+    private static ClinicWebServiceClient clinicWebServiceClient;
+
+    public static RetrofitHttp getRetrofitHttp() {
+        return retrofitHttp;
+    }
+
+    public static void setRetrofitHttp(RetrofitHttp retrofit) {
+        DatabaseUtils.retrofitHttp = retrofit;
+        clinicWebServiceClient = retrofitHttp.retrofit.create(ClinicWebServiceClient.class);
+    }
+
+    public static void getClinicById(Callback<ClinicDto> callback, int id) {
+        Call<ClinicDto> call = clinicWebServiceClient.getClinicById(id);
+        call.enqueue(callback);
+    }
+
+    public static void updateClinic(Callback<ClinicDto> callback, ClinicDto clinicDto) {
+        CreateUpdateClinicDto createUpdateClinicDto = new CreateUpdateClinicDto(clinicDto.getName(),
+                clinicDto.getAddress(), clinicDto.getPhoneNumber(), clinicDto.getEmail());
+
+        Call<ClinicDto> call = clinicWebServiceClient.updateClinic(clinicDto.getId(), createUpdateClinicDto);
+        call.enqueue(callback);
+    }
+
     public static void getTreatments(Callback<List<TreatmentDto>> callback) {
         //TODO: if is admin go to view admin ...
         Log.e("treatment", "id: " + MainActivity.getUser().getId());
