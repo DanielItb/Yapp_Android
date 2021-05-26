@@ -97,9 +97,6 @@ public class SelectUserFragment extends Fragment {
         Log.e("user", "role admin?: " + UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles()));
         Log.e("user", "role user?: " + UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles()));
 
-
-        //TODO: if is admin go to view admin ...
-
         MainActivity.getUser().getRoles().forEach(rol -> {
             Log.e("user", "role: " + rol);
         });

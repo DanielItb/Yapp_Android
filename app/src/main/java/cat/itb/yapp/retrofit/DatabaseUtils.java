@@ -38,13 +38,11 @@ public class DatabaseUtils {
         Long specialistId = MainActivity.getUser().getId().longValue();
         //CHECK USER ROLE
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
-
             String endpointUserRole = "treatment/clinic/" + MainActivity.getUserDto().getClinicId();
             call = treatmentWebServiceClient.getTreatmentsByClinicId(endpointUserRole);
             Log.e("treatment", "all treatments in clinic");
 
         } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
-
             String endpointUserRole = "treatment/specialist/" + specialistId;
             call = treatmentWebServiceClient.getTreatmentsBySpecialistId(endpointUserRole);
             Log.e("treatment", "all treatments by specialist");

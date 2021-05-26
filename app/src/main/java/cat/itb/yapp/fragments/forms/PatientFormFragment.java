@@ -39,7 +39,7 @@ import retrofit2.Response;
 
 
 public class PatientFormFragment extends Fragment {
-    // TODO cargar la foto y borrar paciente
+    // TODO cargar la foto
     private NavController navController;
     private MaterialButton birthDateButton, saveButton, deleteButton;
     private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText, phoneNumberEditText, emailEditText, schoolEditText, courseEditText, reasonEditTExt;
@@ -78,18 +78,11 @@ public class PatientFormFragment extends Fragment {
         circleImageView = v.findViewById(R.id.profile_image);
         editSwitch = v.findViewById(R.id.editSwitchPatient);
 
-
         birthDateButton.setOnClickListener(this::datePicker);
-
-
-
 
         paymentTypeAutoCompleteTextView = v.findViewById(R.id.autoComplete);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_types, paymentTypes);
         paymentTypeAutoCompleteTextView.setAdapter(adapter);
-
-
-
 
         return v;
     }
@@ -108,11 +101,7 @@ public class PatientFormFragment extends Fragment {
                 notFocusable();
                 fillUpInfoInLayout(patientDto);
             } else { // If new
-                patientDto = new PatientDto();
-                editSwitch.setVisibility(View.GONE);
-                focusable();
-//                patientDto.setDate(LocalDateTime.now().toString());
-                editing = false;
+                newPatientSetUp();
             }
         } else { //If load data
             fillUpInfoInLayout(patientDto);
@@ -126,9 +115,9 @@ public class PatientFormFragment extends Fragment {
         editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     focusable();
-                }else{
+                } else {
                     notFocusable();
                 }
             }
@@ -136,7 +125,18 @@ public class PatientFormFragment extends Fragment {
 
     }
 
-    public void notFocusable(){
+    private void newPatientSetUp() {
+        final String urlImg = "https://yapp-backend.herokuapp.com/files/placeholder-user-image.png";
+
+        patientDto = new PatientDto();
+        editSwitch.setVisibility(View.GONE);
+        focusable();
+        editing = false;
+
+        patientDto.setUrlPhoto(urlImg);
+    }
+
+    private void notFocusable() {
         birthDateButton.setEnabled(false);
         nameEditText.setFocusable(false);
         surnameEditText.setFocusable(false);
@@ -158,7 +158,7 @@ public class PatientFormFragment extends Fragment {
 
     }
 
-    public void focusable(){
+    public void focusable() {
         birthDateButton.setEnabled(true);
         nameEditText.setFocusableInTouchMode(true);
         nameEditText.setFocusableInTouchMode(true);
@@ -183,23 +183,28 @@ public class PatientFormFragment extends Fragment {
         if (nameEditText.getText().toString().isEmpty()) {
             allGood = false;
             nameEditText.setError(errorMsg);
-        } if (surnameEditText.getText().toString().isEmpty()) {
+        }
+        if (surnameEditText.getText().toString().isEmpty()) {
             allGood = false;
             surnameEditText.setError(errorMsg);
         } if(addressEditText.getText().toString().isEmpty()) {
             allGood= false;
             addressEditText.setError(errorMsg);
-        } if(phoneNumberEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (phoneNumberEditText.getText().toString().isEmpty()) {
+            allGood = false;
             phoneNumberEditText.setError(errorMsg);
-        } if(schoolEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (schoolEditText.getText().toString().isEmpty()) {
+            allGood = false;
             schoolEditText.setError(errorMsg);
-        } if(courseEditText.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (courseEditText.getText().toString().isEmpty()) {
+            allGood = false;
             courseEditText.setError(errorMsg);
-        } if(reasonEditTExt.getText().toString().isEmpty()) {
-            allGood= false;
+        }
+        if (reasonEditTExt.getText().toString().isEmpty()) {
+            allGood = false;
             reasonEditTExt.setError(errorMsg);
         }
 
@@ -237,9 +242,7 @@ public class PatientFormFragment extends Fragment {
     }
 
 
-
-
-    private void delete(){
+    private void delete() {
         PatientWebServiceClient patientWebServiceClient = MainActivity.getRetrofitHttp()
                 .retrofit.create(PatientWebServiceClient.class);
 
@@ -289,7 +292,8 @@ public class PatientFormFragment extends Fragment {
         if (patientEmail != null) emailEditText.setText(patientEmail);
         if (patientSchool != null) schoolEditText.setText(patientSchool);
         if (patientCourse != null) courseEditText.setText(patientCourse);
-        if (patientPaymentType != null) paymentTypeAutoCompleteTextView.setText(patientPaymentType, false);
+        if (patientPaymentType != null)
+            paymentTypeAutoCompleteTextView.setText(patientPaymentType, false);
         if (patientBirthDate != null) birthDateButton.setText(patientBirthDate);
         if (patientReason != null) reasonEditTExt.setText(patientReason);
 
@@ -316,14 +320,12 @@ public class PatientFormFragment extends Fragment {
         }
 
         createUpdatePatientDto.setUrlPhoto(patientDto.getUrlPhoto());
-        // TODO al crear patient peta por que el id de clinica es null, se debería coger de alguna manera el id de la clinica
-        // TODO urlPhoto
 
         return createUpdatePatientDto;
     }
 
 
-    public void deletePatientDialog(){
+    public void deletePatientDialog() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure);
@@ -336,13 +338,11 @@ public class PatientFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });
         builder.show();
     }
-
 
 
     public void datePicker(View v) {
@@ -354,9 +354,6 @@ public class PatientFormFragment extends Fragment {
         if (picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
             @Override
             public void onPositiveButtonClick(Long selection) {
-                Calendar today = Calendar.getInstance();
-                long now = today.getTimeInMillis();
-
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(selection);
 
@@ -367,22 +364,22 @@ public class PatientFormFragment extends Fragment {
                 String finalMonth;
                 String finalDay;
 
-                if (mMonth < 10){
+                if (mMonth < 10) {
                     finalMonth = "0" + mMonth;
-                }else{
+                } else {
                     finalMonth = String.valueOf(mMonth);
                 }
 
-                if (mDay < 10){
+                if (mDay < 10) {
                     finalDay = "0" + mDay;
-                }else{
+                } else {
                     finalDay = String.valueOf(mDay);
                 }
                 String date = year + "-" + finalMonth + "-" + finalDay;
 
                 birthDateButton.setText(date);
-
-
+                patientDto.setDateOfBirth(date);
+                ageEditText.setText(String.valueOf(patientDto.getAge()));
             }
         })) ;
     }

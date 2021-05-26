@@ -32,12 +32,9 @@ import java.util.Calendar;
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.fragments.CalendarFragment;
-import cat.itb.yapp.fragments.list.PatientListFragment;
 import cat.itb.yapp.models.mts.MtsCreateUpdateDto;
 import cat.itb.yapp.models.mts.MtsDto;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.webservices.MtsServiceClient;
-import cat.itb.yapp.webservices.PatientWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +55,7 @@ public class MtsFormFragment extends Fragment {
 
         final FragmentManager fragmentManager = getParentFragmentManager();
 
-        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
+/*        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
             mtsDto.setSpecialistId(bundle.getLong("userId"));
             String fullName = bundle.getString("fullName");
             String specialistType = bundle.getString("specialistType");
@@ -75,14 +72,19 @@ public class MtsFormFragment extends Fragment {
             String fullName = bundle.getString("fullName");
             mtsDto.setPatientFullName(fullName);
             patientEditText.setText(fullName);
-        });
+        });*/
 
         fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
-            String reason = bundle.getString("reason");
             mtsDto.setTreatmentId(Integer.parseInt(bundle.getString("treatmentId")));
-            mtsDto.setReason(reason);
+            mtsDto.setReason(bundle.getString("reason"));
+            mtsDto.setPatientFullName(bundle.getString("patientName"));
+            mtsDto.setPatientId(bundle.getInt("patientId"));
+            mtsDto.setSpecialistFullName(bundle.getString("specialistName"));
+            mtsDto.setSpecialistId(bundle.getLong("specialistId"));
 
-            reasonEditText.setText(reason);
+            reasonEditText.setText(mtsDto.getReason());
+            patientEditText.setText(mtsDto.getPatientFullName());
+            specialistEditText.setText(mtsDto.getSpecialistFullName());
         }));
 
     }
@@ -137,9 +139,9 @@ public class MtsFormFragment extends Fragment {
         editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     focusable();
-                }else{
+                } else {
                     notFocusable();
                 }
             }
@@ -147,25 +149,19 @@ public class MtsFormFragment extends Fragment {
     }
 
 
-    public void notFocusable(){
-        patientEditText.setEnabled(false);
-        specialistEditText.setEnabled(false);
+    public void notFocusable() {
         dateEditText.setEnabled(false);
         reasonEditText.setEnabled(false);
         saveButton.setVisibility(View.GONE);
         deleteButton.setVisibility(View.GONE);
     }
 
-    public void focusable(){
-        patientEditText.setEnabled(true);
-        specialistEditText.setEnabled(true);
+    public void focusable() {
         dateEditText.setEnabled(true);
         reasonEditText.setEnabled(true);
         deleteButton.setVisibility(View.VISIBLE);
         saveButton.setVisibility(View.VISIBLE);
-
     }
-
 
 
     private void fillUpInfoInLayout(MtsDto mtsDto) {
@@ -239,7 +235,7 @@ public class MtsFormFragment extends Fragment {
     }
 
 
-    private void delete(){
+    private void delete() {
         MtsServiceClient mtsService = MainActivity.getRetrofitHttp()
                 .retrofit.create(MtsServiceClient.class);
 
@@ -267,7 +263,7 @@ public class MtsFormFragment extends Fragment {
     }
 
 
-    public void deleteMtsDialog(){
+    public void deleteMtsDialog() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure);
@@ -280,13 +276,11 @@ public class MtsFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });
         builder.show();
     }
-
 
 
     private MtsCreateUpdateDto getInfoFromLayout() {
@@ -319,7 +313,7 @@ public class MtsFormFragment extends Fragment {
 
                 Calendar c = Calendar.getInstance();
                 c.setTimeInMillis(selection);
-           
+
                 int year = c.get(Calendar.YEAR);
                 int mMonth = c.get(Calendar.MONTH) + 1;
                 int mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -327,15 +321,15 @@ public class MtsFormFragment extends Fragment {
                 String finalMonth;
                 String finalDay;
 
-                if (mMonth < 10){
+                if (mMonth < 10) {
                     finalMonth = "0" + mMonth;
-                }else{
+                } else {
                     finalMonth = String.valueOf(mMonth);
                 }
 
-                if (mDay < 10){
+                if (mDay < 10) {
                     finalDay = "0" + mDay;
-                }else{
+                } else {
                     finalDay = String.valueOf(mDay);
                 }
                 String date = year + "-" + finalMonth + "-" + finalDay;
@@ -347,36 +341,36 @@ public class MtsFormFragment extends Fragment {
 
 
     public void timePicker(String date) {
-            // Get Current Time
-            int mHour = 0;
-            int mMinute = 0;
+        // Get Current Time
+        int mHour = 0;
+        int mMinute = 0;
 
-            // Launch Time Picker Dialog
-            TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    String finalHour;
-                    String finalMinute;
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String finalHour;
+                String finalMinute;
 
-                    if (hourOfDay < 10){
-                        finalHour = "0" + hourOfDay;
-                    }else{
-                        finalHour = String.valueOf(hourOfDay);
-                    }
-
-                    if (minute < 10){
-                        finalMinute = "0" + minute;
-                    }else{
-                        finalMinute = String.valueOf(minute);
-                    }
-                    
-                    String finalDate = date + "T" + finalHour + ":" + finalMinute + ":00" ;
-                    dateEditText.setText(finalDate);
-                    mtsDto.setDate(finalDate);
-
+                if (hourOfDay < 10) {
+                    finalHour = "0" + hourOfDay;
+                } else {
+                    finalHour = String.valueOf(hourOfDay);
                 }
-            }, mHour, mMinute, false);
-            timePickerDialog.show();
+
+                if (minute < 10) {
+                    finalMinute = "0" + minute;
+                } else {
+                    finalMinute = String.valueOf(minute);
+                }
+
+                String finalDate = date + "T" + finalHour + ":" + finalMinute + ":00";
+                dateEditText.setText(finalDate);
+                mtsDto.setDate(finalDate);
+
+            }
+        }, mHour, mMinute, false);
+        timePickerDialog.show();
     }
 }
 

@@ -1,6 +1,10 @@
 package cat.itb.yapp.models.patient;
 
+import android.util.Log;
+
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.Period;
 
 import lombok.Data;
 
@@ -22,5 +26,23 @@ public class PatientDto implements Serializable {
     private String paymentType;
     //clinic
     private Integer clinicId;
+
+    public float getAge() {
+        LocalDate date = LocalDate.parse(dateOfBirth);
+
+        LocalDate today = LocalDate.now();
+        LocalDate birthday;
+        if (date!= null) {
+            birthday = LocalDate.of(
+                    date.getYear(),
+                    date.getMonth(),
+                    date.getDayOfMonth());
+        } else {
+            birthday = today;
+        }
+
+
+        return Period.between(birthday, today).getYears();
+    }
 
 }
