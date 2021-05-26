@@ -138,8 +138,8 @@ public class TreatmentFormFragment extends Fragment {
     }
 
     public void focusable(){
-        editTextSessions.setFocusable(true);
-        editTextReason.setFocusable(true);
+        editTextSessions.setFocusableInTouchMode(true);
+        editTextReason.setFocusableInTouchMode(true);
         editTextSpecialist.setEnabled(true);
         editTextPatient.setEnabled(true);
         editTextStartDate.setEnabled(true);
