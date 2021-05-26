@@ -95,17 +95,12 @@ public class TreatmentListFragment extends Fragment {
     }
 
     public void getTreatments() {
-        //TODO: if is admin go to view admin ...
         Log.e("treatment", "id: "+ MainActivity.getUser().getId());
         Log.e("treatment", "username: "+MainActivity.getUser().getUsername());
 
         MainActivity.getUser().getRoles().forEach(rol -> {
             Log.e("treatment", "role: "+rol);
         });
-
-        final List<TreatmentDto>[] treatmentDtoList = new List[]{new ArrayList<>()};
-
-
 
         RetrofitHttp retrofitHttp = new RetrofitHttp();
         TreatmentWebServiceClient treatmentWebServiceClient = retrofitHttp.retrofit.create(TreatmentWebServiceClient.class);
@@ -141,10 +136,6 @@ public class TreatmentListFragment extends Fragment {
 
                         treatmentList = response.body();
                         setUpRecycler(recyclerView);
-
-                        treatmentDtoList[0].forEach(t-> {
-                            Log.e("treatment", "status response: " + t.toString());
-                        });
 
                     }else {
                         Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get treatment by specialistId", Toast.LENGTH_SHORT).show();

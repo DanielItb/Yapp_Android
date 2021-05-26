@@ -187,8 +187,6 @@ public class TreatmentFormFragment extends Fragment {
 
         editTextSessions.setText(treatment.getSessionsFinished());
         editTextReason.setText(treatment.getReason());
-        //TODO active button
-        //switchActive.setChecked(treatment.get);
     }
 
     private void save() {
@@ -261,7 +259,6 @@ public class TreatmentFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });

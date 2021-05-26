@@ -54,7 +54,7 @@ public class ReportFormFragment extends Fragment {
         final FragmentManager fragmentManager = getParentFragmentManager();
 
         fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
-            reportDto.setSpecialistId(bundle.getLong("userId")); //TODO Remove parse
+            reportDto.setSpecialistId(bundle.getLong("userId"));
             String fullName = bundle.getString("fullName");
             String specialistType = bundle.getString("specialistType");
 
@@ -66,7 +66,7 @@ public class ReportFormFragment extends Fragment {
         });
 
         fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
-            reportDto.setPatientId(bundle.getInt("patientId")); //TODO Remove parse
+            reportDto.setPatientId(bundle.getInt("patientId"));
             String fullName = bundle.getString("fullName");
             reportDto.setPatientFullName(fullName);
             editTextPatient.setText(fullName);
@@ -252,7 +252,6 @@ public class ReportFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });

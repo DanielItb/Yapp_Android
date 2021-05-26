@@ -95,7 +95,6 @@ public class PatientListFragment extends Fragment {
     }
 
     public void getPatients() {
-        //TODO: if is admin go to view admin ...
         Log.e("user", "id: " + MainActivity.getUser().getId());
         Log.e("user", "username: " + MainActivity.getUser().getUsername());
 

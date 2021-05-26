@@ -14,7 +14,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:shapeAppearanceOverlay="@style/circleImageView"
-        tools:src="@drawable/profile" />
+        android:src="@drawable/placeholder_user_image"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewUsernameDrawer"

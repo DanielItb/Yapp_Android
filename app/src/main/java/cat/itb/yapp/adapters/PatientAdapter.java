@@ -1,5 +1,6 @@
 package cat.itb.yapp.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.models.patient.Patient;
 import cat.itb.yapp.models.patient.PatientDto;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,7 +38,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         TextView patientNameTextView;
         TextView patientReasonTextView;
         TextView patientAgeTextView;
-        CircleImageView patientImageTextView;
+        CircleImageView patientImageView;
 
 
         public ViewHolder(RecyclerItemClickListener recyclerItemClickListener, @NonNull View itemView) {
@@ -45,7 +47,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             patientNameTextView = itemView.findViewById(R.id.namePatientTextView);
             patientAgeTextView = itemView.findViewById(R.id.agePatientTextView);
             patientReasonTextView = itemView.findViewById(R.id.reasonPatientTextView);
-            patientImageTextView = itemView.findViewById(R.id.circleImageView);
+            patientImageView = itemView.findViewById(R.id.circleImageView);
 
             itemView.setOnClickListener(this);
         }
@@ -54,7 +56,9 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             patientNameTextView.setText(patient.getName() + " " + patient.getSurname());
             patientAgeTextView.setText(String.valueOf(patient.getAge()));
             patientReasonTextView.setText(patient.getReason());
-            patientImageTextView.setImageResource(R.drawable.kid);
+
+            Context context = patientImageView.getContext();
+            Picasso.with(context).load(patient.getUrlPhoto()).into(patientImageView);
         }
 
         @Override

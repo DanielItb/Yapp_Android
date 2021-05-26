@@ -39,7 +39,7 @@ import retrofit2.Response;
 
 
 public class PatientFormFragment extends Fragment {
-    // TODO cargar la foto y borrar paciente
+    // TODO cargar la foto
     private NavController navController;
     private MaterialButton birthDateButton, saveButton, deleteButton;
     private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText, phoneNumberEditText, emailEditText, schoolEditText, courseEditText, reasonEditTExt;
@@ -78,18 +78,11 @@ public class PatientFormFragment extends Fragment {
         circleImageView = v.findViewById(R.id.profile_image);
         editSwitch = v.findViewById(R.id.editSwitchPatient);
 
-
         birthDateButton.setOnClickListener(this::datePicker);
-
-
-
 
         paymentTypeAutoCompleteTextView = v.findViewById(R.id.autoComplete);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_types, paymentTypes);
         paymentTypeAutoCompleteTextView.setAdapter(adapter);
-
-
-
 
         return v;
     }
@@ -108,11 +101,7 @@ public class PatientFormFragment extends Fragment {
                 notFocusable();
                 fillUpInfoInLayout(patientDto);
             } else { // If new
-                patientDto = new PatientDto();
-                editSwitch.setVisibility(View.GONE);
-                focusable();
-//                patientDto.setDate(LocalDateTime.now().toString());
-                editing = false;
+                newPatientSetUp();
             }
         } else { //If load data
             fillUpInfoInLayout(patientDto);
@@ -136,7 +125,18 @@ public class PatientFormFragment extends Fragment {
 
     }
 
-    public void notFocusable(){
+    private void newPatientSetUp() {
+        final String urlImg = "https://yapp-backend.herokuapp.com/files/placeholder-user-image.png";
+
+        patientDto = new PatientDto();
+        editSwitch.setVisibility(View.GONE);
+        focusable();
+        editing = false;
+
+        patientDto.setUrlPhoto(urlImg);
+    }
+
+    private void notFocusable() {
         birthDateButton.setEnabled(false);
         nameEditText.setFocusable(false);
         surnameEditText.setFocusable(false);
@@ -319,8 +319,6 @@ public class PatientFormFragment extends Fragment {
         }
 
         createUpdatePatientDto.setUrlPhoto(patientDto.getUrlPhoto());
-        // TODO al crear patient peta por que el id de clinica es null, se debería coger de alguna manera el id de la clinica
-        // TODO urlPhoto
 
         return createUpdatePatientDto;
     }
@@ -339,7 +337,6 @@ public class PatientFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });

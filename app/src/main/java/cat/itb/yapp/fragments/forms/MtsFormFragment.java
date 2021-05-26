@@ -280,7 +280,6 @@ public class MtsFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });

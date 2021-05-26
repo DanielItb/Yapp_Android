@@ -21,7 +21,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         style="@style/CircleImageForms"
-        android:src="@drawable/kid"
+        android:src="@drawable/placeholder_user_image"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
