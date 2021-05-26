@@ -23,9 +23,6 @@ public class DatabaseUtils {
             Log.e("treatment", "role: " + rol);
         });
 
-        final List<TreatmentDto>[] treatmentDtoList = new List[]{new ArrayList<>()};
-
-
         RetrofitHttp retrofitHttp = MainActivity.getRetrofitHttp();
         TreatmentWebServiceClient treatmentWebServiceClient = retrofitHttp.retrofit.create(TreatmentWebServiceClient.class);
 
@@ -34,13 +31,11 @@ public class DatabaseUtils {
         Long specialistId = MainActivity.getUser().getId().longValue();
         //CHECK USER ROLE
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
-
             String endpointUserRole = "treatment/clinic/" + MainActivity.getUserDto().getClinicId();
             call = treatmentWebServiceClient.getTreatmentsByClinicId(endpointUserRole);
             Log.e("treatment", "all treatments in clinic");
 
         } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
-
             String endpointUserRole = "treatment/specialist/" + specialistId;
             call = treatmentWebServiceClient.getTreatmentsBySpecialistId(endpointUserRole);
             Log.e("treatment", "all treatments by specialist");
