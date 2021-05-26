@@ -55,7 +55,7 @@ public class MtsFormFragment extends Fragment {
 
         final FragmentManager fragmentManager = getParentFragmentManager();
 
-        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
+/*        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
             mtsDto.setSpecialistId(bundle.getLong("userId"));
             String fullName = bundle.getString("fullName");
             String specialistType = bundle.getString("specialistType");
@@ -72,7 +72,7 @@ public class MtsFormFragment extends Fragment {
             String fullName = bundle.getString("fullName");
             mtsDto.setPatientFullName(fullName);
             patientEditText.setText(fullName);
-        });
+        });*/
 
         fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
             mtsDto.setTreatmentId(Integer.parseInt(bundle.getString("treatmentId")));
@@ -150,8 +150,6 @@ public class MtsFormFragment extends Fragment {
 
 
     public void notFocusable() {
-        specialistEditText.setEnabled(false);
-        patientEditText.setEnabled(false);
         dateEditText.setEnabled(false);
         reasonEditText.setEnabled(false);
         saveButton.setVisibility(View.GONE);
@@ -159,8 +157,6 @@ public class MtsFormFragment extends Fragment {
     }
 
     public void focusable() {
-        specialistEditText.setEnabled(true);
-        patientEditText.setEnabled(true);
         dateEditText.setEnabled(true);
         reasonEditText.setEnabled(true);
         deleteButton.setVisibility(View.VISIBLE);
