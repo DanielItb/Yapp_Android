@@ -186,25 +186,10 @@ public class PatientFormFragment extends Fragment {
         if (surnameEditText.getText().toString().isEmpty()) {
             allGood = false;
             surnameEditText.setError(errorMsg);
-        } if(addressEditText.getText().toString().isEmpty()) {
-            allGood= false;
-            addressEditText.setError(errorMsg);
         }
-        if (phoneNumberEditText.getText().toString().isEmpty()) {
+        if (birthDateEditText.getText().toString().isEmpty()) {
             allGood = false;
-            phoneNumberEditText.setError(errorMsg);
-        }
-        if (schoolEditText.getText().toString().isEmpty()) {
-            allGood = false;
-            schoolEditText.setError(errorMsg);
-        }
-        if (courseEditText.getText().toString().isEmpty()) {
-            allGood = false;
-            courseEditText.setError(errorMsg);
-        }
-        if (reasonEditTExt.getText().toString().isEmpty()) {
-            allGood = false;
-            reasonEditTExt.setError(errorMsg);
+            birthDateEditText.setError(errorMsg);
         }
 
         return allGood;
