@@ -20,11 +20,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.HashSet;
 
 import cat.itb.yapp.R;
@@ -33,6 +30,7 @@ import cat.itb.yapp.fragments.list.UserListFragment;
 import cat.itb.yapp.models.user.CreateUserDto;
 import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -250,14 +248,7 @@ public class UserFormFragment extends Fragment {
                 if (response.isSuccessful()) {
                     navController.popBackStack();
                 } else {
-                    try {
-                        JsonParser jsonParser = new JsonParser();
-                        JsonObject json = jsonParser.parse(response.errorBody().string()).getAsJsonObject();
-
-                        Toast.makeText(getContext(), json.get("message").getAsString(), Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                 }
             }
 
