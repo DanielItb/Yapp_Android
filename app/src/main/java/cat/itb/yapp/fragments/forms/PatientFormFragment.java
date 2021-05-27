@@ -40,8 +40,10 @@ import retrofit2.Response;
 public class PatientFormFragment extends Fragment {
     // TODO cargar la foto
     private NavController navController;
-    private MaterialButton birthDateButton, saveButton, deleteButton;
-    private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText, phoneNumberEditText, emailEditText, schoolEditText, courseEditText, reasonEditTExt;
+    private MaterialButton saveButton, deleteButton;
+    private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText,
+            phoneNumberEditText, emailEditText, schoolEditText, courseEditText, reasonEditTExt,
+            birthDateEditText;
     private AutoCompleteTextView paymentTypeAutoCompleteTextView;
     private boolean editing;
     private PatientDto patientDto = null;
@@ -62,7 +64,7 @@ public class PatientFormFragment extends Fragment {
 
 //        registerDate = v.findViewById(R.id.registerDateEditText);
 
-        birthDateButton = v.findViewById(R.id.birthDateButton);
+        birthDateEditText = v.findViewById(R.id.birthDateButton);
         saveButton = v.findViewById(R.id.saveButtonPatientForm);
         nameEditText = v.findViewById(R.id.nameEditText);
         surnameEditText = v.findViewById(R.id.surnameEditText);
@@ -77,7 +79,7 @@ public class PatientFormFragment extends Fragment {
         circleImageView = v.findViewById(R.id.profile_image);
         editSwitch = v.findViewById(R.id.editSwitchPatient);
 
-        birthDateButton.setOnClickListener(this::datePicker);
+        birthDateEditText.setOnClickListener(this::datePicker);
 
         paymentTypeAutoCompleteTextView = v.findViewById(R.id.autoComplete);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_types, paymentTypes);
@@ -136,7 +138,7 @@ public class PatientFormFragment extends Fragment {
     }
 
     private void notFocusable() {
-        birthDateButton.setEnabled(false);
+        birthDateEditText.setEnabled(false);
         nameEditText.setFocusable(false);
         surnameEditText.setFocusable(false);
         addressEditText.setFocusable(false);
@@ -157,7 +159,7 @@ public class PatientFormFragment extends Fragment {
     }
 
     public void focusable() {
-        birthDateButton.setEnabled(true);
+        birthDateEditText.setEnabled(true);
         nameEditText.setFocusableInTouchMode(true);
         nameEditText.setFocusableInTouchMode(true);
         surnameEditText.setFocusableInTouchMode(true);
@@ -290,7 +292,7 @@ public class PatientFormFragment extends Fragment {
         if (patientCourse != null) courseEditText.setText(patientCourse);
         if (patientPaymentType != null)
             paymentTypeAutoCompleteTextView.setText(patientPaymentType, false);
-        if (patientBirthDate != null) birthDateButton.setText(patientBirthDate);
+        if (patientBirthDate != null) birthDateEditText.setText(patientBirthDate);
         if (patientReason != null) reasonEditTExt.setText(patientReason);
 
 
@@ -305,7 +307,7 @@ public class PatientFormFragment extends Fragment {
         createUpdatePatientDto.setReason(reasonEditTExt.getText().toString());
         createUpdatePatientDto.setPhoneNumber(phoneNumberEditText.getText().toString());
         createUpdatePatientDto.setEmail(emailEditText.getText().toString());
-        createUpdatePatientDto.setDateOfBirth(birthDateButton.getText().toString());
+        createUpdatePatientDto.setDateOfBirth(birthDateEditText.getText().toString());
         createUpdatePatientDto.setHomeAddress(addressEditText.getText().toString());
         createUpdatePatientDto.setSchoolName(schoolEditText.getText().toString());
         createUpdatePatientDto.setCourse(courseEditText.getText().toString());
@@ -373,7 +375,7 @@ public class PatientFormFragment extends Fragment {
                 }
                 String date = year + "-" + finalMonth + "-" + finalDay;
 
-                birthDateButton.setText(date);
+                birthDateEditText.setText(date);
                 patientDto.setDateOfBirth(date);
                 ageEditText.setText(String.valueOf(patientDto.getAge()));
             }
