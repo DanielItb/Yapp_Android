@@ -250,6 +250,7 @@ public class RegisterFormFragment extends Fragment {
         registerDtoRoleAdmin.setAddressClinic(clinicAddressEditText.getText().toString());
         registerDtoRoleAdmin.setEmailClinic(clinicEmailEditText.getText().toString());
         registerDtoRoleAdmin.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
+        registerDtoRoleAdmin.setPhotoUrl("https://yapp-backend.herokuapp.com/files/placeholder-user-image.png");
 
         return registerDtoRoleAdmin;
     }

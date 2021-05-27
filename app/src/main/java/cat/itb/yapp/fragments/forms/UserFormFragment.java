@@ -20,6 +20,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -245,7 +247,10 @@ public class UserFormFragment extends Fragment {
                     navController.popBackStack();
                 } else {
                     try {
-                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject json = jsonParser.parse(response.errorBody().string()).getAsJsonObject();
+
+                        Toast.makeText(getContext(), json.get("message").getAsString(), Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -359,9 +364,7 @@ public class UserFormFragment extends Fragment {
         userDto.setUsername(usernameEditText.getText().toString());
         userDto.setCollegiateNumber(Integer.parseInt(collegiateNumberEditText.getText().toString()));
         userDto.setClinicId(MainActivity.getUserDto().getClinicId());
-
-
-
+        userDto.setPhotoUrl("https://yapp-backend.herokuapp.com/files/placeholder-user-image.png");
 
         // TODO urlPhoto
 
