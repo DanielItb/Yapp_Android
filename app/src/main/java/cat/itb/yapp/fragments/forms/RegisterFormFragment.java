@@ -2,19 +2,18 @@ package cat.itb.yapp.fragments.forms;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -80,7 +79,6 @@ public class RegisterFormFragment extends Fragment {
         clinicPhoneEditTExt.setText("123456789");
         clinicAddressEditText.setText("Mi clinica 123");
         clinicEmailEditText.setText("wreb@gmail.com");
-        specialistTypeAutoCompleteTextView.setText("None");
 
 
         return v;
