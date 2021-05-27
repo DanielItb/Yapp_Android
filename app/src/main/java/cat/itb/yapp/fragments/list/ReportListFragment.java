@@ -133,7 +133,6 @@ public class ReportListFragment extends Fragment {
                         reportList = response.body();
                         setUpRecycler(recyclerView);
                     } else {
-                        Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get report by specialistId", Toast.LENGTH_SHORT).show();
                         Log.e("report", "status response: " + response.code()); //401 Unauthorized
                     }
                 }
