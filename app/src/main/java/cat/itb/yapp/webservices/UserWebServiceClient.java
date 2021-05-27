@@ -19,6 +19,10 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
+/**
+ * Interface con las peticiones rest al backend del objeto User.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public interface UserWebServiceClient {
     // ROLE_ADMIN
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

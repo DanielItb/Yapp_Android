@@ -29,6 +29,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador de la lista que muestra los informes.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class ReportListFragment extends Fragment {
     private NavController navController;
     private List<ReportDto> reportList = null;
@@ -91,7 +96,7 @@ public class ReportListFragment extends Fragment {
         navController.navigate(dir);
     }
 
-    public void getReportsIntroRecycler(RecyclerView recyclerView) {
+    private void getReportsIntroRecycler(RecyclerView recyclerView) {
         //TODO: if is admin go to view admin ...
         Log.e("user", "id: "+ MainActivity.getUser().getId());
         Log.e("user", "username: "+MainActivity.getUser().getUsername());

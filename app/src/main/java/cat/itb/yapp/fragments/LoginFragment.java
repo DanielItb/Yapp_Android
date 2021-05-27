@@ -41,6 +41,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador del login.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class LoginFragment extends Fragment {
 
     private TextInputLayout usernameInputLayout, passwordInputLayout;
@@ -108,7 +113,7 @@ public class LoginFragment extends Fragment {
         return v;
     }
 
-    public void login() {
+    private void login() {
 
         retrofitHttpLogin = new RetrofitHttpLogin();
 

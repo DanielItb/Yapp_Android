@@ -32,6 +32,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador del formulario de registro.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class RegisterFormFragment extends Fragment {
     private MaterialButton cancelButton, registerButton;
     private NavController navController;
@@ -192,9 +197,17 @@ public class RegisterFormFragment extends Fragment {
             return allGood;
     }
 
+    /**
+     * Método con un patrón regex para controlar que el formato del campo email es correcto.
+     */
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
+    /**
+     * Mátodo que valida el forato correcto del campo email.
+     * @param emailStr String
+     * @return Boolean
+     */
     public static boolean validate(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return !matcher.find();
@@ -257,7 +270,7 @@ public class RegisterFormFragment extends Fragment {
     }
 
 
-    public void confirmEmailDialog(){
+    private void confirmEmailDialog(){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.thanks_for_joining);
         builder.setMessage(R.string.check_email);

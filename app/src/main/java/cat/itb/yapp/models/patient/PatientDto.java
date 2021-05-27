@@ -7,7 +7,10 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import lombok.Data;
-
+/**
+ * Modelo con los atributos necesarios para cargar y setear pacientes.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Data
 public class PatientDto implements Serializable {
     private Integer id;

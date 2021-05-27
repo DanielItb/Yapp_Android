@@ -18,11 +18,21 @@ import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.report.ReportDto;
 import cat.itb.yapp.models.user.User;
 
+/**
+ * Adapter del objeto RportDto. Carga las listas de informes.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder> implements Filterable {
     private final List<ReportDto> listReport;
     private final List<ReportDto> listReportFilter;
     private final RecyclerItemClickListener recyclerItemClickListener;
 
+    /**
+     * Constructor del adapter.
+     * @param listReport Lista de objetos RportDto
+     * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+     */
     public ReportAdapter(List<ReportDto> listReport, RecyclerItemClickListener recyclerItemClickListener) {
         this.listReport = listReport;
         listReportFilter = new ArrayList<>(listReport);
@@ -30,11 +40,18 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
 
-
+    /**
+     * ViehHolder que extiende de RecyclerView e implementa un onClickListener.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView patientNameReportTextView, diagnosisReportTextView;
         private RecyclerItemClickListener recyclerItemClickListener;
 
+        /**
+         * Constructor de la clase ViewHolder.
+         * @param itemView Objeto View
+         * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+         */
         public ViewHolder(@NonNull View itemView, RecyclerItemClickListener recyclerItemClickListener) {
             super(itemView);
             this.recyclerItemClickListener = recyclerItemClickListener;
@@ -44,6 +61,10 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Setea los datos en el elemento pertinente.
+         * @param report Objeto ReportDto
+         */
         public void binData(ReportDto report){
             patientNameReportTextView.setText(report.getPatientFullName());
             diagnosisReportTextView.setText(report.getDiagnosis());
@@ -73,12 +94,21 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
     }
 
 
+    /**
+     * Retorna la lista filtrada.
+     * @return Objeto Filter
+     */
     @Override
     public Filter getFilter() {
         return reportFilter;
     }
 
     private Filter reportFilter = new Filter() {
+        /**
+         * Filtra la lista que mostrará el recycler dependiendo del patrón de texto recibido como parámetro.
+         * @param constraint Objeto CharSequence
+         * @return Objeto FilterResults
+         */
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<ReportDto> filteredList = new ArrayList<>();
@@ -103,6 +133,11 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                 return results;
         }
 
+        /**
+         * Carga la listra filtrada.
+         * @param constraint Objeto CharSequence
+         * @param results Objeto FilterResults
+         */
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             listReport.clear();

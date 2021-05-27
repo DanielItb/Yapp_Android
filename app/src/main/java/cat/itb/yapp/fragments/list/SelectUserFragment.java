@@ -26,7 +26,11 @@ import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * Fragmento controlador de la lista que muestra los usuarios (especialistas) para ser seleccionados.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 
 public class SelectUserFragment extends Fragment {
     private NavController navController;
@@ -93,7 +97,7 @@ public class SelectUserFragment extends Fragment {
         }
     }
 
-    public void getUsers() {
+    private void getUsers() {
         Log.e("user", "role admin?: " + UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles()));
         Log.e("user", "role user?: " + UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles()));
 

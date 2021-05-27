@@ -3,7 +3,10 @@ package cat.itb.yapp.models.treatment;
 import java.io.Serializable;
 
 import lombok.Data;
-
+/**
+ * Modelo con los atributos necesarios para cargar y setear tratamientos.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Data
 public class TreatmentDto implements Serializable {
     private String id;

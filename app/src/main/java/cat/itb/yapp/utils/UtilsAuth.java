@@ -2,6 +2,10 @@ package cat.itb.yapp.utils;
 
 import java.util.Set;
 
+/**
+ * Clase utils varios para comprobar el rol del usuario conectado a la aplicación.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public class UtilsAuth {
 
     private final static String ADMIN_ROLE = "ROLE_ADMIN";

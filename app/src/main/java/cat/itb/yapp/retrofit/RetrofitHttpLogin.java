@@ -7,6 +7,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 //https://stackoverflow.com/questions/41078866/retrofit2-authorization-global-interceptor-for-access-token
+/**
+ * Clase utils varios de conexión para realizar los logins correctamente
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public class RetrofitHttpLogin {
     public Retrofit retrofit;
     private HttpLoggingInterceptor loggingInterceptor;

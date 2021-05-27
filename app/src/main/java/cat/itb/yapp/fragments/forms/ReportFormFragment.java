@@ -34,6 +34,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador del formulario de los datos de los informes (Report).
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class ReportFormFragment extends Fragment {
     private NavController navController;
     private TextInputEditText editTextDiagnosis, editTextObjectives, editTextSpecialistType, editTextDate,
@@ -130,7 +135,7 @@ public class ReportFormFragment extends Fragment {
     }
 
 
-    public void notFocusable(){
+    private void notFocusable(){
         editTextDiagnosis.setFocusable(false);
         editTextObjectives.setFocusable(false);
         editTextDate.setEnabled(false);
@@ -139,7 +144,7 @@ public class ReportFormFragment extends Fragment {
         buttonSave.setVisibility(View.GONE);
     }
 
-    public void focusable(){
+    private void focusable(){
         editTextDiagnosis.setFocusableInTouchMode(true);
         editTextObjectives.setFocusableInTouchMode(true);
         editTextSpecialistType.setEnabled(true);
@@ -216,7 +221,7 @@ public class ReportFormFragment extends Fragment {
 
 
 
-    public void deleteReportDialog(){
+    private void deleteReportDialog(){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure_report);

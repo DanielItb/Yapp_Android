@@ -28,6 +28,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador del formulario de los datos de la clínica
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class ClinicFormFragment extends Fragment {
     private NavController navController;
     private ClinicDto clinicDto;

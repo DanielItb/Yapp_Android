@@ -41,6 +41,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador del calendario.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class CalendarFragment extends Fragment implements WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener, View.OnClickListener {
     private NavController navController;
     private WeekView mWeekView;
@@ -261,7 +266,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
     }
 
 
-    public List<MtsDto> getMts() {
+    private List<MtsDto> getMts() {
         Log.e("user", "id: " + MainActivity.getUser().getId());
         Log.e("user", "username: " + MainActivity.getUser().getUsername());
 

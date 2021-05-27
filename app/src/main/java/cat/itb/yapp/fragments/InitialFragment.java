@@ -14,7 +14,11 @@ import com.google.android.material.button.MaterialButton;
 
 import cat.itb.yapp.R;
 
-
+/**
+ * Fragmento controlador del fragmento inicial.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class InitialFragment extends Fragment {
     private MaterialButton registerButton, loginButton;
     private NavController navController;

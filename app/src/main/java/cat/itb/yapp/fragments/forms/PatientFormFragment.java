@@ -36,7 +36,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ * Fragmento controlador del formulario de los datos de los pacientes.
+ */
 public class PatientFormFragment extends Fragment {
     // TODO cargar la foto
     private NavController navController;
@@ -135,7 +138,7 @@ public class PatientFormFragment extends Fragment {
         patientDto.setUrlPhoto(urlImg);
     }
 
-    private void notFocusable() {
+    public void notFocusable() {
         birthDateButton.setEnabled(false);
         nameEditText.setFocusable(false);
         surnameEditText.setFocusable(false);
@@ -156,7 +159,7 @@ public class PatientFormFragment extends Fragment {
 
     }
 
-    public void focusable() {
+    private void focusable() {
         birthDateButton.setEnabled(true);
         nameEditText.setFocusableInTouchMode(true);
         nameEditText.setFocusableInTouchMode(true);
@@ -321,7 +324,7 @@ public class PatientFormFragment extends Fragment {
     }
 
 
-    public void deletePatientDialog() {
+    private void deletePatientDialog() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure);
@@ -341,7 +344,7 @@ public class PatientFormFragment extends Fragment {
     }
 
 
-    public void datePicker(View v) {
+    private void datePicker(View v) {
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Select date: ");
 

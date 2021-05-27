@@ -15,6 +15,10 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
+/**
+ * Interface con las peticiones rest al backend del objeto Treatment.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public interface TreatmentWebServiceClient {
 
     // ROLE_ADMIN

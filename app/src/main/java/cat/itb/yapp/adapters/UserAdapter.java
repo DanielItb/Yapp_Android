@@ -17,12 +17,21 @@ import cat.itb.yapp.R;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.user.User;
 import cat.itb.yapp.models.user.UserDto;
-
+/**
+ * Adapter del objeto UserDto. Carga las listas de usuarios.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> implements Filterable {
     private final List<UserDto> listUser;
     private final List<UserDto> listUserFilter;
     private final RecyclerItemClickListener recyclerItemClickListener;
 
+    /**
+     * Constructor del adapter.
+     * @param listUser Lista de objetos UserDto
+     * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+     */
     public UserAdapter(List<UserDto> listUser, RecyclerItemClickListener recyclerItemClickListener) {
         this.listUser = listUser;
         listUserFilter = new ArrayList<>(listUser);
@@ -30,11 +39,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> im
     }
 
 
-
+    /**
+     * ViehHolder que extiende de RecyclerView e implementa un onClickListener.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView userNameTextView, userSpecialistTypeTextView;
         private final RecyclerItemClickListener recyclerItemClickListener;
 
+        /**
+         * Constructor de la clase ViewHolder.
+         * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+         * @param itemView Objeto View
+         */
         public ViewHolder(@NonNull View itemView, RecyclerItemClickListener recyclerItemClickListener) {
             super(itemView);
             this.recyclerItemClickListener = recyclerItemClickListener;
@@ -44,6 +60,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> im
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Setea los datos en el elemento pertinente.
+         * @param user Objeto UserDto
+         */
         public void binData(UserDto user){
             userNameTextView.setText(user.getName() + " " + user.getSurnames());
             userSpecialistTypeTextView.setText(user.getSpecialistType());
@@ -71,12 +91,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> im
         return listUser.size();
     }
 
+    /**
+     * Retorna la lista filtrada.
+     * @return Objeto Filter
+     */
     @Override
     public Filter getFilter() {
         return userFilter;
     }
 
     private Filter userFilter = new Filter() {
+        /**
+         * Filtra la lista que mostrará el recycler dependiendo del patrón de texto recibido como parámetro.
+         * @param constraint Objeto CharSequence
+         * @return Objeto FilterResults
+         */
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<UserDto> filteredList = new ArrayList<>();
@@ -103,6 +132,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> im
             return results;
         }
 
+        /**
+         * Carga la listra filtrada.
+         * @param constraint Objeto CharSequence
+         * @param results Objeto FilterResults
+         */
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             listUser.clear();

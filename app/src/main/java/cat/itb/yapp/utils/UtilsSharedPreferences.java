@@ -6,6 +6,10 @@ import android.util.Log;
 
 import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * Almacena el Json Web Token (JWT), necesario para hacer las peticiones. Las almacena en el fichero SharePreferences del dispositivo móvil.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public class UtilsSharedPreferences {
 
     private static String YAPP_PREF_FILE = "YaapPreferencesFile";
@@ -25,6 +29,11 @@ public class UtilsSharedPreferences {
         return prefs.getString(key, "null");
     }
 
+    /**
+     * Método que setea el token del usuario
+     * @param activity
+     * @param token
+     */
     public static void setToken(Activity activity, String token) {
         SharedPreferences.Editor editor = activity.getSharedPreferences(YAPP_PREF_FILE, MODE_PRIVATE).edit();
         editor.putString(KEY_TOKEN_FILE, token);

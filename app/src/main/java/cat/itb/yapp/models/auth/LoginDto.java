@@ -3,6 +3,10 @@ package cat.itb.yapp.models.auth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Modelo con los atributos necesarios para hacer el login
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public class LoginDto {
     @SerializedName("username")
     @Expose

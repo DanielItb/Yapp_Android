@@ -1,7 +1,10 @@
 package cat.itb.yapp.models.user;
 
 import lombok.Data;
-
+/**
+ * Modelo con los atributos necesarios para crear un usuario con rol user (básico) .
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Data
 public class CreateUserDto {
     private String username;

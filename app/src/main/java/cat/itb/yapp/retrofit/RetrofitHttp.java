@@ -12,7 +12,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
+/**
+ * Clase utils varios de conexión con la base de datos con la url y la peticion de cliente
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public class RetrofitHttp {
     public Retrofit retrofit;
     public OkHttpClient httpClient;

@@ -35,6 +35,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador del formulario de los datos de los tratamientos.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class TreatmentFormFragment extends Fragment {
 
     private NavController navController;
@@ -126,7 +131,7 @@ public class TreatmentFormFragment extends Fragment {
         });
     }
 
-    public void notFocusable(){
+    private void notFocusable(){
         editTextSessions.setFocusable(false);
         editTextReason.setFocusable(false);
         editTextSpecialist.setEnabled(false);
@@ -136,7 +141,7 @@ public class TreatmentFormFragment extends Fragment {
         buttonSave.setVisibility(View.GONE);
     }
 
-    public void focusable(){
+    private void focusable(){
         editTextSessions.setFocusableInTouchMode(true);
         editTextReason.setFocusableInTouchMode(true);
         editTextSpecialist.setEnabled(true);
@@ -244,7 +249,7 @@ public class TreatmentFormFragment extends Fragment {
     }
 
 
-    public void deleteTreatmentDialog(){
+    private void deleteTreatmentDialog(){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure_treatment);

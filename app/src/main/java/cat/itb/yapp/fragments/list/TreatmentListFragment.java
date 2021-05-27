@@ -31,7 +31,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * Fragmento controlador de la lista que muestra los tratamientos.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class TreatmentListFragment extends Fragment {
     private RecyclerView recyclerView;
     private NavController navController;
@@ -97,7 +101,7 @@ public class TreatmentListFragment extends Fragment {
         navController.navigate(dir);
     }
 
-    public void getTreatments() {
+    private void getTreatments() {
         Log.e("treatment", "id: "+ MainActivity.getUser().getId());
         Log.e("treatment", "username: "+MainActivity.getUser().getUsername());
 

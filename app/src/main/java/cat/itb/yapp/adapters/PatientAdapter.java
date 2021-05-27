@@ -20,19 +20,31 @@ import cat.itb.yapp.R;
 import cat.itb.yapp.models.patient.PatientDto;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Adapter del objeto PatientDto. Carga las listas de pacientes.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ *
+ */
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> implements Filterable {
     private final List<PatientDto> listPatient;
     private final List<PatientDto> listPatientFilter;
     private final RecyclerItemClickListener recyclerItemClickListener;
 
-
+    /**
+     * Constructor del adapter.
+     * @param listPatient Lista de objetos PatientDto
+     * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+     */
     public PatientAdapter(List<PatientDto> listPatient, RecyclerItemClickListener recyclerItemClickListener) {
         this.listPatient = listPatient;
         listPatientFilter = new ArrayList<>(listPatient);
         this.recyclerItemClickListener = recyclerItemClickListener;
     }
 
-
+    /**
+     * ViehHolder que extiende de RecyclerView e implementa un onClickListener.
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final RecyclerItemClickListener recyclerItemClickListener;
         TextView patientNameTextView;
@@ -40,7 +52,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         TextView patientAgeTextView;
         CircleImageView patientImageView;
 
-
+        /**
+         * Constructor de la clase ViewHolder.
+         * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+         * @param itemView Objeto View
+         */
         public ViewHolder(RecyclerItemClickListener recyclerItemClickListener, @NonNull View itemView) {
             super(itemView);
             this.recyclerItemClickListener = recyclerItemClickListener;
@@ -52,6 +68,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Setea los datos en el elemento pertinente.
+         * @param patient Objeto PatientDto
+         */
         public void binData(PatientDto patient) {
             patientNameTextView.setText(patient.getName() + " " + patient.getSurname());
             patientAgeTextView.setText(String.valueOf(patient.getAge()));
@@ -66,6 +86,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             recyclerItemClickListener.onRecyclerItemClick(getAdapterPosition());
         }
     }
+
 
     @NonNull
     @Override
@@ -85,12 +106,22 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     }
 
 
+    /**
+     * Retorna la lista filtrada.
+     * @return Objeto Filter
+     */
     @Override
     public Filter getFilter() {
         return patientFilter;
     }
 
+
     private Filter patientFilter = new Filter() {
+        /**
+         * Filtra la lista que mostrará el recycler dependiendo del patrón de texto recibido como parámetro.
+         * @param constraint Objeto CharSequence
+         * @return Objeto FilterResults
+         */
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<PatientDto> filteredList = new ArrayList<>();
@@ -115,6 +146,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             return results;
         }
 
+        /**
+         * Carga la listra filtrada.
+         * @param constraint Objeto CharSequence
+         * @param results Objeto FilterResults
+         */
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
              listPatient.clear();

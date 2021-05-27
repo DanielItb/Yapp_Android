@@ -16,12 +16,21 @@ import java.util.List;
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
-
+/**
+ * Adapter del objeto TreatmentDto. Carga las listas de tratamientos.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.Viewholder> implements Filterable {
     private final List<TreatmentDto> listTreatment;
     private final List<TreatmentDto> listTreatmentFilter;
     private final RecyclerItemClickListener recyclerItemClickListener;
 
+    /**
+     * Constructor del adapter.
+     * @param listTreatment Lista de objetos TreatmentDto
+     * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+     */
     public TreatmentAdapter(List<TreatmentDto> listTreatment, RecyclerItemClickListener recyclerItemClickListener) {
         this.listTreatment = listTreatment;
         listTreatmentFilter = new ArrayList<>(listTreatment);
@@ -29,13 +38,21 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
     }
 
 
-
+    /**
+     * ViehHolder que extiende de RecyclerView e implementa un onClickListener.
+     */
     public static class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView treatmentIdTextView;
         TextView startDateTreatmentTextView;
         TextView patientFullNameTreatmentTextView;
         private final RecyclerItemClickListener recyclerItemClickListener;
 
+
+        /**
+         * Constructor de la clase ViewHolder.
+         * @param recyclerItemClickListener Objeto RecyclerItemClickListener
+         * @param itemView Objeto View
+         */
         public Viewholder(@NonNull View itemView, RecyclerItemClickListener recyclerItemClickListener) {
             super(itemView);
             this.recyclerItemClickListener = recyclerItemClickListener;
@@ -47,6 +64,10 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Setea los datos en el elemento pertinente.
+         * @param treatment Objeto TreatmentDto
+         */
         public void binData(TreatmentDto treatment){
             treatmentIdTextView.setText(treatment.getId());
             startDateTreatmentTextView.setText(treatment.getStartDate());
@@ -77,12 +98,21 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
         return listTreatment.size();
     }
 
+    /**
+     * Retorna la lista filtrada.
+     * @return Objeto Filter
+     */
     @Override
     public Filter getFilter() {
         return treatmentFilter;
     }
 
     private Filter treatmentFilter = new Filter() {
+        /**
+         * Filtra la lista que mostrará el recycler dependiendo del patrón de texto recibido como parámetro.
+         * @param constraint Objeto CharSequence
+         * @return Objeto FilterResults
+         */
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<TreatmentDto> filteredList = new ArrayList<>();
@@ -105,6 +135,11 @@ public class TreatmentAdapter extends RecyclerView.Adapter<TreatmentAdapter.View
             return results;
         }
 
+        /**
+         * Carga la listra filtrada.
+         * @param constraint Objeto CharSequence
+         * @param results Objeto FilterResults
+         */
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             listTreatment.clear();

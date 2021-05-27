@@ -39,6 +39,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Fragmento controlador del formulario de los datos de las citas (Mts)
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class MtsFormFragment extends Fragment {
     private NavController navController;
     private MaterialButton saveButton, deleteButton;
@@ -149,14 +154,15 @@ public class MtsFormFragment extends Fragment {
     }
 
 
-    public void notFocusable() {
+    private void notFocusable() {
         dateEditText.setEnabled(false);
         reasonEditText.setEnabled(false);
         saveButton.setVisibility(View.GONE);
         deleteButton.setVisibility(View.GONE);
     }
 
-    public void focusable() {
+
+    private void focusable() {
         dateEditText.setEnabled(true);
         reasonEditText.setEnabled(true);
         deleteButton.setVisibility(View.VISIBLE);
@@ -263,7 +269,8 @@ public class MtsFormFragment extends Fragment {
     }
 
 
-    public void deleteMtsDialog() {
+
+    private void deleteMtsDialog() {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure);
@@ -296,7 +303,7 @@ public class MtsFormFragment extends Fragment {
     }
 
 
-    public void datePicker(View v) {
+    private void datePicker(View v) {
         MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
         builder.setTitleText("Select date: ");
         CalendarConstraints.DateValidator dateValidator = DateValidatorPointForward.now();
@@ -340,7 +347,7 @@ public class MtsFormFragment extends Fragment {
     }
 
 
-    public void timePicker(String date) {
+    private void timePicker(String date) {
         // Get Current Time
         int mHour = 0;
         int mMinute = 0;

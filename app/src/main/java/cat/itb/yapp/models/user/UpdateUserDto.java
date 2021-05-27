@@ -3,6 +3,10 @@ package cat.itb.yapp.models.user;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Modelo con los atributos necesarios para editar un usuario con rol user (básico) .
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Getter
 @Setter
 public class UpdateUserDto {

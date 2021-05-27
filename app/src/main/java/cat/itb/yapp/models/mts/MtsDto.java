@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import lombok.Data;
-
+/**
+ * Modelo con los atributos necesarios para cargar y setear Mts (citas).
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Data
 public class MtsDto implements Serializable{
     /// mts

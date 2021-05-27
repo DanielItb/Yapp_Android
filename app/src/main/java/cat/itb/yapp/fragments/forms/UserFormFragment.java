@@ -42,7 +42,11 @@ import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * Fragmento controlador del formulario de los datos de los usuarios (especialistas).
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class UserFormFragment extends Fragment {
     private NavController navController;
     private TextInputEditText usernameEditText, nameEditText, surnameEditText, phoneEditText, emailEditText, collegiateNumberEditText;
@@ -149,7 +153,7 @@ public class UserFormFragment extends Fragment {
 
     }
 
-    public void notFocusable(){
+    private void notFocusable(){
         usernameEditText.setFocusable(false);
         nameEditText.setFocusable(false);
         surnameEditText.setFocusable(false);
@@ -171,7 +175,7 @@ public class UserFormFragment extends Fragment {
 
     }
 
-    public void focusable(){
+    private void focusable(){
         usernameEditText.setFocusableInTouchMode(true);
         nameEditText.setFocusableInTouchMode(true);
         surnameEditText.setFocusableInTouchMode(true);
@@ -192,7 +196,7 @@ public class UserFormFragment extends Fragment {
         cancelButton.setVisibility(View.VISIBLE);
     }
 
-    public void focusableEdit(){
+    private void focusableEdit(){
         nameEditText.setFocusableInTouchMode(true);
         phoneEditText.setFocusableInTouchMode(true);
         surnameEditText.setFocusableInTouchMode(true);
@@ -293,7 +297,7 @@ public class UserFormFragment extends Fragment {
 
     }
 
-    public void deleteUserDialog(){
+    private void deleteUserDialog(){
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.caution);
         builder.setMessage(R.string.sure);

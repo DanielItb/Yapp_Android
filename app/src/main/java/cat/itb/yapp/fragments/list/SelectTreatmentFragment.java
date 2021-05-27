@@ -26,7 +26,11 @@ import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * Fragmento controlador de la lista que muestra los tratamientos para ser seleccionados.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class SelectTreatmentFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;

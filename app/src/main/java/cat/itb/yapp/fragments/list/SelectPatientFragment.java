@@ -18,14 +18,18 @@ import java.util.List;
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.PatientAdapter;
-import cat.itb.yapp.models.patient.Patient;
+
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * Fragmento controlador de la lista que muestra los pacientes para ser seleccionados.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class SelectPatientFragment extends Fragment {
     private NavController navController;
     private RecyclerView recyclerView;

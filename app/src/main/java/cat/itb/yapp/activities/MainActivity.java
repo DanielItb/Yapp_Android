@@ -22,6 +22,11 @@ import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 
+/**
+ * Actividad principal que ejerce de contenedor de fragmentos y para comunicar determinados fragmentos con una información determinada.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static Activity activity;
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialToolbar toolbar;
     private View navHostFragmentLayout;
     private static RetrofitHttp retrofitHttp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,37 +93,59 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setStartDestination(NavController navController, int startDestination) {
-        NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.nav_graph);
-        navGraph.setStartDestination(startDestination);
 
-        navController.setGraph(navGraph);
-    }
-
+    /**
+     * Método que retorna el contexto de la actividad.
+     * @return Activity.
+     */
     public static Activity getActivity() {
         return activity;
     }
 
+    /**
+     * Método que retorna un objeto ProfileUserDto.
+     * @return ProfileUserDto.
+     */
     public static ProfileUserDto getUser() {
         return profileUser;
     }
 
+    /**
+     * Método que setea un objeto ProfileUserDto.
+     * @param user Objeto ProfileUserDto.
+     */
     public static void setUser(ProfileUserDto user) {
         MainActivity.profileUser = user;
     }
 
+    /**
+     * Método que retorna un objeto RetrofirHttp.
+     * @return RetrofitHttp.
+     */
     public static RetrofitHttp getRetrofitHttp() {
         return retrofitHttp;
     }
 
+    /**
+     * Método que setea un objeto RetrofitHttp.
+     * @param retrofitHttp Objeto RetrofitHttp.
+     */
     public static void setRetrofitHttp(RetrofitHttp retrofitHttp) {
         MainActivity.retrofitHttp = retrofitHttp;
     }
 
+    /**
+     * Método que retorna un objeto UserDto.
+     * @return UserDto
+     */
     public static UserDto getUserDto() {
         return userDto;
     }
 
+    /**
+     * Método que setea un objeto UserDto
+     * @param userDto Objeto UserDto
+     */
     public static void setUserDto(UserDto userDto) {
         MainActivity.userDto = userDto;
     }

@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Data;
-
+/**
+ * Modelo con los atributos necesarios para cargar y setear usuarios (especialistas) .
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Data
 public class UserDto implements Serializable {
     private Long id;

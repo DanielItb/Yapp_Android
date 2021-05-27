@@ -5,6 +5,10 @@ import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Modelo con los atributos necesarios para cargar y setear report (informes).
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Getter
 @Setter
 public class ReportDto implements Serializable {

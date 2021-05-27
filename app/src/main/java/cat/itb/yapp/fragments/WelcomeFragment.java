@@ -14,6 +14,11 @@ import com.google.android.material.button.MaterialButton;
 
 import cat.itb.yapp.R;
 
+/**
+ * Fragmento controlador que muestra la pantalla de bienvenida.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ *
+ */
 public class WelcomeFragment extends Fragment {
     private MaterialButton continueButton, backButton;
     private NavController navController;

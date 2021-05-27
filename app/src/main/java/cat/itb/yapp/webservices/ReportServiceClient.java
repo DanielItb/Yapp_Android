@@ -15,6 +15,10 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
+/**
+ * Interface con las peticiones rest al backend del objeto Report.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public interface ReportServiceClient {
     // ROLE_ADMIN
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

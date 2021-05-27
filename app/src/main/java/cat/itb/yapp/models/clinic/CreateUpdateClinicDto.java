@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Modelo con los atributos necesarios para actualizar la clínica.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 @Getter
 @Setter
 @AllArgsConstructor

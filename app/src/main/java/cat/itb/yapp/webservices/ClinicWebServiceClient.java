@@ -9,6 +9,10 @@ import retrofit2.http.Headers;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+/**
+ * Interface con las peticiones rest al backend del objeto Clínica.
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
+ */
 public interface ClinicWebServiceClient {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("clinic/{id}")
