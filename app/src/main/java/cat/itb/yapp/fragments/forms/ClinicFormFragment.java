@@ -62,6 +62,7 @@ public class ClinicFormFragment extends Fragment {
 
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
             editSwitch.setEnabled(true);
+            editSwitch.setVisibility(View.VISIBLE);
         }
         return v;
     }
