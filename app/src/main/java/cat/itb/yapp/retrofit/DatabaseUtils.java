@@ -37,11 +37,8 @@ public class DatabaseUtils {
         call.enqueue(callback);
     }
 
-    public static void updateClinic(Callback<ClinicDto> callback, ClinicDto clinicDto) {
-        CreateUpdateClinicDto createUpdateClinicDto = new CreateUpdateClinicDto(clinicDto.getName(),
-                clinicDto.getAddress(), clinicDto.getPhoneNumber(), clinicDto.getEmail());
-
-        Call<ClinicDto> call = clinicWebServiceClient.updateClinic(clinicDto.getId(), createUpdateClinicDto);
+    public static void updateClinic(Callback<CreateUpdateClinicDto> callback, CreateUpdateClinicDto clinicDto, int id) {
+        Call<CreateUpdateClinicDto> call = clinicWebServiceClient.updateClinic(id, clinicDto);
         call.enqueue(callback);
     }
 

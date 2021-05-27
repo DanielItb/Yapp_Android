@@ -16,5 +16,5 @@ public interface ClinicWebServiceClient {
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @PUT("clinic/{id}")
-    Call<ClinicDto> updateClinic(@Path("id")int id, @Body CreateUpdateClinicDto createUpdateClinicDto);
+    Call<CreateUpdateClinicDto> updateClinic(@Path("id") int id, @Body CreateUpdateClinicDto createUpdateClinicDto);
 }

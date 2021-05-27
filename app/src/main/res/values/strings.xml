@@ -99,6 +99,9 @@
     <string name="bad_credentials">Error! Bad credentials</string>
     <string name="home">Home</string>
     <string name="account">Account</string>
+    <string name="data_saved">Data saved</string>
+    <string name="error_data">Error saving data</string>
+    <string name="must_be_admin_to_edit">You must be an admin to edit this</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>

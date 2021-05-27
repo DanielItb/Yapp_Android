@@ -20,7 +20,9 @@ import com.squareup.picasso.Picasso;
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.clinic.ClinicDto;
+import cat.itb.yapp.models.clinic.CreateUpdateClinicDto;
 import cat.itb.yapp.retrofit.DatabaseUtils;
+import cat.itb.yapp.utils.UtilsAuth;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,6 +34,7 @@ public class ClinicFormFragment extends Fragment {
     private CircleImageView imageViewLogo;
     private SwitchCompat editSwitch;
     private TextInputEditText editTextName, editTextAddress, editTextPhoneNumber, editTextEmail;
+    private TextInputEditText[] editTexts;
     private MaterialButton buttonSave;
 
 
@@ -55,6 +58,11 @@ public class ClinicFormFragment extends Fragment {
         editTextEmail = v.findViewById(R.id.emailEditTextClinic);
         buttonSave = v.findViewById(R.id.saveClinicButton);
 
+        editTexts = new TextInputEditText[]{editTextName, editTextAddress, editTextPhoneNumber, editTextEmail};
+
+        if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
+            editSwitch.setEnabled(true);
+        }
         return v;
     }
 
@@ -62,29 +70,63 @@ public class ClinicFormFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (clinicDto == null) {
-            loadClinicFromDb();
-        } else {
-            loadInfoInLayout(clinicDto);
-        }
+        if (clinicDto == null) loadClinicFromDb();
+        else loadInfoInLayout(clinicDto);
 
         buttonSave.setOnClickListener(this::save);
 
-/*        editSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    focusable();
-                } else {
-                    notFocusable();
-                }
-            }
-        });*/
+        editSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) focusable();
+            else notFocusable();
+        });
 
     }
 
-    private void save(View view) {
+    private void notFocusable() {
+        for (TextInputEditText editText : editTexts) {
+            editText.setFocusable(false);
+        }
+        buttonSave.setVisibility(View.GONE);
+    }
 
+    private void focusable() {
+        for (TextInputEditText editText : editTexts) {
+            editText.setFocusableInTouchMode(true);
+        }
+        buttonSave.setVisibility(View.VISIBLE);
+    }
+
+    private void save(View view) {
+        CreateUpdateClinicDto createUpdateClinicDto = getInfoFromLayout();
+
+        Callback<CreateUpdateClinicDto> callback = new Callback<CreateUpdateClinicDto>() {
+            @Override
+            public void onResponse(Call<CreateUpdateClinicDto> call, Response<CreateUpdateClinicDto> response) {
+                if (response.isSuccessful()) {
+                    navController.popBackStack();
+                } else {
+                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CreateUpdateClinicDto> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+            }
+        };
+
+        DatabaseUtils.updateClinic(callback, createUpdateClinicDto, clinicDto.getId());
+    }
+
+    private CreateUpdateClinicDto getInfoFromLayout() {
+        CreateUpdateClinicDto createUpdateClinicDto = new CreateUpdateClinicDto();
+
+        createUpdateClinicDto.setAddress(editTextAddress.getText().toString());
+        createUpdateClinicDto.setEmail(editTextEmail.getText().toString());
+        createUpdateClinicDto.setName(editTextName.getText().toString());
+        createUpdateClinicDto.setPhoneNumber(editTextPhoneNumber.getText().toString());
+
+        return createUpdateClinicDto;
     }
 
 

@@ -235,11 +235,11 @@
     <fragment
         android:id="@+id/selectTreatmentFragment"
         android:name="cat.itb.yapp.fragments.list.SelectTreatmentFragment"
-        android:label="fragment_select_treatment"
+        android:label="Treatment list"
         tools:layout="@layout/fragment_select_treatment" />
     <fragment
         android:id="@+id/clinicFormFragment"
         android:name="cat.itb.yapp.fragments.forms.ClinicFormFragment"
-        android:label="fragment_clinic_form"
+        android:label="Clinic"
         tools:layout="@layout/fragment_clinic_form" />
 </navigation>
