@@ -20,25 +20,22 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.PatientListFragment;
 import cat.itb.yapp.fragments.list.UserListFragment;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.user.CreateUserDto;
 import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.utils.UtilsAuth;
-import cat.itb.yapp.webservices.PatientWebServiceClient;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import de.hdodenhof.circleimageview.CircleImageView;
-import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -254,7 +251,10 @@ public class UserFormFragment extends Fragment {
                     navController.popBackStack();
                 } else {
                     try {
-                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject json = jsonParser.parse(response.errorBody().string()).getAsJsonObject();
+
+                        Toast.makeText(getContext(), json.get("message").getAsString(), Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -310,7 +310,6 @@ public class UserFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });
@@ -351,10 +350,6 @@ public class UserFormFragment extends Fragment {
         updateUserDto.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
         updateUserDto.setActive(true);
         updateUserDto.setIsAdminRole(UtilsAuth.getIsAdminRole(new HashSet<>(userDto.getRoles())));
-
-
-
-
         // TODO urlPhoto
 
         return updateUserDto;
@@ -373,9 +368,7 @@ public class UserFormFragment extends Fragment {
         userDto.setUsername(usernameEditText.getText().toString());
         userDto.setCollegiateNumber(Integer.parseInt(collegiateNumberEditText.getText().toString()));
         userDto.setClinicId(MainActivity.getUserDto().getClinicId());
-
-
-
+        userDto.setPhotoUrl("https://yapp-backend.herokuapp.com/files/placeholder-user-image.png");
 
         // TODO urlPhoto
 

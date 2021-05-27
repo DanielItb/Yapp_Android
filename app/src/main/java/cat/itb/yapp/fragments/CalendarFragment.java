@@ -30,10 +30,7 @@ import java.util.Locale;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.TreatmentListFragment;
 import cat.itb.yapp.models.mts.MtsDto;
-import cat.itb.yapp.models.treatment.TreatmentDto;
-import cat.itb.yapp.retrofit.DatabaseUtils;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.MtsServiceClient;
@@ -108,26 +105,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
 
     private void fabClicked(View view) {
-        DatabaseUtils.getTreatments(new Callback<List<TreatmentDto>>() {
-            @Override
-            public void onResponse(Call<List<TreatmentDto>> call, Response<List<TreatmentDto>> response) {
-                if (response.isSuccessful()) {
-                    List<TreatmentDto> treatmentDtos = response.body();
-                    if (treatmentDtos.size() > 0) {
-                        navController.navigate(R.id.action_calendarFragment_to_mtsFormFragment);
-                    } else {
-                        Toast.makeText(getContext(), "pa tu cara", Toast.LENGTH_LONG).show();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<TreatmentDto>> call, Throwable t) {
-
-            }
-        });
-
+        navController.navigate(R.id.action_calendarFragment_to_mtsFormFragment);
     }
 
     @Override
@@ -313,7 +291,6 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
                         listMts.forEach(object -> Log.d("mtsLisit", object.toString()));
                     } else {
-                        Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get mts by specialistId", Toast.LENGTH_SHORT).show();
                         Log.e("mts", "status response: " + response.code()); //401 Unauthorized
                     }
                 }
