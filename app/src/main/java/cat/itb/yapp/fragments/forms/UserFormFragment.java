@@ -23,22 +23,17 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
-import cat.itb.yapp.fragments.list.PatientListFragment;
 import cat.itb.yapp.fragments.list.UserListFragment;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.user.CreateUserDto;
 import cat.itb.yapp.models.user.UpdateUserDto;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.utils.UtilsAuth;
-import cat.itb.yapp.webservices.PatientWebServiceClient;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import de.hdodenhof.circleimageview.CircleImageView;
-import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -306,7 +301,6 @@ public class UserFormFragment extends Fragment {
         builder.setPositiveButton(R.string.deleteButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO delete
                 delete();
             }
         });
@@ -347,10 +341,6 @@ public class UserFormFragment extends Fragment {
         updateUserDto.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
         updateUserDto.setActive(true);
         updateUserDto.setIsAdminRole(UtilsAuth.getIsAdminRole(new HashSet<>(userDto.getRoles())));
-
-
-
-
         // TODO urlPhoto
 
         return updateUserDto;

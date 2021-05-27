@@ -242,7 +242,7 @@ public class ReportFormFragment extends Fragment {
         createUpdateReportDto.setDiagnosis(editTextDiagnosis.getText().toString());
         createUpdateReportDto.setObjectives(editTextObjectives.getText().toString());
         createUpdateReportDto.setTreatmentId(reportDto.getTreatmentId());
-        createUpdateReportDto.setDate(reportDto.getDate()); //Todo get date on new dto
+        createUpdateReportDto.setDate(reportDto.getDate());
 
         return createUpdateReportDto;
     }
