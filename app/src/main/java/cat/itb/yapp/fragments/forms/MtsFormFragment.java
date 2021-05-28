@@ -61,25 +61,6 @@ public class MtsFormFragment extends Fragment {
 
         final FragmentManager fragmentManager = getParentFragmentManager();
 
-/*        fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
-            mtsDto.setSpecialistId(bundle.getLong("userId"));
-            String fullName = bundle.getString("fullName");
-            String specialistType = bundle.getString("specialistType");
-
-            mtsDto.setSpecialistFullName(fullName);
-            mtsDto.setSpecialistType(specialistType);
-
-            specialistEditText.setText(fullName);
-//            editTextSpecialist.setText(specialistType);
-        });
-
-        fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
-            mtsDto.setPatientId(bundle.getInt("patientId"));
-            String fullName = bundle.getString("fullName");
-            mtsDto.setPatientFullName(fullName);
-            patientEditText.setText(fullName);
-        });*/
-
         fragmentManager.setFragmentResultListener("treatment", this, ((requestKey, bundle) -> {
             mtsDto.setTreatmentId(Integer.parseInt(bundle.getString("treatmentId")));
             mtsDto.setReason(bundle.getString("reason"));

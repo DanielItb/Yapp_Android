@@ -24,11 +24,6 @@ public class RetrofitHttp {
     public RetrofitHttp() {
         super();
 
-/*
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-// set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-*/
 
         httpClient = new OkHttpClient.Builder()
 

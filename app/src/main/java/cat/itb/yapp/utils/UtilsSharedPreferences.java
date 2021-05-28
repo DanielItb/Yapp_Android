@@ -2,7 +2,6 @@ package cat.itb.yapp.utils;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import static android.content.Context.MODE_PRIVATE;
 

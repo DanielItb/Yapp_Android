@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.models.patient.PatientDto;
-import cat.itb.yapp.models.user.User;
 import cat.itb.yapp.models.user.UserDto;
 /**
  * Adapter del objeto UserDto. Carga las listas de usuarios.

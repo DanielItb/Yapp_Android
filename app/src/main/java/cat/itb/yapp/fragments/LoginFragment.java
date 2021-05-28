@@ -1,12 +1,6 @@
 package cat.itb.yapp.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,28 +10,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.auth.LoginDto;
-import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.models.user.ProfileUserDto;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.DatabaseUtils;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.retrofit.RetrofitHttpLogin;
-import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 import cat.itb.yapp.webservices.AuthWebServiceClient;
-import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +48,6 @@ public class LoginFragment extends Fragment {
     private TextView loadTextView;
     private ProgressBar loadProgressBar;
 
-    ProfileUserDto profileUserDto;
 
     private NavController navController;
 
@@ -89,9 +81,8 @@ public class LoginFragment extends Fragment {
         loadProgressBar = v.findViewById(R.id.progressBarLogin);
         // TESTING HARDCODE
         // username = ADMIN, username2 = USER ADMIN, username3 USER
-        // TODO: remove
-        usernameTextInput.setText("userc4");
-        passwordTextInput.setText("password");
+        // username = adminc4 (ADMIN), username = userc4 (USER)
+        // pass = password
 
 
         btnLogin = v.findViewById(R.id.loginButton);

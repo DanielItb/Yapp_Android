@@ -2,9 +2,6 @@ package cat.itb.yapp.webservices;
 
 import java.util.List;
 
-
-import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.user.CreateUserDto;
 import cat.itb.yapp.models.user.RegisterDtoRoleAdmin;
 import cat.itb.yapp.models.user.UpdateUserDto;

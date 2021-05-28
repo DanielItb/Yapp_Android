@@ -8,14 +8,10 @@ import java.util.List;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.clinic.ClinicDto;
 import cat.itb.yapp.models.clinic.CreateUpdateClinicDto;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
-import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.ClinicWebServiceClient;
-import cat.itb.yapp.webservices.PatientWebServiceClient;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
-import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 /**

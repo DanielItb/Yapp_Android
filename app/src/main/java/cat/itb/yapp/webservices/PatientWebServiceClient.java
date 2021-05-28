@@ -4,8 +4,6 @@ import java.util.List;
 
 import cat.itb.yapp.models.patient.CreateUpdatePatientDto;
 import cat.itb.yapp.models.patient.PatientDto;
-import cat.itb.yapp.models.report.CreateUpdateReportDto;
-import cat.itb.yapp.models.report.ReportDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;

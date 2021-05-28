@@ -117,20 +117,7 @@
             android:id="@+id/action_reportListFragment_to_reportFormFragment"
             app:destination="@id/reportFormFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/mtsListFragment"
-        android:name="cat.itb.yapp.fragments.list.MtsListFragment"
-        android:label="@string/mts_list"
-        tools:layout="@layout/fragment_mts_list">
-        <action
-            android:id="@+id/action_mtsListFragment_to_mtsFormFragment"
-            app:destination="@id/mtsFormFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/personalProfileFragment"
-        android:name="cat.itb.yapp.fragments.forms.PersonalProfileFragment"
-        android:label="@string/update_profile"
-        tools:layout="@layout/fragment_personal_profile" />
+
     <fragment
         android:id="@+id/mtsFormFragment"
         android:name="cat.itb.yapp.fragments.forms.MtsFormFragment"

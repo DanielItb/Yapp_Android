@@ -77,21 +77,6 @@ public class RegisterFormFragment extends Fragment {
         ArrayAdapter<String> adapterSpecialist = new ArrayAdapter<String>(requireContext(), R.layout.drop_down_types, specialistTypes);
         specialistTypeAutoCompleteTextView.setAdapter(adapterSpecialist);
 
-        //TEST
-        //Todo remove
-        usernameEditText.setText("Pacomer");
-        passwordEditText.setText("password");
-        repeatPasswordEditText.setText("password");
-        nameEditText.setText("Paco");
-        surnameEditText.setText("Paquito");
-        phoneEditText.setText("123456789");
-        emailEditText.setText("daniel.acostaromero@gmail.com");
-        collegiateNumberEditText.setText(String.valueOf(89451));
-        clinicNameEditTExt.setText("Mi clinica");
-        clinicPhoneEditTExt.setText("123456789");
-        clinicAddressEditText.setText("Mi clinica 123");
-        clinicEmailEditText.setText("wreb@gmail.com");
-
 
         return v;
     }
@@ -236,7 +221,6 @@ public class RegisterFormFragment extends Fragment {
             @Override
             public void onResponse(Call<RegisterDtoRoleAdmin> call, Response<RegisterDtoRoleAdmin> response) {
                 if (response.isSuccessful()) {
-//                    navController.navigate(R.id.action_registerFormFragment_to_loginFragment);
                     confirmEmailDialog();
                 } else {
                     Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();

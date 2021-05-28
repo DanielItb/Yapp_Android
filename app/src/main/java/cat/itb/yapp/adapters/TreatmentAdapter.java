@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 /**
  * Adapter del objeto TreatmentDto. Carga las listas de tratamientos.

@@ -66,7 +66,6 @@ public class PatientFormFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_patient_profile, container, false);
         final String[] paymentTypes = getResources().getStringArray(R.array.payment_types);
 
-//        registerDate = v.findViewById(R.id.registerDateEditText);
 
         birthDateEditText = v.findViewById(R.id.birthDateButton);
         saveButton = v.findViewById(R.id.saveButtonPatientForm);

@@ -14,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.report.ReportDto;
-import cat.itb.yapp.models.user.User;
 
 /**
  * Adapter del objeto RportDto. Carga las listas de informes.
@@ -122,9 +120,6 @@ public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ViewHolder
                     if (item.getPatientFullName().toLowerCase().contains(filterPattern)){
                         filteredList.add(item);
                     }
-//                    else if (item.get.toLowerCase().contains(filterPattern)){
-//                        filteredList.add(item);
-//                    }
                 }
             }
                 FilterResults results = new FilterResults();

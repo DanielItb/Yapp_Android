@@ -2,7 +2,6 @@ package cat.itb.yapp.webservices;
 
 import java.util.List;
 
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.report.CreateUpdateReportDto;
 import cat.itb.yapp.models.report.ReportDto;
 import retrofit2.Call;

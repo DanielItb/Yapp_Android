@@ -112,7 +112,6 @@ public class UserFormFragment extends Fragment {
                 userDto = new UserDto();
                 editSwitch.setVisibility(View.GONE);
                 focusable();
-//                userDto.setDate(LocalDateTime.now().toString());
                 editing = false;
             }
         } else { //If load data

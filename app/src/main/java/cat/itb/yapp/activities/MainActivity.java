@@ -3,11 +3,11 @@ package cat.itb.yapp.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
-import androidx.navigation.NavGraph;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -17,7 +17,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.user.ProfileUserDto;
-import cat.itb.yapp.models.user.User;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private static ProfileUserDto profileUser;
     private static UserDto userDto;
     private MaterialToolbar toolbar;
-    private View navHostFragmentLayout;
     private static RetrofitHttp retrofitHttp;
 
 
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         activity = this;
-        navHostFragmentLayout = findViewById(R.id.nav_host_fragment);
+        View navHostFragmentLayout = findViewById(R.id.nav_host_fragment);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         toolbar = findViewById(R.id.toolbar);
         NavigationView navView = findViewById(R.id.nav_view);
@@ -64,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(R.id.mainFragment, R.id.treatmentListFragment,
-                        R.id.patientListFragment, R.id.userListFragment, R.id.mtsListFragment,
-                        R.id.reportListFragment)
+                        R.id.patientListFragment, R.id.userListFragment,  R.id.reportListFragment)
                         .setOpenableLayout(drawerLayout)
                         .build();
 
@@ -73,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-//        setSupportActionBar(toolbar);
 
     }
 
