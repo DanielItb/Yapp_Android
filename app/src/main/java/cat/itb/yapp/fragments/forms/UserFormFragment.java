@@ -331,7 +331,6 @@ public class UserFormFragment extends Fragment {
         updateUserDto.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
         updateUserDto.setActive(true);
         updateUserDto.setIsAdminRole(UtilsAuth.getIsAdminRole(new HashSet<>(userDto.getRoles())));
-        // TODO urlPhoto
 
         return updateUserDto;
     }
@@ -352,8 +351,6 @@ public class UserFormFragment extends Fragment {
             userDto.setCollegiateNumber(Integer.parseInt(collegiateNumber));
         userDto.setClinicId(MainActivity.getUserDto().getClinicId());
         userDto.setPhotoUrl("https://yapp-backend.herokuapp.com/files/placeholder-user-image.png");
-
-        // TODO urlPhoto
 
         return userDto;
     }

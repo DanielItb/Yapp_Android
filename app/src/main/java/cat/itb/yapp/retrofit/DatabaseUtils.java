@@ -72,7 +72,6 @@ public class DatabaseUtils {
      * @param callback Objeto Callback
      */
     public static void getTreatments(Callback<List<TreatmentDto>> callback) {
-        //TODO: if is admin go to view admin ...
         Log.e("treatment", "id: " + MainActivity.getUser().getId());
         Log.e("treatment", "username: " + MainActivity.getUser().getUsername());
 

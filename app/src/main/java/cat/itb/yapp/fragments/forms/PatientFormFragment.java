@@ -42,7 +42,6 @@ import retrofit2.Response;
  * Fragmento controlador del formulario de los datos de los pacientes.
  */
 public class PatientFormFragment extends Fragment {
-    // TODO cargar la foto
     private NavController navController;
     private MaterialButton saveButton, deleteButton;
     private TextInputEditText nameEditText, surnameEditText, ageEditText, addressEditText,

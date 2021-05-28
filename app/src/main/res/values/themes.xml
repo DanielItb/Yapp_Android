@@ -43,7 +43,6 @@
         <item name="android:focusable">false</item>
     </style>
 
-    <!--TODO intentar que al activarse se ponga del color principal-->
     <!-- SWITCH FORMS STYLE -->
     <style name="SwitchTheme" >
         <item name="colorOnSurface">@color/blue_main</item>

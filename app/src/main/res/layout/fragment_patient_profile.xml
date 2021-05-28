@@ -193,7 +193,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--TODO hacer el metodo de pago un sniper seleccionable-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/paymentInputLayout"
                 style="@style/DropDownOptionForms"

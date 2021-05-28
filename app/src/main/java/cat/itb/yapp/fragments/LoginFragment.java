@@ -29,6 +29,7 @@ import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.DatabaseUtils;
 import cat.itb.yapp.retrofit.RetrofitHttp;
 import cat.itb.yapp.retrofit.RetrofitHttpLogin;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsSharedPreferences;
 import cat.itb.yapp.webservices.AuthWebServiceClient;
 import cat.itb.yapp.webservices.UserWebServiceClient;
@@ -192,17 +193,22 @@ public class LoginFragment extends Fragment {
         call.enqueue(new Callback<UserDto>() {
             @Override
             public void onResponse(Call<UserDto> call, Response<UserDto> response) {
-                UserDto userDto = response.body();
-                MainActivity.setUserDto(userDto);
+                if (response.isSuccessful()) {
+                    UserDto userDto = response.body();
+                    MainActivity.setUserDto(userDto);
 
-                setEmailInDrawer(userDto.getEmail());
+                    setEmailInDrawer(userDto.getEmail());
 
-                navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
+                    navController.navigate(LoginFragmentDirections.actionLoginFragmentToMainFragment());
+                } else {
+                    Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override
             public void onFailure(Call<UserDto> call, Throwable t) {
-                //TODO Y si esto falla que?
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

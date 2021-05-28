@@ -58,13 +58,13 @@ public class TreatmentFormFragment extends Fragment {
 
         final FragmentManager fragmentManager = getParentFragmentManager();
         fragmentManager.setFragmentResultListener("userId", this, (requestKey, bundle) -> {
-            treatment.setSpecialistId(String.valueOf(bundle.getLong("userId"))); //TODO Remove parse
+            treatment.setSpecialistId(String.valueOf(bundle.getLong("userId")));
             String fullName = bundle.getString("fullName");
             treatment.setSpecialistFullName(fullName);
             editTextSpecialist.setText(fullName);
         });
         fragmentManager.setFragmentResultListener("patientId", this, (requestKey, bundle) -> {
-            treatment.setPatientId(String.valueOf(bundle.getInt("patientId"))); //TODO Remove parse
+            treatment.setPatientId(String.valueOf(bundle.getInt("patientId")));
             String fullName = bundle.getString("fullName");
             treatment.setPatientFullName(fullName);
             editTextPatient.setText(fullName);
@@ -276,12 +276,11 @@ public class TreatmentFormFragment extends Fragment {
         CreateUpdateTreatmentDto createUpdateTreatmentDto = new CreateUpdateTreatmentDto();
 
 //        createUpdateTreatmentDto.setActive(switchActive.getShowText());
-        createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId())); //TODO remove parse
+        createUpdateTreatmentDto.setPatientId(Integer.parseInt(treatment.getPatientId()));
         createUpdateTreatmentDto.setReason(editTextReason.getText().toString());
         createUpdateTreatmentDto.setSessionsFinished(Integer.parseInt(editTextSessions.getText().toString()));
         createUpdateTreatmentDto.setStartDate(editTextStartDate.getText().toString());
-        createUpdateTreatmentDto.setUserId(Long.parseLong(treatment.getSpecialistId())); //TODO remove parse
-
+        createUpdateTreatmentDto.setUserId(Long.parseLong(treatment.getSpecialistId()));
         return createUpdateTreatmentDto;
     }
 }
