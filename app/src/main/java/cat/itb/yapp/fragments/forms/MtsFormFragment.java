@@ -371,7 +371,7 @@ public class MtsFormFragment extends Fragment {
                     finalMinute = String.valueOf(minute);
                 }
 
-                String finalDate = date + "T" + finalHour + ":" + finalMinute + ":00";
+                String finalDate = date + "T" + finalHour + ":00:00";
                 dateEditText.setText(finalDate);
                 mtsDto.setDate(finalDate);
 

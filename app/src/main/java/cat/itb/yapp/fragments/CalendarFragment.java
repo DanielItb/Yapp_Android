@@ -263,7 +263,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
         if (UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles())) {
 
             String endpointUserRole = "medicalsheet/clinic/" + MainActivity.getUserDto().getClinicId();
-            call = mtsServiceClient.getUsers(endpointUserRole);
+            call = mtsServiceClient.getMtsByClinicId(endpointUserRole);
             Log.e("mts", "all mts in clinic");
 
         } else if (UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles())) {
