@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -41,6 +43,8 @@ public class PatientListFragment extends Fragment {
     private NavController navController;
     private PatientAdapter adapter;
     private SearchView filterPatientSearchView;
+    private TextView loadTextView;
+    private ProgressBar loadProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class PatientListFragment extends Fragment {
         FloatingActionButton fab = v.findViewById(R.id.fabPatients);
         recyclerView = v.findViewById(R.id.recyclerPatient);
         filterPatientSearchView = v.findViewById(R.id.filterPatientSearchView);
+        loadTextView = v.findViewById(R.id.loafingTextViewPatientList);
+        loadProgressBar = v.findViewById(R.id.progressBarPatientList);
 
         getPatients();
 
@@ -94,6 +100,7 @@ public class PatientListFragment extends Fragment {
 //
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
+            loadingGone();
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
             adapter = new PatientAdapter(patientList, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
@@ -101,6 +108,7 @@ public class PatientListFragment extends Fragment {
     }
 
     private void getPatients() {
+        loadingVisible();
         Log.e("user", "id: " + MainActivity.getUser().getId());
         Log.e("user", "username: " + MainActivity.getUser().getUsername());
 
@@ -130,6 +138,7 @@ public class PatientListFragment extends Fragment {
                         System.out.println(Arrays.toString(patientList.toArray()));
                         setUpRecycler(recyclerView);
                     } else {
+                        loadingGone();
                         Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                         Log.e("patient", "status response: " + response.code()); //401 Unauthorized
                     }
@@ -137,6 +146,7 @@ public class PatientListFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<List<PatientDto>> call, Throwable t) {
+                    loadingGone();
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("patient", "onResponse onFailure");
                     Log.e("patient", "throwable.getMessage(): " + t.getMessage());
@@ -145,6 +155,16 @@ public class PatientListFragment extends Fragment {
             });
         }
 
+    }
+
+    private void loadingGone(){
+        loadProgressBar.setVisibility(View.GONE);
+        loadTextView.setVisibility(View.GONE);
+    }
+
+    private void loadingVisible(){
+        loadProgressBar.setVisibility(View.VISIBLE);
+        loadTextView.setVisibility(View.VISIBLE);
     }
 
 }

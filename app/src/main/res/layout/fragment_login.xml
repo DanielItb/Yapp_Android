@@ -75,5 +75,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordLoginInput" />
 
+    <ProgressBar
+        android:id="@+id/progressBarLogin"
+        style="@style/ProgressBarStyleLoading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loadTextViewLogin"
+        style="@style/LoadingTextView"
+        android:text="@string/loading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarLogin" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

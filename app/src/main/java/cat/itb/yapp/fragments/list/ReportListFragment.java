@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -40,6 +42,8 @@ public class ReportListFragment extends Fragment {
     private List<ReportDto> reportList = null;
     private ReportAdapter adapter;
     private SearchView filterReportSearchView;
+    private TextView loadTextView;
+    private ProgressBar loadProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,12 +55,15 @@ public class ReportListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_report_list, container, false);
         RecyclerView recyclerView = v.findViewById(R.id.recyclerReport);
+        filterReportSearchView = v.findViewById(R.id.filterReportSearchView);
+        loadTextView = v.findViewById(R.id.loafingTextViewReportList);
+        loadProgressBar = v.findViewById(R.id.progressBarReportList);
         getReportsIntroRecycler(recyclerView);
         FloatingActionButton fab = v.findViewById(R.id.fabReport);
 
         fab.setOnClickListener(this::fabClicked);
 
-        filterReportSearchView = v.findViewById(R.id.filterReportSearchView);
+
 
         if (reportList != null) setUpRecycler(recyclerView);
         filterReportSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -82,6 +89,7 @@ public class ReportListFragment extends Fragment {
 
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
+            loadingGone();
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
             adapter = new ReportAdapter(reportList, ReportListFragment.this::loadForm);
             recyclerView.setAdapter(adapter);
@@ -98,6 +106,7 @@ public class ReportListFragment extends Fragment {
     }
 
     private void getReportsIntroRecycler(RecyclerView recyclerView) {
+        loadingVisible();
         //TODO: if is admin go to view admin ...
         Log.e("user", "id: "+ MainActivity.getUser().getId());
         Log.e("user", "username: "+MainActivity.getUser().getUsername());
@@ -139,6 +148,7 @@ public class ReportListFragment extends Fragment {
                         reportList = response.body();
                         setUpRecycler(recyclerView);
                     } else {
+                        loadingGone();
                         Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                         Log.e("report", "status response: " + response.code()); //401 Unauthorized
                     }
@@ -146,6 +156,7 @@ public class ReportListFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<List<ReportDto>> call, Throwable t) {
+                    loadingGone();
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("report", "onResponse onFailure");
                     Log.e("report", "throwable.getMessage(): "+t.getMessage());
@@ -154,5 +165,15 @@ public class ReportListFragment extends Fragment {
             });
         }
 
+    }
+
+    private void loadingGone(){
+        loadProgressBar.setVisibility(View.GONE);
+        loadTextView.setVisibility(View.GONE);
+    }
+
+    private void loadingVisible(){
+        loadProgressBar.setVisibility(View.VISIBLE);
+        loadTextView.setVisibility(View.VISIBLE);
     }
 }

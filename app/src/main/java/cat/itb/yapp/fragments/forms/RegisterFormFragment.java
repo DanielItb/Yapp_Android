@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +43,8 @@ public class RegisterFormFragment extends Fragment {
     private NavController navController;
     private AutoCompleteTextView specialistTypeAutoCompleteTextView;
     private TextInputEditText usernameEditText, passwordEditText, repeatPasswordEditText, nameEditText, surnameEditText, phoneEditText, emailEditText, collegiateNumberEditText, clinicNameEditTExt, clinicPhoneEditTExt, clinicAddressEditText, clinicEmailEditText;
+    private TextView loadTextView;
+    private ProgressBar loadProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class RegisterFormFragment extends Fragment {
         clinicPhoneEditTExt = v.findViewById(R.id.phoneClinicEditTextRegister);
         clinicAddressEditText = v.findViewById(R.id.addressClinicEditTextRegister);
         clinicEmailEditText = v.findViewById(R.id.emailClinicEditTextRegister);
+        loadTextView = v.findViewById(R.id.loadingTextViewRegister);
+        loadProgressBar = v.findViewById(R.id.progressBarRegister);
 
         final String[] specialistTypes = getResources().getStringArray(R.array.specialist_types);
         specialistTypeAutoCompleteTextView = v.findViewById(R.id.autoCompleteSpecialistRegister);
@@ -216,6 +222,8 @@ public class RegisterFormFragment extends Fragment {
 
 
     private void save() {
+        loadProgressBar.setVisibility(View.VISIBLE);
+        loadTextView.setVisibility(View.VISIBLE);
         final RegisterDtoRoleAdmin registerDtoRoleAdmin = getCreateAdminFromFrontEnd();
 
         UserWebServiceClient userWebServiceClient = new RetrofitHttpLogin()
@@ -266,6 +274,8 @@ public class RegisterFormFragment extends Fragment {
 
 
     private void confirmEmailDialog(){
+        loadProgressBar.setVisibility(View.GONE);
+        loadTextView.setVisibility(View.GONE);
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
         builder.setTitle(R.string.thanks_for_joining);
         builder.setMessage(R.string.check_email);

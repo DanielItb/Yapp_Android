@@ -47,6 +47,6 @@ public interface TreatmentWebServiceClient {
 
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @DELETE("treatment/deactivate/{id}")
+    @DELETE("treatment/{id}")
     Call<TreatmentDto> deleteTreatmentDto(@Path("id") int id);
 }

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -35,13 +37,15 @@ public class SelectPatientFragment extends Fragment {
     private List<PatientDto> patientDtoList = null;
     private SearchView filterPatientSearchView;
     private PatientAdapter adapter;
+    private TextView loadTextView;
+    private ProgressBar loadProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         navController = NavHostFragment.findNavController(this);
-        getPatients();
+
     }
 
     @Override
@@ -53,6 +57,9 @@ public class SelectPatientFragment extends Fragment {
         filterPatientSearchView = v.findViewById(R.id.filterSelectPatientSearchView);
 
         recyclerView = v.findViewById(R.id.recyclerSelectPatient);
+        loadTextView = v.findViewById(R.id.loafingTextViewSelectPatientList);
+        loadProgressBar = v.findViewById(R.id.progressBarSelectPatientList);
+        getPatients();
 
         filterPatientSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -83,6 +90,7 @@ public class SelectPatientFragment extends Fragment {
 
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
+            loadingGone();
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
             adapter = new PatientAdapter(patientDtoList, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
@@ -90,6 +98,7 @@ public class SelectPatientFragment extends Fragment {
     }
 
     private void getPatients() {
+        loadingVisible();
         PatientWebServiceClient webServiceClient = MainActivity.getRetrofitHttp().retrofit
                 .create(PatientWebServiceClient.class);
 
@@ -104,6 +113,7 @@ public class SelectPatientFragment extends Fragment {
                     patientDtoList = response.body();
                     setUpRecycler(recyclerView);
                 } else {
+                    loadingGone();
                     Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                 }
 
@@ -111,11 +121,22 @@ public class SelectPatientFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<PatientDto>> call, Throwable t) {
+                loadingGone();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
 
+    }
+
+    private void loadingGone(){
+        loadProgressBar.setVisibility(View.GONE);
+        loadTextView.setVisibility(View.GONE);
+    }
+
+    private void loadingVisible(){
+        loadProgressBar.setVisibility(View.VISIBLE);
+        loadTextView.setVisibility(View.VISIBLE);
     }
 
 }

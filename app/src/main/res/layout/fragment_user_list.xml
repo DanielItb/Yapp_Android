@@ -32,4 +32,20 @@
         style="@style/Fab"
         tools:ignore="MissingConstraints" />
 
+    <ProgressBar
+        android:id="@+id/progressBarUserList"
+        style="@style/ProgressBarStyleLoading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loafingTextViewUserList"
+        style="@style/LoadingTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarUserList" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

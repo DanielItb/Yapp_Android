@@ -39,7 +39,7 @@ public interface ReportServiceClient {
     Call<ReportDto> updateDto(@Url String url, @Body CreateUpdateReportDto createUpdateReportDto);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @DELETE("report/deactivate/{id}")
+    @DELETE("report/{id}")
     Call<ReportDto> deleteReportDto(@Path("id") int id);
 
 }

@@ -50,6 +50,6 @@ public interface PatientWebServiceClient {
     Call<PatientDto> updateDto(@Url String url, @Body CreateUpdatePatientDto createUpdatePatientDto);
 
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    @DELETE("patient/deactivate/{id}")
+    @DELETE("patient/{id}")
     Call<PatientDto> deletePatientDto(@Path("id") int id);
 }

@@ -114,6 +114,7 @@
     <string name="report">Informe</string>
     <string name="select_user">Selecciona usuario</string>
     <string name="mts_calendar">Calendario de citas</string>
+    <string name="loading">Cargando…</string>
 
     <string-array name="payment_types">
         <item>Cuota</item>

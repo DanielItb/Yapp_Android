@@ -8,13 +8,12 @@
     android:background="@color/white">
 
 
-
     <ScrollView
         android:id="@+id/scrollView"
         style="@style/ScrollViewForms"
-        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
 
@@ -78,7 +77,6 @@
                     android:layout_height="match_parent"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -179,7 +177,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/collegiateNumberInputLayoutRegister" />
 
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nameClinicInputLayoutRegister"
                 style="@style/TextInputStyle"
@@ -241,17 +238,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-
-<!--            <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/cancelClinicButtonRegister"-->
-<!--                style="@style/CancelButton"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                app:layout_constraintBottom_toTopOf="@+id/saveClinicButtonRegister"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/phoneClinicInputLayoutRegister"/>-->
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/cancelClinicButtonRegister"-->
+            <!--                style="@style/CancelButton"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="20dp"-->
+            <!--                app:layout_constraintBottom_toTopOf="@+id/saveClinicButtonRegister"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/phoneClinicInputLayoutRegister"/>-->
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/saveClinicButtonRegister"
@@ -269,4 +265,20 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBarRegister"
+        style="@style/ProgressBarStyleLoading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView" />
+
+
+    <TextView
+        android:id="@+id/loadingTextViewRegister"
+        style="@style/LoadingTextView"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView"
+        app:layout_constraintStart_toStartOf="@+id/scrollView"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarRegister" />
 </androidx.constraintlayout.widget.ConstraintLayout>

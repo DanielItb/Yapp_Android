@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -41,6 +43,8 @@ public class TreatmentListFragment extends Fragment {
     private List<TreatmentDto> treatmentList = null;
     private TreatmentAdapter adapter;
     private SearchView filterTreatmentSearchView;
+    private TextView loadTextView;
+    private ProgressBar loadProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,9 +56,12 @@ public class TreatmentListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_treatment_list, container, false);
         recyclerView = v.findViewById(R.id.recyclerTreatment);
+        loadTextView = v.findViewById(R.id.loafingTextViewTreatmentList);
+        loadProgressBar = v.findViewById(R.id.progressBarTreatmentList);
         getTreatments();
         FloatingActionButton fab = v.findViewById(R.id.fabTreatment);
         filterTreatmentSearchView = v.findViewById(R.id.filterTreatmentSearchView);
+
 
         fab.setOnClickListener(this::fabClicked);
 
@@ -85,6 +92,7 @@ public class TreatmentListFragment extends Fragment {
 
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
+            loadingGone();
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
             adapter = new TreatmentAdapter(treatmentList, TreatmentListFragment.this::loadForm);
             recyclerView.setAdapter(adapter);
@@ -101,6 +109,7 @@ public class TreatmentListFragment extends Fragment {
     }
 
     private void getTreatments() {
+        loadingVisible();
         Log.e("treatment", "id: "+ MainActivity.getUser().getId());
         Log.e("treatment", "username: "+MainActivity.getUser().getUsername());
 
@@ -144,6 +153,7 @@ public class TreatmentListFragment extends Fragment {
                         setUpRecycler(recyclerView);
 
                     }else {
+                        loadingGone();
                         Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                         Log.e("treatment", "status response: " + response.code()); //401 Unauthorized
                     }
@@ -151,6 +161,7 @@ public class TreatmentListFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<List<TreatmentDto>> call, Throwable t) {
+                    loadingGone();
                     Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("treatment", "onResponse onFailure");
                     Log.e("treatment", "throwable.getMessage(): "+t.getMessage());
@@ -159,6 +170,16 @@ public class TreatmentListFragment extends Fragment {
             });
         }
 
+    }
+
+    private void loadingGone(){
+        loadProgressBar.setVisibility(View.GONE);
+        loadTextView.setVisibility(View.GONE);
+    }
+
+    private void loadingVisible(){
+        loadProgressBar.setVisibility(View.VISIBLE);
+        loadTextView.setVisibility(View.VISIBLE);
     }
 
 }

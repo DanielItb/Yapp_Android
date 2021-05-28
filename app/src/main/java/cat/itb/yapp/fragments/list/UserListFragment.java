@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -42,6 +44,8 @@ public class UserListFragment extends Fragment {
     public static List<UserDto> listUsers;
     private SearchView filterUserSearchView;
     private UserAdapter adapter;
+    private TextView loadTextView;
+    private ProgressBar loadProgressBar;
 
 
     @Override
@@ -57,6 +61,8 @@ public class UserListFragment extends Fragment {
         listUsers = null;
         recyclerView = v.findViewById(R.id.recyclerUser);
         filterUserSearchView = v.findViewById(R.id.filterUserSearchView);
+        loadTextView = v.findViewById(R.id.loafingTextViewUserList);
+        loadProgressBar = v.findViewById(R.id.progressBarUserList);
         getUsers();
 
         FloatingActionButton fab = v.findViewById(R.id.fabUsers);
@@ -101,6 +107,7 @@ public class UserListFragment extends Fragment {
 
     private void setUpRecycler(RecyclerView recyclerView) {
         if (getContext() != null) {
+            loadingGone();
             recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
             adapter = new UserAdapter(listUsers, this::recyclerItemClicked);
             recyclerView.setAdapter(adapter);
@@ -109,6 +116,7 @@ public class UserListFragment extends Fragment {
 
 
     public void getUsers() {
+        loadingVisible();
         Log.e("user", "role admin?: " + UtilsAuth.getIsAdminRole(MainActivity.getUser().getRoles()));
         Log.e("user", "role user?: " + UtilsAuth.getIsUserRole(MainActivity.getUser().getRoles()));
 
@@ -138,6 +146,7 @@ public class UserListFragment extends Fragment {
                             listUsers = response.body();
                             setUpRecycler(recyclerView);
                         } else {
+                            loadingGone();
                             Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                             Log.e("user", "status response: " + response.code()); //401 Unauthorized
                         }
@@ -145,6 +154,7 @@ public class UserListFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<List<UserDto>> call, Throwable t) {
+                        loadingGone();
                         Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("user", "onResponse onFailure");
                         Log.e("user", "throwable.getMessage(): " + t.getMessage());
@@ -163,5 +173,15 @@ public class UserListFragment extends Fragment {
         } else {
             Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error, usuario sin rol? ", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void loadingGone(){
+        loadProgressBar.setVisibility(View.GONE);
+        loadTextView.setVisibility(View.GONE);
+    }
+
+    private void loadingVisible(){
+        loadProgressBar.setVisibility(View.VISIBLE);
+        loadTextView.setVisibility(View.VISIBLE);
     }
 }

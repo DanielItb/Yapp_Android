@@ -31,5 +31,22 @@
         tools:ignore="MissingConstraints" />
 
 
+    <ProgressBar
+        android:id="@+id/progressBarTreatmentList"
+        style="@style/ProgressBarStyleLoading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/loafingTextViewTreatmentList"
+        style="@style/LoadingTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBarTreatmentList" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

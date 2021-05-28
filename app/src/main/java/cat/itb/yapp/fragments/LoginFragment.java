@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.imageview.ShapeableImageView;
@@ -50,6 +52,8 @@ public class LoginFragment extends Fragment {
 
     private TextInputLayout usernameInputLayout, passwordInputLayout;
     public static RetrofitHttpLogin retrofitHttpLogin;
+    private TextView loadTextView;
+    private ProgressBar loadProgressBar;
 
     ProfileUserDto profileUserDto;
 
@@ -81,6 +85,8 @@ public class LoginFragment extends Fragment {
         passwordInputLayout = v.findViewById(R.id.passwordLoginInput);
         usernameTextInput = v.findViewById(R.id.usernameLoginEditText);
         passwordTextInput = v.findViewById(R.id.passwordLoginEditText);
+        loadTextView = v.findViewById(R.id.loadTextViewLogin);
+        loadProgressBar = v.findViewById(R.id.progressBarLogin);
         // TESTING HARDCODE
         // username = ADMIN, username2 = USER ADMIN, username3 USER
         // TODO: remove
@@ -114,7 +120,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void login() {
-
+        loadingVisible();
         retrofitHttpLogin = new RetrofitHttpLogin();
 
         AuthWebServiceClient authWebServiceClient = retrofitHttpLogin.retrofit.create(AuthWebServiceClient.class);
@@ -158,6 +164,7 @@ public class LoginFragment extends Fragment {
 
                     Log.e("login", "accessToken from shared preferences: "+UtilsSharedPreferences.getToken(MainActivity.getActivity()));
                 }else {
+                    loadingGone();
                     Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error bad credentials", Toast.LENGTH_SHORT).show();
                     Log.e("login", "status response: " + response.code()); //401 Unauthorized
                     //delete token
@@ -175,6 +182,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ProfileUserDto> call, Throwable t) {
+                loadingGone();
                 Log.e("login", "onResponse onFailure");
                 Log.e("login", "throwable.getMessage(): "+t.getMessage());
                 Log.e("login", "call.toString(): "+call.toString());
@@ -224,6 +232,16 @@ public class LoginFragment extends Fragment {
 
         textViewUsername.setText(username);
         Picasso.with(requireContext()).load(photoUrl).into(imageViewProfile);
+    }
+
+    private void loadingGone(){
+        loadProgressBar.setVisibility(View.GONE);
+        loadTextView.setVisibility(View.GONE);
+    }
+
+    private void loadingVisible(){
+        loadProgressBar.setVisibility(View.VISIBLE);
+        loadTextView.setVisibility(View.VISIBLE);
     }
 
 
