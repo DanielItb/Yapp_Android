@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/userFormFragment"
         android:name="cat.itb.yapp.fragments.forms.UserFormFragment"
-        android:label="User"
+        android:label="@string/user"
         tools:layout="@layout/fragment_user_form">
         <argument
             android:name="UserDto"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="cat.itb.yapp.fragments.MainFragment"
-        android:label="Home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_treatmentListFragment"
@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/treatmentFormFragment"
         android:name="cat.itb.yapp.fragments.forms.TreatmentFormFragment"
-        android:label="Treatment"
+        android:label="@string/treatment"
         tools:layout="@layout/fragment_treatment_form">
         <argument
             android:name="TreatmentDto"
@@ -84,7 +84,7 @@
     <fragment
         android:id="@+id/treatmentListFragment"
         android:name="cat.itb.yapp.fragments.list.TreatmentListFragment"
-        android:label="Treatment List"
+        android:label="@string/treatment_list"
         tools:layout="@layout/fragment_treatment_list">
         <action
             android:id="@+id/action_treatmentListFragment_to_treatmentFormFragment"
@@ -93,7 +93,7 @@
     <fragment
         android:id="@+id/patientListFragment"
         android:name="cat.itb.yapp.fragments.list.PatientListFragment"
-        android:label="Patient List"
+        android:label="@string/patient_list"
         tools:layout="@layout/fragment_patient_list">
         <action
             android:id="@+id/action_patientListFragment_to_patientFormFragment"
@@ -102,7 +102,7 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="cat.itb.yapp.fragments.list.UserListFragment"
-        android:label="User List"
+        android:label="@string/user_list"
         tools:layout="@layout/fragment_user_list">
         <action
             android:id="@+id/action_userListFragment_to_userFormFragment"
@@ -111,7 +111,7 @@
     <fragment
         android:id="@+id/reportListFragment"
         android:name="cat.itb.yapp.fragments.list.ReportListFragment"
-        android:label="Report List"
+        android:label="@string/report_list"
         tools:layout="@layout/fragment_report_list">
         <action
             android:id="@+id/action_reportListFragment_to_reportFormFragment"
@@ -120,7 +120,7 @@
     <fragment
         android:id="@+id/mtsListFragment"
         android:name="cat.itb.yapp.fragments.list.MtsListFragment"
-        android:label="Mts List"
+        android:label="@string/mts_list"
         tools:layout="@layout/fragment_mts_list">
         <action
             android:id="@+id/action_mtsListFragment_to_mtsFormFragment"
@@ -129,12 +129,12 @@
     <fragment
         android:id="@+id/personalProfileFragment"
         android:name="cat.itb.yapp.fragments.forms.PersonalProfileFragment"
-        android:label="Update Profile"
+        android:label="@string/update_profile"
         tools:layout="@layout/fragment_personal_profile" />
     <fragment
         android:id="@+id/mtsFormFragment"
         android:name="cat.itb.yapp.fragments.forms.MtsFormFragment"
-        android:label="Medical tecnical sheet"
+        android:label="@string/mts_"
         tools:layout="@layout/fragment_mts_form" >
         <argument
             android:name="MtsDto"
@@ -154,7 +154,7 @@
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="cat.itb.yapp.fragments.WelcomeFragment"
-        android:label="Welcome to YAPP"
+        android:label="@string/welcome_to_yapp"
         tools:layout="@layout/fragment_welcome" >
         <action
             android:id="@+id/action_welcomeFragment_to_registerFormFragment"
@@ -163,7 +163,7 @@
     <fragment
         android:id="@+id/reportFormFragment"
         android:name="cat.itb.yapp.fragments.forms.ReportFormFragment"
-        android:label="Report"
+        android:label="@string/report"
         tools:layout="@layout/fragment_report_form">
         <argument
             android:name="ReportDto"
@@ -184,7 +184,7 @@
     <fragment
         android:id="@+id/patientFormFragment"
         android:name="cat.itb.yapp.fragments.forms.PatientFormFragment"
-        android:label="Patient"
+        android:label="@string/patient"
         tools:layout="@layout/fragment_patient_profile" >
         <argument
             android:name="PatientDto"
@@ -195,17 +195,17 @@
     <fragment
         android:id="@+id/selectUserFragment"
         android:name="cat.itb.yapp.fragments.list.SelectUserFragment"
-        android:label="Select user"
+        android:label="@string/select_user"
         tools:layout="@layout/fragment_select_user" />
     <fragment
         android:id="@+id/selectPatientFragment"
         android:name="cat.itb.yapp.fragments.list.SelectPatientFragment"
-        android:label="Select patient"
+        android:label="@string/select_patient"
         tools:layout="@layout/fragment_select_patient" />
     <fragment
         android:id="@+id/calendarFragment"
         android:name="cat.itb.yapp.fragments.CalendarFragment"
-        android:label="Mts Calendar"
+        android:label="@string/mts_calendar"
         tools:layout="@layout/fragment_calendar">
         <action
             android:id="@+id/action_calendarFragment_to_mtsFormFragment"
@@ -226,7 +226,7 @@
     <fragment
         android:id="@+id/registerFormFragment"
         android:name="cat.itb.yapp.fragments.forms.RegisterFormFragment"
-        android:label="Register"
+        android:label="@string/register"
         tools:layout="@layout/fragment_register_form">
         <action
             android:id="@+id/action_registerFormFragment_to_loginFragment"
@@ -235,11 +235,11 @@
     <fragment
         android:id="@+id/selectTreatmentFragment"
         android:name="cat.itb.yapp.fragments.list.SelectTreatmentFragment"
-        android:label="Treatment list"
+        android:label="@string/treatment_list"
         tools:layout="@layout/fragment_select_treatment" />
     <fragment
         android:id="@+id/clinicFormFragment"
         android:name="cat.itb.yapp.fragments.forms.ClinicFormFragment"
-        android:label="Clinic"
+        android:label="@string/center"
         tools:layout="@layout/fragment_clinic_form" />
 </navigation>

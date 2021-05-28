@@ -201,25 +201,16 @@ public class UserFormFragment extends Fragment {
 
     private boolean allRequiredCampsSet() {
         boolean allGood = true;
-        if (editing){
-            CharSequence errorMsg = getText(R.string.must_fill);
+        TextInputEditText[] textInputEditTexts = {nameEditText, surnameEditText, usernameEditText,
+                phoneEditText, collegiateNumberEditText, emailEditText};
+        CharSequence errorMsg = getText(R.string.must_fill);
 
-            if (nameEditText.getText().toString().isEmpty()) {
+        for (TextInputEditText textInputEditText : textInputEditTexts) {
+            if (textInputEditText.getText().toString().isEmpty()) {
                 allGood = false;
-                nameEditText.setError(errorMsg);
+                textInputEditText.setError(errorMsg);
             }
-            if (surnameEditText.getText().toString().isEmpty()) {
-                allGood = false;
-                surnameEditText.setError(errorMsg);
-            }
-            if (phoneEditText.getText().toString().isEmpty()) {
-                allGood = false;
-                phoneEditText.setError(errorMsg);
-            }
-        }else{
-
         }
-
 
         return allGood;
     }
@@ -357,7 +348,9 @@ public class UserFormFragment extends Fragment {
         userDto.setEmail(emailEditText.getText().toString());
         userDto.setSpecialistType(specialistTypeAutoCompleteTextView.getText().toString());
         userDto.setUsername(usernameEditText.getText().toString());
-        userDto.setCollegiateNumber(Integer.parseInt(collegiateNumberEditText.getText().toString()));
+        String collegiateNumber = collegiateNumberEditText.getText().toString();
+        if (!collegiateNumber.isEmpty())
+            userDto.setCollegiateNumber(Integer.parseInt(collegiateNumber));
         userDto.setClinicId(MainActivity.getUserDto().getClinicId());
         userDto.setPhotoUrl("https://yapp-backend.herokuapp.com/files/placeholder-user-image.png");
 

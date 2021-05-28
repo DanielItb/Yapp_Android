@@ -72,6 +72,7 @@ public class RegisterFormFragment extends Fragment {
         specialistTypeAutoCompleteTextView.setAdapter(adapterSpecialist);
 
         //TEST
+        //Todo remove
         usernameEditText.setText("Pacomer");
         passwordEditText.setText("password");
         repeatPasswordEditText.setText("password");
