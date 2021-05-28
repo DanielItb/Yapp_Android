@@ -1,5 +1,8 @@
 package cat.itb.yapp.fragments.forms;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.io.File;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
@@ -23,19 +29,24 @@ import cat.itb.yapp.models.clinic.ClinicDto;
 import cat.itb.yapp.models.clinic.CreateUpdateClinicDto;
 import cat.itb.yapp.retrofit.DatabaseUtils;
 import cat.itb.yapp.utils.ErrorUtils;
+import cat.itb.yapp.utils.ImageUtils;
 import cat.itb.yapp.utils.UtilsAuth;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Fragmento controlador del formulario de los datos de la clínica
- * @author David Lama, Kenneth Griñan, Daniel Acosta
  *
+ * @author David Lama, Kenneth Griñan, Daniel Acosta
  */
 public class ClinicFormFragment extends Fragment {
     private NavController navController;
+    private ImageUtils imageUtils;
+    private File imgFile = null;
     private ClinicDto clinicDto;
     private CircleImageView imageViewLogo;
     private SwitchCompat editSwitch;
@@ -70,6 +81,8 @@ public class ClinicFormFragment extends Fragment {
             editSwitch.setEnabled(true);
             editSwitch.setVisibility(View.VISIBLE);
         }
+
+        imageUtils = new ImageUtils(getContext());
         return v;
     }
 
@@ -87,6 +100,11 @@ public class ClinicFormFragment extends Fragment {
             else notFocusable();
         });
 
+        imageViewLogo.setOnClickListener(this::takePicture);
+    }
+
+    private void takePicture(View view) {
+        if (editSwitch.isChecked()) CropImage.startPickImageActivity(getContext(), this);
     }
 
     private void notFocusable() {
@@ -104,6 +122,24 @@ public class ClinicFormFragment extends Fragment {
     }
 
     private void save(View view) {
+/*        if (imgFile != null) {
+            DatabaseUtils.uploadClinicPhoto(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    if (response.isSuccessful()) {
+                        //navController.popBackStack();
+                    } else {
+                        Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            }, imgFile, clinicDto.getId());
+        }*/
+
         CreateUpdateClinicDto createUpdateClinicDto = getInfoFromLayout();
 
         Callback<CreateUpdateClinicDto> callback = new Callback<CreateUpdateClinicDto>() {
@@ -163,6 +199,24 @@ public class ClinicFormFragment extends Fragment {
         editTextAddress.setText(clinicDto.getAddress());
         if (clinicDto.getPhoto() != null) {
             Picasso.with(getContext()).load(clinicDto.getPhoto()).into(imageViewLogo);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            imageViewLogo.setImageBitmap(bitmap);
+        } else if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == RESULT_OK) {
+            Uri imageUri = CropImage.getPickImageResultUri(requireContext(), data);
+            imageUtils.cutImage(imageUri, this);
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                imgFile = new File(result.getUri().getPath());
+                Picasso.with(requireContext()).load(imgFile).into(imageViewLogo);
+            }
         }
     }
 }

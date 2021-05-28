@@ -8,14 +8,10 @@ import java.util.List;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.clinic.ClinicDto;
 import cat.itb.yapp.models.clinic.CreateUpdateClinicDto;
-import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
-import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.ClinicWebServiceClient;
-import cat.itb.yapp.webservices.PatientWebServiceClient;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
-import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 /**
@@ -55,17 +51,24 @@ public class DatabaseUtils {
 
     /**
      * Método que actualiza los datos de la clñinica.
-     * @param callback Objeto Callback
+     *
+     * @param callback  Objeto Callback
      * @param clinicDto Objeto CreateUpdateClinicDto
-     * @param id int
+     * @param id        int
      */
     public static void updateClinic(Callback<CreateUpdateClinicDto> callback, CreateUpdateClinicDto clinicDto, int id) {
         Call<CreateUpdateClinicDto> call = clinicWebServiceClient.updateClinic(id, clinicDto);
         call.enqueue(callback);
     }
 
+/*    public static void uploadClinicPhoto(Callback<String> callback, File img, int id) {
+        Call<String> call = clinicWebServiceClient.updatePhoto(id, img);
+        call.enqueue(callback);
+    }*/
+
     /**
      * Método que carga una lista con los tratamientos recogidos del backend
+     *
      * @param callback Objeto Callback
      */
     public static void getTreatments(Callback<List<TreatmentDto>> callback) {
