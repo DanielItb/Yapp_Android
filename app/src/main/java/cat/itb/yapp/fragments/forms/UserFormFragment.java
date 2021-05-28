@@ -254,7 +254,7 @@ public class UserFormFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UserDto> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

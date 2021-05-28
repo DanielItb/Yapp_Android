@@ -29,6 +29,7 @@ import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.treatment.CreateUpdateTreatmentDto;
 import cat.itb.yapp.models.treatment.TreatmentDto;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsDatePicker;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
@@ -210,13 +211,13 @@ public class TreatmentFormFragment extends Fragment {
                 if (response.isSuccessful()) {
                     navController.popBackStack();
                 } else {
-                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<TreatmentDto> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

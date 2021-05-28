@@ -32,6 +32,7 @@ import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.mts.MtsDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.MtsServiceClient;
 import retrofit2.Call;
@@ -291,12 +292,14 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
                         listMts.forEach(object -> Log.d("mtsLisit", object.toString()));
                     } else {
+                        Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                         Log.e("mts", "status response: " + response.code()); //401 Unauthorized
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<MtsDto>> call, Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("mts", "onResponse onFailure");
                     Log.e("mts", "throwable.getMessage(): " + t.getMessage());
                     Log.e("mts", "call.toString(): " + call.toString());

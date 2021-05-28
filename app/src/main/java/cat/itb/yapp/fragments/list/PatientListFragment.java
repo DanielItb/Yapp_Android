@@ -24,6 +24,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.PatientAdapter;
 import cat.itb.yapp.models.patient.PatientDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -129,13 +130,14 @@ public class PatientListFragment extends Fragment {
                         System.out.println(Arrays.toString(patientList.toArray()));
                         setUpRecycler(recyclerView);
                     } else {
-                        Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get patients by specialistId", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                         Log.e("patient", "status response: " + response.code()); //401 Unauthorized
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<PatientDto>> call, Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("patient", "onResponse onFailure");
                     Log.e("patient", "throwable.getMessage(): " + t.getMessage());
                     Log.e("patient", "call.toString(): " + call.toString());

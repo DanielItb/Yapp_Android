@@ -24,6 +24,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.UserAdapter;
 import cat.itb.yapp.models.user.UserDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
@@ -137,13 +138,14 @@ public class UserListFragment extends Fragment {
                             listUsers = response.body();
                             setUpRecycler(recyclerView);
                         } else {
-                            Toast.makeText(MainActivity.getActivity().getApplicationContext(), "error get user by specialistId", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                             Log.e("user", "status response: " + response.code()); //401 Unauthorized
                         }
                     }
 
                     @Override
                     public void onFailure(Call<List<UserDto>> call, Throwable t) {
+                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("user", "onResponse onFailure");
                         Log.e("user", "throwable.getMessage(): " + t.getMessage());
                         Log.e("user", "call.toString(): " + call.toString());

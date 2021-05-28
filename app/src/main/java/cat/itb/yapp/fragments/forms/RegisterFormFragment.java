@@ -19,13 +19,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.models.user.RegisterDtoRoleAdmin;
 import cat.itb.yapp.retrofit.RetrofitHttpLogin;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.webservices.UserWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -229,19 +229,14 @@ public class RegisterFormFragment extends Fragment {
                 if (response.isSuccessful()) {
 //                    navController.navigate(R.id.action_registerFormFragment_to_loginFragment);
                     confirmEmailDialog();
-
                 } else {
-                    try {
-                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RegisterDtoRoleAdmin> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

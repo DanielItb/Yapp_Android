@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cat.itb.yapp.R;
@@ -25,6 +23,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.TreatmentAdapter;
 import cat.itb.yapp.models.treatment.TreatmentDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.TreatmentWebServiceClient;
 import retrofit2.Call;
@@ -145,17 +144,14 @@ public class TreatmentListFragment extends Fragment {
                         setUpRecycler(recyclerView);
 
                     }else {
-                        try {
-                            Toast.makeText(MainActivity.getActivity().getApplicationContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                         Log.e("treatment", "status response: " + response.code()); //401 Unauthorized
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<TreatmentDto>> call, Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("treatment", "onResponse onFailure");
                     Log.e("treatment", "throwable.getMessage(): "+t.getMessage());
                     Log.e("treatment", "call.toString(): "+call.toString());

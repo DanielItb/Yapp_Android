@@ -22,6 +22,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.models.clinic.ClinicDto;
 import cat.itb.yapp.models.clinic.CreateUpdateClinicDto;
 import cat.itb.yapp.retrofit.DatabaseUtils;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsAuth;
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -111,13 +112,13 @@ public class ClinicFormFragment extends Fragment {
                 if (response.isSuccessful()) {
                     navController.popBackStack();
                 } else {
-                    Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<CreateUpdateClinicDto> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         };
 

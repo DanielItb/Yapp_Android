@@ -1,6 +1,11 @@
 package cat.itb.yapp.fragments.list;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -8,19 +13,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.SearchView;
-
 import java.util.List;
 
 import cat.itb.yapp.R;
 import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.PatientAdapter;
-
 import cat.itb.yapp.models.patient.PatientDto;
-import cat.itb.yapp.utils.UtilsAuth;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.webservices.PatientWebServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -101,13 +100,18 @@ public class SelectPatientFragment extends Fragment {
         call.enqueue(new Callback<List<PatientDto>>() {
             @Override
             public void onResponse(Call<List<PatientDto>> call, Response<List<PatientDto>> response) {
-                patientDtoList = response.body();
-                setUpRecycler(recyclerView);
+                if (response.isSuccessful()) {
+                    patientDtoList = response.body();
+                    setUpRecycler(recyclerView);
+                } else {
+                    Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
+                }
+
             }
 
             @Override
             public void onFailure(Call<List<PatientDto>> call, Throwable t) {
-
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 

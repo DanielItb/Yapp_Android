@@ -34,6 +34,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.fragments.CalendarFragment;
 import cat.itb.yapp.models.mts.MtsCreateUpdateDto;
 import cat.itb.yapp.models.mts.MtsDto;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.webservices.MtsServiceClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -228,14 +229,14 @@ public class MtsFormFragment extends Fragment {
                 if (response.isSuccessful()) {
                     navController.popBackStack();
                 } else {
-                    Toast.makeText(getContext(), response.message(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<MtsDto> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.error_saving, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

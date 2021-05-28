@@ -23,6 +23,7 @@ import cat.itb.yapp.activities.MainActivity;
 import cat.itb.yapp.adapters.ReportAdapter;
 import cat.itb.yapp.models.report.ReportDto;
 import cat.itb.yapp.retrofit.RetrofitHttp;
+import cat.itb.yapp.utils.ErrorUtils;
 import cat.itb.yapp.utils.UtilsAuth;
 import cat.itb.yapp.webservices.ReportServiceClient;
 import retrofit2.Call;
@@ -138,12 +139,14 @@ public class ReportListFragment extends Fragment {
                         reportList = response.body();
                         setUpRecycler(recyclerView);
                     } else {
+                        Toast.makeText(getContext(), ErrorUtils.getErrorString(response.errorBody()), Toast.LENGTH_LONG).show();
                         Log.e("report", "status response: " + response.code()); //401 Unauthorized
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<ReportDto>> call, Throwable t) {
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("report", "onResponse onFailure");
                     Log.e("report", "throwable.getMessage(): "+t.getMessage());
                     Log.e("report", "call.toString(): "+call.toString());
