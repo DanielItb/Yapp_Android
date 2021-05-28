@@ -100,11 +100,24 @@
     <string name="data_saved">Data saved</string>
     <string name="error_data">Error saving data</string>
     <string name="must_be_admin_to_edit">You must be an admin to edit this</string>
+    <string name="today">Today</string>
+    <string name="three_days">Three Days</string>
+    <string name="week">Week</string>
+    <string name="treatment_list">Treatment list</string>
+    <string name="patient_list">Patient list</string>
+    <string name="user_list">User list</string>
+    <string name="report_list">Report list</string>
+    <string name="mts_list">Mts list</string>
+    <string name="update_profile">Update profile</string>
+    <string name="mts_">Medical Technical Sheet</string>
+    <string name="report">Report</string>
+    <string name="select_user">Select User</string>
+    <string name="mts_calendar">Mts Calendar</string>
 
     <string-array name="payment_types">
-        <item>Cuota</item>
-        <item>Beca</item>
-        <item>Sesión</item>
+        <item>Fee</item>
+        <item>Scholarship</item>
+        <item>Session</item>
     </string-array>
 
     <string-array name="rol_types">
@@ -113,9 +126,9 @@
     </string-array>
 
     <string-array name="specialist_types">
-        <item>Logopeda</item>
-        <item>Pedagogo/a</item>
-        <item>Psicólogo/a</item>
+        <item>Speech therapist</item>
+        <item>Pedagogue</item>
+        <item>Psychologist</item>
         <item>None</item>
     </string-array>
 </resources>

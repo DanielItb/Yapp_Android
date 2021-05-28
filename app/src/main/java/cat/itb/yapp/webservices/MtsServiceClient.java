@@ -22,7 +22,7 @@ public interface MtsServiceClient {
     // ROLE_ADMIN
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET()
-    Call<List<MtsDto>> getUsers(@Url String url);
+    Call<List<MtsDto>> getMtsByClinicId(@Url String url);
 
     // ROLE_USER
     @Headers({"Content-Type: application/json;charset=UTF-8"})
