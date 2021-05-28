@@ -161,6 +161,8 @@ public class ClinicFormFragment extends Fragment {
         editTextEmail.setText(clinicDto.getEmail());
         editTextPhoneNumber.setText(clinicDto.getPhoneNumber());
         editTextAddress.setText(clinicDto.getAddress());
-        Picasso.with(getContext()).load(clinicDto.getPhoto()).into(imageViewLogo);
+        if (clinicDto.getPhoto() != null) {
+            Picasso.with(getContext()).load(clinicDto.getPhoto()).into(imageViewLogo);
+        }
     }
 }

@@ -146,7 +146,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
     @Override
     public void onEmptyViewLongPress(java.util.Calendar time) {
-        Toast.makeText(getContext(), "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Empty view long pressed: " + getEventTitle(time), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -160,7 +160,7 @@ public class CalendarFragment extends Fragment implements WeekView.EventClickLis
 
     @Override
     public void onEventLongPress(WeekViewEvent event, RectF eventRect) {
-        Toast.makeText(getContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
     }
 
 
