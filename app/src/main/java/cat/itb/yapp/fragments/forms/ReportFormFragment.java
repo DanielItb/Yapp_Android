@@ -62,10 +62,12 @@ public class ReportFormFragment extends Fragment {
             reportDto.setPatientId(bundle.getInt("patientId"));
             reportDto.setSpecialistFullName(bundle.getString("specialistName"));
             reportDto.setSpecialistId(bundle.getLong("specialistId"));
+            reportDto.setSpecialistType(bundle.getString("type"));
 
             editTextTreatment.setText(reportDto.getTreatmentReason());
             editTextPatient.setText(reportDto.getPatientFullName());
             editTextSpecialist.setText(reportDto.getSpecialistFullName());
+            editTextSpecialistType.setText(reportDto.getSpecialistType());
         }));
     }
 
@@ -286,7 +288,7 @@ public class ReportFormFragment extends Fragment {
 
         if (patientName != null) editTextPatient.setText(patientName);
         if (specialistName != null) editTextSpecialist.setText(specialistName);
-        if (specialistType != null) editTextSpecialistType.setText(reportDto.getSpecialistType());
+        if (specialistType != null) editTextSpecialistType.setText(specialistType);
         if (diagnosis != null) editTextDiagnosis.setText(diagnosis);
         if (objectives != null) editTextObjectives.setText(objectives);
         if (reason != null) editTextTreatment.setText(reason);

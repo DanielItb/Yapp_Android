@@ -24,7 +24,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Today"
+            android:text="@string/today"
             android:textColor="@color/black"/>
 
 
@@ -36,7 +36,7 @@
             app:layout_constraintEnd_toStartOf="@+id/oneWeekButton"
             app:layout_constraintStart_toEndOf="@+id/oneDayButton"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Three Days"
+            android:text="@string/three_days"
             android:textColor="@color/black"/>
 
 
@@ -48,7 +48,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Week"
+            android:text="@string/week"
             android:textColor="@color/black"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

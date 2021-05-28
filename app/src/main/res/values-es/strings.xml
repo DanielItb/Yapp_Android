@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yapp</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="birth_date">Fecha de nacimiento</string>
+    <string name="age">Edad</string>
+    <string name="address">Dirección</string>
+    <string name="phone_number">Teléfono</string>
+    <string name="email">Email</string>
+    <string name="school">Colegio</string>
+    <string name="course">Curso</string>
+    <string name="payment_type">Tipo de pago</string>
+    <string name="register_date">Fecha de registro</string>
+    <string name="active">Activo</string>
+    <string name="reason">Motivo</string>
+    <string name="sessions_finished">Sesiones finalizadas</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="log_in">ENTRAR</string>
+    <string name="select_patient">Selecciona paciente</string>
+    <string name="select_specialist">Selecciona especilista</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="select_start_date">Selecciona fecha de inicio</string>
+    <string name="rol">Rol</string>
+    <string name="specialist_type">Tipo de especialista</string>
+    <string name="collegiate_number">Número de colegiado</string>
+    <string name="patient_with_two_points">Paciente: </string>
+    <string name="user">Usuario</string>
+    <string name="treatments">Tratamientos</string>
+    <string name="center">Clínica</string>
+    <string name="reports">Informes</string>
+    <string name="mts">Citas</string>
+    <string name="patients">Pacientes</string>
+    <string name="users">Usuarios</string>
+    <string name="recipe">Recipe</string>
+    <string name="patient_name">Nombre del paciente:</string>
+    <string name="start_date_two_points">Fecha de inicio:</string>
+    <string name="treatment_n">Nº tratamiento:</string>
+    <string name="mts_n">Nº cita:</string>
+    <string name="date">Fecha:</string>
+    <string name="select_mts_date">Selecciona la fecha de la cita</string>
+    <string name="clinic_name">Nombre de la clínica</string>
+    <string name="welcome_to_yapp">Bienvenido a YAPP</string>
+    <string name="continue_btn">Continuar</string>
+    <string name="profile">Perfil</string>
+    <string name="log_out">Salir</string>
+    <string name="repeat_password">Repite contraseña</string>
+    <string name="register">Registrarse</string>
+    <string name="clinic_address">Dirección de la clínica</string>
+    <string name="clinic_phone_number">Teléfono de la clínica</string>
+    <string name="admin_data">Datos del administrador</string>
+    <string name="clinic_data">Datos de la clínica</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="welcome_yapp_paragraph">YAPP es una aplicación gratuita que te permite gestionar tu clínica o consulta.</string>
+    <string name="welcome_yapp_paragraph_2">Para empezar a gestionar tu clínica o consulta, primero debes registrarte como administrador con tus datos personales y registrar los datos de tu negocio.</string>
+    <string name="press_the_button_bellow_to_start">Pulsa continuar para empezar.</string>
+    <string name="id">Id de usuario:</string>
+    <string name="name_user_item">Nombre:</string>
+    <string name="specialist_type_user_item_list">Especialista:</string>
+    <string name="rol_user_item_list">Rol:</string>
+    <string name="username_user_list_item">Usuario:</string>
+    <string name="surname_user_item_list">apellido:</string>
+    <string name="diagnosis">Diagnóstico</string>
+    <string name="diagnosis_item_list">Diagnóstico: </string>
+    <string name="objetives">Objetivos</string>
+    <string name="error_saving">Error guardando datos</string>
+    <string name="error_deleting">Error eliminando datos</string>
+    <string name="must_fill">Debe ser rellenado</string>
+    <string name="length_pass">La contraseña ha de tener almenos 6 caracteres</string>
+    <string name="equal_pass">Las contraseñas no son iguales</string>
+    <string name="phone_length">El teléfono debe tener 9 caracteres</string>
+    <string name="invalid_mail">Email inválido</string>
+    <string name="select_treatment">Selecciona tratamiento</string>
+    <string name="deleteButton">Eliminar</string>
+    <string name="date_clean">Fecha</string>
+    <string name="patient">Paciente</string>
+    <string name="specialist">Especialista</string>
+    <string name="treatment">Tratamiento</string>
+    <string name="start_date">Fecha de inicio</string>
+    <string name="clinic_email">Email de la clínica</string>
+    <string name="ok">ok</string>
+    <string name="check_email">Por favor, revisa tu correo y verifica tu cuenta</string>
+    <string name="thanks_for_joining">Gracias por unirte a YAPP</string>
+    <string name="caution">CUIDADO!</string>
+    <string name="sure">¿Quieres eliminar este paciente? ¿Seguro?</string>
+    <string name="sure_report">¿Quieres eliminar este informe? ¿Seguro?</string>
+    <string name="sure_treatment">¿Quieres eliminar este tratamiento? ¿Seguro?</string>
+    <string name="sure_mts">¿Quieres eliminar esta cita? ¿Seguro?</string>
+    <string name="sure_user">¿Quieres eliminar este usurio? ¿Seguro?</string>
+    <string name="back">Volver</string>
+    <string name="search_patient">Buscar paciente por nombre</string>
+    <string name="search_report">Buscar informe por nombre paciente</string>
+    <string name="search_treatment">Buscar tratamiento por nombre paciente</string>
+    <string name="search_user">Buscar usuario por nombre o tipo especialista</string>
+    <string name="edit">Editar</string>
+    <string name="bad_credentials">Error! Credenciales erróneas</string>
+    <string name="home">Inicio</string>
+    <string name="account">Cuenta</string>
+    <string name="data_saved">Datos guardados</string>
+    <string name="error_data">Error guardando datos</string>
+    <string name="must_be_admin_to_edit">Debes ser administrador para poder editar esto</string>
+    <string name="today">Hoy</string>
+    <string name="three_days">Tres días</string>
+    <string name="week">Semana</string>
+    <string name="treatment_list">Lista de tratamientos</string>
+    <string name="patient_list">Lista de pacientes</string>
+    <string name="user_list">Lista de usuarios</string>
+    <string name="report_list">Lista de informes</string>
+    <string name="mts_list">Mts list</string>
+    <string name="update_profile">Actualizar perfil</string>
+    <string name="mts_">Cita</string>
+    <string name="report">Informe</string>
+    <string name="select_user">Selecciona usuario</string>
+    <string name="mts_calendar">Calendario de citas</string>
+
+    <string-array name="payment_types">
+        <item>Cuota</item>
+        <item>Beca</item>
+        <item>Sesión</item>
+    </string-array>
+
+    <string-array name="rol_types">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
+
+    <string-array name="specialist_types">
+        <item>Logopeda</item>
+        <item>Pedagogo/a</item>
+        <item>Psicólogo/a</item>
+        <item>Ninguno</item>
+    </string-array>
+</resources>

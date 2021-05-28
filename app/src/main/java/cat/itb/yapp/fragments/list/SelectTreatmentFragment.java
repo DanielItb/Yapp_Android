@@ -142,6 +142,7 @@ public class SelectTreatmentFragment extends Fragment {
         result.putString("specialistName", treatmentDto.getSpecialistFullName());
         result.putLong("specialistId", Long.parseLong(treatmentDto.getSpecialistId()));
         result.putString("reason", treatmentDto.getReason());
+        result.putString("type", treatmentDto.getSpecialistType());
 
         getParentFragmentManager().setFragmentResult("treatment", result);
         navController.popBackStack();
