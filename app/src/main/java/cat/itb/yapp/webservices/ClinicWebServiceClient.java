@@ -16,9 +16,13 @@ import retrofit2.http.Path;
 public interface ClinicWebServiceClient {
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @GET("clinic/{id}")
-    Call<ClinicDto> getClinicById(@Path("id")int id);
+    Call<ClinicDto> getClinicById(@Path("id") int id);
 
     @Headers({"Content-Type: application/json;charset=UTF-8"})
     @PUT("clinic/{id}")
     Call<CreateUpdateClinicDto> updateClinic(@Path("id") int id, @Body CreateUpdateClinicDto createUpdateClinicDto);
+
+/*    @Headers({"Content-Type: application/json;charset=UTF-8"})
+    @POST("clinic/updatephoto/{id}")
+    Call<String> updatePhoto(@Path("id") int id, @Body File file);*/
 }
