@@ -103,6 +103,7 @@ public class PatientFormFragment extends Fragment {
                 editing = true;
                 notFocusable();
                 fillUpInfoInLayout(patientDto);
+                deleteButton.setOnClickListener(v1 -> deletePatientDialog());
             } else { // If new
                 newPatientSetUp();
             }
@@ -110,7 +111,7 @@ public class PatientFormFragment extends Fragment {
             fillUpInfoInLayout(patientDto);
         }
 
-        deleteButton.setOnClickListener(v1 -> deletePatientDialog());
+
         saveButton.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });
@@ -135,6 +136,8 @@ public class PatientFormFragment extends Fragment {
         editSwitch.setVisibility(View.GONE);
         focusable();
         editing = false;
+
+        deleteButton.setOnClickListener(v -> navController.popBackStack());
 
         patientDto.setUrlPhoto(urlImg);
     }
