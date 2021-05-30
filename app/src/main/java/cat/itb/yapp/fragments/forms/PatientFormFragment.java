@@ -99,16 +99,22 @@ public class PatientFormFragment extends Fragment {
         if (patientDto == null) {
             patientDto = PatientFormFragmentArgs.fromBundle(getArguments()).getPatientDto();
             if (patientDto != null) { //If editing
-                deleteButton.setText(R.string.deleteButton);
                 editing = true;
                 notFocusable();
                 fillUpInfoInLayout(patientDto);
-                deleteButton.setOnClickListener(v1 -> deletePatientDialog());
             } else { // If new
                 newPatientSetUp();
             }
         } else { //If load data
             fillUpInfoInLayout(patientDto);
+        }
+
+        if (editing) {
+            deleteButton.setText(R.string.deleteButton);
+            deleteButton.setOnClickListener(v1 -> deletePatientDialog());
+        } else {
+            deleteButton.setOnClickListener(v -> navController.popBackStack());
+            editSwitch.setVisibility(View.GONE);
         }
 
 
@@ -133,11 +139,8 @@ public class PatientFormFragment extends Fragment {
         final String urlImg = "https://yapp-backend.herokuapp.com/files/placeholder-user-image.png";
 
         patientDto = new PatientDto();
-        editSwitch.setVisibility(View.GONE);
         focusable();
         editing = false;
-
-        deleteButton.setOnClickListener(v -> navController.popBackStack());
 
         patientDto.setUrlPhoto(urlImg);
     }

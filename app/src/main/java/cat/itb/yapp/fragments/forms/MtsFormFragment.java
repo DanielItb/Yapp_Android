@@ -107,14 +107,21 @@ public class MtsFormFragment extends Fragment {
             } else { // If new
                 mtsDto = new MtsDto();
                 editing = false;
-                editSwitch.setVisibility(View.GONE);
                 focusable();
             }
         } else { //If new
             fillUpInfoInLayout(mtsDto);
         }
 
-        deleteButton.setOnClickListener(v -> deleteMtsDialog());
+        if (editing) {
+            deleteButton.setOnClickListener(v -> deleteMtsDialog());
+        } else {
+            deleteButton.setOnClickListener(v -> navController.popBackStack());
+            deleteButton.setText(R.string.cancel);
+            editSwitch.setVisibility(View.GONE);
+        }
+
+
         saveButton.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });

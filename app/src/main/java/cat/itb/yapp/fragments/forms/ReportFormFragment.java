@@ -104,7 +104,6 @@ public class ReportFormFragment extends Fragment {
             } else { // If new
                 reportDto = new ReportDto();
                 reportDto.setDate(LocalDate.now().toString());
-                editSwitch.setVisibility(View.GONE);
                 focusable();
                 editing = false;
 
@@ -113,7 +112,15 @@ public class ReportFormFragment extends Fragment {
             fillUpInfoInLayout(reportDto);
         }
 
-        buttonDelete.setOnClickListener(v -> deleteReportDialog());
+        if (editing) {
+            buttonDelete.setOnClickListener(v -> deleteReportDialog());
+        } else {
+            buttonDelete.setText(R.string.cancel);
+            buttonDelete.setOnClickListener(v -> navController.popBackStack());
+            editSwitch.setVisibility(View.GONE);
+        }
+
+
         buttonSave.setOnClickListener(v -> {
             if (allRequiredCampsSet()) save();
         });
