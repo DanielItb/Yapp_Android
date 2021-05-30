@@ -103,17 +103,23 @@ public class TreatmentFormFragment extends Fragment {
             } else {
                 treatment = new TreatmentDto();
                 editing = false;
-                editSwitch.setVisibility(View.GONE);
                 focusable();
             }
         } else {
             fillUpInfoInLayout(treatment);
         }
 
+        if (editing) {
+            buttonDelete.setOnClickListener(v1 -> deleteTreatmentDialog());
+        } else {
+            editSwitch.setVisibility(View.GONE);
+            buttonDelete.setText(R.string.cancel);
+            buttonDelete.setOnClickListener(v -> navController.popBackStack());
+        }
 
-        buttonDelete.setOnClickListener(v1 -> deleteTreatmentDialog());
+
         buttonSave.setOnClickListener(v -> {
-            if(allRequiredCampsSet()) save();
+            if (allRequiredCampsSet()) save();
         });
         editTextSpecialist.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectUserFragment));
         editTextPatient.setOnClickListener(v -> navController.navigate(R.id.action_treatmentFormFragment_to_selectPatientFragment));
